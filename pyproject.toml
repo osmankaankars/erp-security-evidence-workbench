@@ -28,7 +28,7 @@ classifiers = [
 dev = [
     "build==1.6.0",
     "jsonschema==4.26.0",
-    "mypy==1.20.2",
+    "mypy==2.3.1",
     "pytest==8.4.2",
     "ruff==0.16.5",
     "setuptools==84.0.0",
