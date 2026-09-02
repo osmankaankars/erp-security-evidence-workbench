@@ -1,0 +1,27 @@
+# Exact regular-file members allowed in the 0.1.0rc1 source distribution.
+erp_security_evidence_workbench-0.1.0rc1/MANIFEST.in
+erp_security_evidence_workbench-0.1.0rc1/LICENSE
+erp_security_evidence_workbench-0.1.0rc1/PKG-INFO
+erp_security_evidence_workbench-0.1.0rc1/README.md
+erp_security_evidence_workbench-0.1.0rc1/THIRD_PARTY_NOTICES.md
+erp_security_evidence_workbench-0.1.0rc1/pyproject.toml
+erp_security_evidence_workbench-0.1.0rc1/setup.cfg
+erp_security_evidence_workbench-0.1.0rc1/src/erp_security_evidence_workbench/__init__.py
+erp_security_evidence_workbench-0.1.0rc1/src/erp_security_evidence_workbench/__main__.py
+erp_security_evidence_workbench-0.1.0rc1/src/erp_security_evidence_workbench/adapters.py
+erp_security_evidence_workbench-0.1.0rc1/src/erp_security_evidence_workbench/cli.py
+erp_security_evidence_workbench-0.1.0rc1/src/erp_security_evidence_workbench/errors.py
+erp_security_evidence_workbench-0.1.0rc1/src/erp_security_evidence_workbench/html_report.py
+erp_security_evidence_workbench-0.1.0rc1/src/erp_security_evidence_workbench/ingest.py
+erp_security_evidence_workbench-0.1.0rc1/src/erp_security_evidence_workbench/models.py
+erp_security_evidence_workbench-0.1.0rc1/src/erp_security_evidence_workbench/normalization.py
+erp_security_evidence_workbench-0.1.0rc1/src/erp_security_evidence_workbench/reporting.py
+erp_security_evidence_workbench-0.1.0rc1/src/erp_security_evidence_workbench/rules.py
+erp_security_evidence_workbench-0.1.0rc1/src/erp_security_evidence_workbench/sarif_report.py
+erp_security_evidence_workbench-0.1.0rc1/src/erp_security_evidence_workbench/timestamps.py
+erp_security_evidence_workbench-0.1.0rc1/src/erp_security_evidence_workbench.egg-info/PKG-INFO
+erp_security_evidence_workbench-0.1.0rc1/src/erp_security_evidence_workbench.egg-info/SOURCES.txt
+erp_security_evidence_workbench-0.1.0rc1/src/erp_security_evidence_workbench.egg-info/dependency_links.txt
+erp_security_evidence_workbench-0.1.0rc1/src/erp_security_evidence_workbench.egg-info/entry_points.txt
+erp_security_evidence_workbench-0.1.0rc1/src/erp_security_evidence_workbench.egg-info/requires.txt
+erp_security_evidence_workbench-0.1.0rc1/src/erp_security_evidence_workbench.egg-info/top_level.txt

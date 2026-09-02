@@ -1,0 +1,2 @@
+schema_version,dataset_classification,record_type,record_id,principal_id,principal_kind,enabled,last_active_at
+erpsec.synthetic-evidence/v1,synthetic,principal,principal.clean.user,fixture-clean-user,human,true,2026-09-01T00:00:00Z

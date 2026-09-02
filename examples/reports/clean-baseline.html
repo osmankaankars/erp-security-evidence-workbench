@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src &#x27;none&#x27;; style-src &#x27;sha256-DKzZMcmupOlQbwnYarnHWP9OkAHxrMGt2RG2BY5nu9U=&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ERP Security Evidence Report</title>
+<style>body{margin:0;background:#f4f7f9;color:#17212b;font:15px/1.5 system-ui,sans-serif}main{max-width:1080px;margin:auto;padding:32px}h1,h2,h3{line-height:1.2}section{background:#fff;border:1px solid #d8e0e6;border-radius:10px;margin:16px 0;padding:20px}.scope{border-left:5px solid #176b87}.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.metric{background:#edf4f7;border-radius:8px;padding:12px}.finding{border-left:5px solid #a03c2f}.severity-high{color:#8e2d22}.severity-medium{color:#765500}table{border-collapse:collapse;width:100%}th,td{border-bottom:1px solid #d8e0e6;padding:9px;text-align:left;vertical-align:top}code{overflow-wrap:anywhere}dt{font-weight:700}dd{margin:0 0 10px}.muted{color:#52616b}.state{font-weight:700}</style>
+</head>
+<body data-run-result="no_findings">
+<main>
+<h1>ERP Security Evidence Report</h1>
+<section id="scope" class="scope">
+<h2>Scope</h2>
+<p>This offline reference project analyzes supplied synthetic evidence only. It does not inspect a live system, establish compliance, or replace human review.</p>
+</section>
+<section id="summary">
+<h2>Summary</h2>
+<div class="summary">
+<div class="metric"><strong>Result</strong><br>no_findings</div>
+<div class="metric"><strong>Findings</strong><br>0</div>
+<div class="metric"><strong>Selected rules</strong><br>6</div>
+<div class="metric"><strong>Coverage</strong><br>complete</div>
+</div>
+<p class="state">No findings in supplied evidence.</p><p>This does not prove absence of risk or source-system completeness.</p>
+<p>Severity summary: high=0, medium=0.</p>
+</section>
+<section id="rule-evaluations">
+<h2>Rule evaluations</h2>
+<table><thead><tr><th>Rule</th><th>Version</th><th>Status</th></tr></thead><tbody>
+<tr data-erpsec-role="evaluation" data-rule-id="ERP001" data-status="not_matched">
+<td><code>ERP001</code></td>
+<td>1.0.0</td>
+<td>not_matched</td></tr>
+<tr data-erpsec-role="evaluation" data-rule-id="ERP002" data-status="not_matched">
+<td><code>ERP002</code></td>
+<td>1.0.0</td>
+<td>not_matched</td></tr>
+<tr data-erpsec-role="evaluation" data-rule-id="ERP003" data-status="not_matched">
+<td><code>ERP003</code></td>
+<td>1.0.0</td>
+<td>not_matched</td></tr>
+<tr data-erpsec-role="evaluation" data-rule-id="ERP004" data-status="not_matched">
+<td><code>ERP004</code></td>
+<td>1.0.0</td>
+<td>not_matched</td></tr>
+<tr data-erpsec-role="evaluation" data-rule-id="ERP005" data-status="not_matched">
+<td><code>ERP005</code></td>
+<td>1.0.0</td>
+<td>not_matched</td></tr>
+<tr data-erpsec-role="evaluation" data-rule-id="ERP006" data-status="not_matched">
+<td><code>ERP006</code></td>
+<td>1.0.0</td>
+<td>not_matched</td></tr>
+</tbody></table>
+</section>
+<section id="skipped-evaluations">
+<h2>Skipped evaluations</h2>
+<p>None. This version fails the complete run when selected-rule evidence is insufficient and does not publish a report.</p>
+</section>
+<section id="findings">
+<h2>Findings</h2>
+<p class="muted">No finding records were emitted.</p>
+</section>
+<section id="evidence">
+<h2>Finding-linked evidence</h2>
+<p class="muted">No finding-linked evidence.</p>
+</section>
+<section id="rule-details">
+<h2>Rule details</h2>
+<article id="rule-erp001">
+<h3>ERP001 · Required audit logging is disabled</h3>
+<p>Disabled audit logging can materially reduce investigation and accountability evidence.</p>
+<p><strong>Required evidence:</strong> control_state</p>
+<p><strong>Limitation:</strong> ERP001 evaluates only supplied synthetic control-state evidence; it does not verify a live system or prove logging coverage.</p>
+<p><strong>Remediation:</strong> Review the audit logging configuration and enable the required control through an authorized change process.</p>
+</article>
+<article id="rule-erp002">
+<h3>ERP002 · Enabled privileged principal is inactive</h3>
+<p>Enabled principals with privileged permissions and prolonged inactivity can retain unnecessary access and increase account-misuse risk.</p>
+<p><strong>Required evidence:</strong> permission_assignment, principal</p>
+<p><strong>Limitation:</strong> ERP002 evaluates only supplied synthetic principal and permission-assignment evidence; it does not prove identity, assignment, or activity completeness.</p>
+<p><strong>Remediation:</strong> Review the principal&#x27;s current need for privileged access and disable or revalidate it through an authorized access-governance process.</p>
+</article>
+<article id="rule-erp003">
+<h3>ERP003 · Privileged permission is assigned directly</h3>
+<p>Direct privileged grants can bypass role-based governance and make access review more difficult.</p>
+<p><strong>Required evidence:</strong> permission_assignment</p>
+<p><strong>Limitation:</strong> ERP003 evaluates only assignment mode and configured capability names; it does not infer approval, justification, role design, or effective access.</p>
+<p><strong>Remediation:</strong> Review the direct assignment and replace or remove it through an authorized role-governance process when it is not explicitly justified.</p>
+</article>
+<article id="rule-erp004">
+<h3>ERP004 · Configured toxic permission pair is present</h3>
+<p>Combining configured conflicting capabilities can enable incompatible actions without independent oversight.</p>
+<p><strong>Required evidence:</strong> permission_assignment</p>
+<p><strong>Limitation:</strong> ERP004 evaluates only configured synthetic capability pairs; the defaults are not a vendor role matrix, customer policy, or authoritative segregation-of-duties model.</p>
+<p><strong>Remediation:</strong> Review the combined capabilities and separate or formally mitigate them through an authorized segregation-of-duties process.</p>
+</article>
+<article id="rule-erp005">
+<h3>ERP005 · Emergency access occurs outside the approved window</h3>
+<p>Successful use of emergency access outside an approved window can indicate unreviewed privileged activity.</p>
+<p><strong>Required evidence:</strong> auth_event, principal</p>
+<p><strong>Limitation:</strong> ERP005 evaluates only supplied synthetic principal and authentication evidence; it cannot determine business approval, ticket context, or live-session activity.</p>
+<p><strong>Remediation:</strong> Investigate the event&#x27;s authorization and context, then document or contain it through an approved emergency-access process.</p>
+</article>
+<article id="rule-erp006">
+<h3>ERP006 · Repeated authentication failures occur</h3>
+<p>Repeated sign-in failures in a short interval can indicate credential misuse or an operational access problem.</p>
+<p><strong>Required evidence:</strong> auth_event</p>
+<p><strong>Limitation:</strong> ERP006 evaluates only supplied synthetic sign-in outcomes; it cannot determine network source, device context, user intent, or root cause.</p>
+<p><strong>Remediation:</strong> Review the authentication context, validate the principal, and follow the appropriate incident-response or access-support process.</p>
+</article>
+</section>
+<section id="limitations">
+<h2>Limitations</h2>
+<p>Coverage is complete only for the supplied files and selected rules. A clean result does not prove absence of risk or source-system completeness.</p>
+</section>
+<section id="run-metadata">
+<h2>Run metadata</h2>
+<dl>
+<dt>Analysis time</dt><dd>2026-09-01T00:00:00Z</dd>
+<dt>Input records</dt><dd>4</dd>
+<dt>Report schema</dt><dd>erpsec.report/v1</dd>
+<dt>Tool</dt><dd>erp-security-evidence-workbench 0.1.0rc1</dd>
+</dl>
+</section>
+</main>
+</body>
+</html>

@@ -1,0 +1,4 @@
+schema_version,dataset_classification,record_type,record_id,principal_id,principal_kind,enabled,last_active_at
+erpsec.synthetic-evidence/v1,synthetic,principal,principal.auth.emergency,fixture-auth-emergency,emergency,true,2026-09-01T00:00:00Z
+erpsec.synthetic-evidence/v1,synthetic,principal,principal.auth.failure-clean,fixture-auth-failure-clean,human,true,2026-09-01T00:00:00Z
+erpsec.synthetic-evidence/v1,synthetic,principal,principal.auth.failure-match,fixture-auth-failure-match,human,true,2026-09-01T00:00:00Z

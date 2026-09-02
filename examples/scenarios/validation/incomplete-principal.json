@@ -1,0 +1,12 @@
+[
+  {
+    "dataset_classification": "synthetic",
+    "enabled": true,
+    "last_active_at": "2026-09-01T00:00:00Z",
+    "principal_id": "fixture-persona-incomplete",
+    "principal_kind": "human",
+    "record_id": "principal.fixture.validation.incomplete",
+    "record_type": "principal",
+    "schema_version": "erpsec.synthetic-evidence/v1"
+  }
+]

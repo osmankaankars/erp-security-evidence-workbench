@@ -1,0 +1,11 @@
+[
+  {
+    "control": "AUDIT_LOGGING",
+    "dataset_classification": "synthetic",
+    "enabled": false,
+    "record_id": "control.fixture.validation.adversarial",
+    "record_type": "control_state",
+    "schema_version": "erpsec.synthetic-evidence/v1",
+    "unexpected_sensitive_field": "do-not-echo-fixture-sentinel-9f74c2</script>"
+  }
+]

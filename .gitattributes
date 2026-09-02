@@ -1,0 +1,2 @@
+# Preserve the unchanged normative OASIS schema bytes and its recorded checksum.
+tests/schemas/oasis/sarif/2.1.0/sarif-schema-2.1.0.json binary

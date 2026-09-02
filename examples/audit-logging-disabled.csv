@@ -1,0 +1,2 @@
+schema_version,dataset_classification,record_type,record_id,control,enabled
+erpsec.synthetic-evidence/v1,synthetic,control_state,control-audit-logging,AUDIT_LOGGING,false

@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src &#x27;none&#x27;; style-src &#x27;sha256-DKzZMcmupOlQbwnYarnHWP9OkAHxrMGt2RG2BY5nu9U=&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ERP Security Evidence Report</title>
+<style>body{margin:0;background:#f4f7f9;color:#17212b;font:15px/1.5 system-ui,sans-serif}main{max-width:1080px;margin:auto;padding:32px}h1,h2,h3{line-height:1.2}section{background:#fff;border:1px solid #d8e0e6;border-radius:10px;margin:16px 0;padding:20px}.scope{border-left:5px solid #176b87}.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.metric{background:#edf4f7;border-radius:8px;padding:12px}.finding{border-left:5px solid #a03c2f}.severity-high{color:#8e2d22}.severity-medium{color:#765500}table{border-collapse:collapse;width:100%}th,td{border-bottom:1px solid #d8e0e6;padding:9px;text-align:left;vertical-align:top}code{overflow-wrap:anywhere}dt{font-weight:700}dd{margin:0 0 10px}.muted{color:#52616b}.state{font-weight:700}</style>
+</head>
+<body data-run-result="findings">
+<main>
+<h1>ERP Security Evidence Report</h1>
+<section id="scope" class="scope">
+<h2>Scope</h2>
+<p>This offline reference project analyzes supplied synthetic evidence only. It does not inspect a live system, establish compliance, or replace human review.</p>
+</section>
+<section id="summary">
+<h2>Summary</h2>
+<div class="summary">
+<div class="metric"><strong>Result</strong><br>findings</div>
+<div class="metric"><strong>Findings</strong><br>6</div>
+<div class="metric"><strong>Selected rules</strong><br>6</div>
+<div class="metric"><strong>Coverage</strong><br>complete</div>
+</div>
+<p class="state">Findings in supplied evidence.</p>
+<p>Severity summary: high=5, medium=1.</p>
+</section>
+<section id="rule-evaluations">
+<h2>Rule evaluations</h2>
+<table><thead><tr><th>Rule</th><th>Version</th><th>Status</th></tr></thead><tbody>
+<tr data-erpsec-role="evaluation" data-rule-id="ERP001" data-status="matched">
+<td><code>ERP001</code></td>
+<td>1.0.0</td>
+<td>matched</td></tr>
+<tr data-erpsec-role="evaluation" data-rule-id="ERP002" data-status="matched">
+<td><code>ERP002</code></td>
+<td>1.0.0</td>
+<td>matched</td></tr>
+<tr data-erpsec-role="evaluation" data-rule-id="ERP003" data-status="matched">
+<td><code>ERP003</code></td>
+<td>1.0.0</td>
+<td>matched</td></tr>
+<tr data-erpsec-role="evaluation" data-rule-id="ERP004" data-status="matched">
+<td><code>ERP004</code></td>
+<td>1.0.0</td>
+<td>matched</td></tr>
+<tr data-erpsec-role="evaluation" data-rule-id="ERP005" data-status="matched">
+<td><code>ERP005</code></td>
+<td>1.0.0</td>
+<td>matched</td></tr>
+<tr data-erpsec-role="evaluation" data-rule-id="ERP006" data-status="matched">
+<td><code>ERP006</code></td>
+<td>1.0.0</td>
+<td>matched</td></tr>
+</tbody></table>
+</section>
+<section id="skipped-evaluations">
+<h2>Skipped evaluations</h2>
+<p>None. This version fails the complete run when selected-rule evidence is insufficient and does not publish a report.</p>
+</section>
+<section id="findings">
+<h2>Findings</h2>
+<article id="finding-c83e136a4166eed08297bced0454e3389e8cf909e10d030c0e80b3874ca8bee2" class="finding" data-erpsec-role="finding" data-fingerprint="c83e136a4166eed08297bced0454e3389e8cf909e10d030c0e80b3874ca8bee2" data-rule-id="ERP001" data-rule-version="1.0.0" data-severity="high">
+<h3>Required audit logging is disabled</h3>
+<p class="severity-high"><strong>ERP001 · high</strong></p>
+<p>The supplied control-state evidence explicitly marks required audit logging as disabled.</p>
+<p><strong>Finding ID:</strong> <code>c83e136a4166eed08297bced0454e3389e8cf909e10d030c0e80b3874ca8bee2</code></p>
+<p><strong>Limitation:</strong> ERP001 evaluates only supplied synthetic control-state evidence; it does not verify a live system or prove logging coverage.</p>
+<p><strong>Remediation:</strong> Review the audit logging configuration and enable the required control through an authorized change process.</p>
+</article>
+<article id="finding-989835a7946d769806d6d1cd60fa422aa926df97ab19ad5bfefb7b40ea9eebea" class="finding" data-erpsec-role="finding" data-fingerprint="989835a7946d769806d6d1cd60fa422aa926df97ab19ad5bfefb7b40ea9eebea" data-rule-id="ERP002" data-rule-version="1.0.0" data-severity="high">
+<h3>Enabled privileged principal is inactive</h3>
+<p class="severity-high"><strong>ERP002 · high</strong></p>
+<p>The supplied evidence shows an enabled principal with a configured privileged permission and activity older than the configured cutoff.</p>
+<p><strong>Finding ID:</strong> <code>989835a7946d769806d6d1cd60fa422aa926df97ab19ad5bfefb7b40ea9eebea</code></p>
+<p><strong>Limitation:</strong> ERP002 evaluates only supplied synthetic principal and permission-assignment evidence; it does not prove identity, assignment, or activity completeness.</p>
+<p><strong>Remediation:</strong> Review the principal&#x27;s current need for privileged access and disable or revalidate it through an authorized access-governance process.</p>
+</article>
+<article id="finding-9c756796dbd430284e7a8e94c8a598ee473a1b81f6f7aa751f5c36b986f95786" class="finding" data-erpsec-role="finding" data-fingerprint="9c756796dbd430284e7a8e94c8a598ee473a1b81f6f7aa751f5c36b986f95786" data-rule-id="ERP003" data-rule-version="1.0.0" data-severity="high">
+<h3>Privileged permission is assigned directly</h3>
+<p class="severity-high"><strong>ERP003 · high</strong></p>
+<p>The supplied evidence shows a configured privileged permission assigned directly rather than inherited through a role.</p>
+<p><strong>Finding ID:</strong> <code>9c756796dbd430284e7a8e94c8a598ee473a1b81f6f7aa751f5c36b986f95786</code></p>
+<p><strong>Limitation:</strong> ERP003 evaluates only assignment mode and configured capability names; it does not infer approval, justification, role design, or effective access.</p>
+<p><strong>Remediation:</strong> Review the direct assignment and replace or remove it through an authorized role-governance process when it is not explicitly justified.</p>
+</article>
+<article id="finding-35111b769b133da44ef20f2084c6f76b1b8fb7f7f88a8298a9881257cde08c76" class="finding" data-erpsec-role="finding" data-fingerprint="35111b769b133da44ef20f2084c6f76b1b8fb7f7f88a8298a9881257cde08c76" data-rule-id="ERP004" data-rule-version="1.0.0" data-severity="high">
+<h3>Configured toxic permission pair is present</h3>
+<p class="severity-high"><strong>ERP004 · high</strong></p>
+<p>The supplied evidence assigns both capabilities in a configured toxic permission pair to the same principal.</p>
+<p><strong>Finding ID:</strong> <code>35111b769b133da44ef20f2084c6f76b1b8fb7f7f88a8298a9881257cde08c76</code></p>
+<p><strong>Limitation:</strong> ERP004 evaluates only configured synthetic capability pairs; the defaults are not a vendor role matrix, customer policy, or authoritative segregation-of-duties model.</p>
+<p><strong>Remediation:</strong> Review the combined capabilities and separate or formally mitigate them through an authorized segregation-of-duties process.</p>
+</article>
+<article id="finding-88e2ecea43af64d3becf70208b8e526d1bfda332d77d1cc93f8b3a19c7b99486" class="finding" data-erpsec-role="finding" data-fingerprint="88e2ecea43af64d3becf70208b8e526d1bfda332d77d1cc93f8b3a19c7b99486" data-rule-id="ERP005" data-rule-version="1.0.0" data-severity="high">
+<h3>Emergency access occurs outside the approved window</h3>
+<p class="severity-high"><strong>ERP005 · high</strong></p>
+<p>The supplied evidence shows successful emergency sign-in activity outside the configured approved window.</p>
+<p><strong>Finding ID:</strong> <code>88e2ecea43af64d3becf70208b8e526d1bfda332d77d1cc93f8b3a19c7b99486</code></p>
+<p><strong>Limitation:</strong> ERP005 evaluates only supplied synthetic principal and authentication evidence; it cannot determine business approval, ticket context, or live-session activity.</p>
+<p><strong>Remediation:</strong> Investigate the event&#x27;s authorization and context, then document or contain it through an approved emergency-access process.</p>
+</article>
+<article id="finding-8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" class="finding" data-erpsec-role="finding" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-rule-id="ERP006" data-rule-version="1.0.0" data-severity="medium">
+<h3>Repeated authentication failures occur</h3>
+<p class="severity-medium"><strong>ERP006 · medium</strong></p>
+<p>The supplied evidence contains the configured number of failed sign-in events for one principal within the configured interval.</p>
+<p><strong>Finding ID:</strong> <code>8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f</code></p>
+<p><strong>Limitation:</strong> ERP006 evaluates only supplied synthetic sign-in outcomes; it cannot determine network source, device context, user intent, or root cause.</p>
+<p><strong>Remediation:</strong> Review the authentication context, validate the principal, and follow the appropriate incident-response or access-support process.</p>
+</article>
+</section>
+<section id="evidence">
+<h2>Finding-linked evidence</h2>
+<table><thead><tr><th>Rule</th><th>Record</th><th>Source</th><th>Format</th><th>Locator</th><th>Field</th></tr></thead><tbody>
+<tr data-erpsec-role="evidence" data-fingerprint="c83e136a4166eed08297bced0454e3389e8cf909e10d030c0e80b3874ca8bee2" data-record-id="control.audit" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/0/enabled" data-field="enabled">
+<td><code>ERP001</code></td>
+<td><code>control.audit</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /0/enabled</td>
+<td>enabled</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="989835a7946d769806d6d1cd60fa422aa926df97ab19ad5bfefb7b40ea9eebea" data-record-id="permission.admin" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/2/permission" data-field="permission">
+<td><code>ERP002</code></td>
+<td><code>permission.admin</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /2/permission</td>
+<td>permission</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="989835a7946d769806d6d1cd60fa422aa926df97ab19ad5bfefb7b40ea9eebea" data-record-id="permission.admin" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/2/principal_id" data-field="principal_id">
+<td><code>ERP002</code></td>
+<td><code>permission.admin</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /2/principal_id</td>
+<td>principal_id</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="989835a7946d769806d6d1cd60fa422aa926df97ab19ad5bfefb7b40ea9eebea" data-record-id="principal.old-admin" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/1/enabled" data-field="enabled">
+<td><code>ERP002</code></td>
+<td><code>principal.old-admin</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /1/enabled</td>
+<td>enabled</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="989835a7946d769806d6d1cd60fa422aa926df97ab19ad5bfefb7b40ea9eebea" data-record-id="principal.old-admin" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/1/last_active_at" data-field="last_active_at">
+<td><code>ERP002</code></td>
+<td><code>principal.old-admin</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /1/last_active_at</td>
+<td>last_active_at</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="989835a7946d769806d6d1cd60fa422aa926df97ab19ad5bfefb7b40ea9eebea" data-record-id="principal.old-admin" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/1/principal_id" data-field="principal_id">
+<td><code>ERP002</code></td>
+<td><code>principal.old-admin</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /1/principal_id</td>
+<td>principal_id</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="9c756796dbd430284e7a8e94c8a598ee473a1b81f6f7aa751f5c36b986f95786" data-record-id="permission.admin" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/2/assignment_mode" data-field="assignment_mode">
+<td><code>ERP003</code></td>
+<td><code>permission.admin</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /2/assignment_mode</td>
+<td>assignment_mode</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="9c756796dbd430284e7a8e94c8a598ee473a1b81f6f7aa751f5c36b986f95786" data-record-id="permission.admin" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/2/permission" data-field="permission">
+<td><code>ERP003</code></td>
+<td><code>permission.admin</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /2/permission</td>
+<td>permission</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="35111b769b133da44ef20f2084c6f76b1b8fb7f7f88a8298a9881257cde08c76" data-record-id="permission.approve" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/5/permission" data-field="permission">
+<td><code>ERP004</code></td>
+<td><code>permission.approve</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /5/permission</td>
+<td>permission</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="35111b769b133da44ef20f2084c6f76b1b8fb7f7f88a8298a9881257cde08c76" data-record-id="permission.approve" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/5/principal_id" data-field="principal_id">
+<td><code>ERP004</code></td>
+<td><code>permission.approve</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /5/principal_id</td>
+<td>principal_id</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="35111b769b133da44ef20f2084c6f76b1b8fb7f7f88a8298a9881257cde08c76" data-record-id="permission.create" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/4/permission" data-field="permission">
+<td><code>ERP004</code></td>
+<td><code>permission.create</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /4/permission</td>
+<td>permission</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="35111b769b133da44ef20f2084c6f76b1b8fb7f7f88a8298a9881257cde08c76" data-record-id="permission.create" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/4/principal_id" data-field="principal_id">
+<td><code>ERP004</code></td>
+<td><code>permission.create</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /4/principal_id</td>
+<td>principal_id</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="88e2ecea43af64d3becf70208b8e526d1bfda332d77d1cc93f8b3a19c7b99486" data-record-id="auth.emergency" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/7/action" data-field="action">
+<td><code>ERP005</code></td>
+<td><code>auth.emergency</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /7/action</td>
+<td>action</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="88e2ecea43af64d3becf70208b8e526d1bfda332d77d1cc93f8b3a19c7b99486" data-record-id="auth.emergency" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/7/occurred_at" data-field="occurred_at">
+<td><code>ERP005</code></td>
+<td><code>auth.emergency</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /7/occurred_at</td>
+<td>occurred_at</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="88e2ecea43af64d3becf70208b8e526d1bfda332d77d1cc93f8b3a19c7b99486" data-record-id="auth.emergency" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/7/outcome" data-field="outcome">
+<td><code>ERP005</code></td>
+<td><code>auth.emergency</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /7/outcome</td>
+<td>outcome</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="88e2ecea43af64d3becf70208b8e526d1bfda332d77d1cc93f8b3a19c7b99486" data-record-id="auth.emergency" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/7/principal_id" data-field="principal_id">
+<td><code>ERP005</code></td>
+<td><code>auth.emergency</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /7/principal_id</td>
+<td>principal_id</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="88e2ecea43af64d3becf70208b8e526d1bfda332d77d1cc93f8b3a19c7b99486" data-record-id="principal.emergency" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/6/principal_id" data-field="principal_id">
+<td><code>ERP005</code></td>
+<td><code>principal.emergency</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /6/principal_id</td>
+<td>principal_id</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="88e2ecea43af64d3becf70208b8e526d1bfda332d77d1cc93f8b3a19c7b99486" data-record-id="principal.emergency" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/6/principal_kind" data-field="principal_kind">
+<td><code>ERP005</code></td>
+<td><code>principal.emergency</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /6/principal_kind</td>
+<td>principal_kind</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-record-id="auth.failure.1" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/8/action" data-field="action">
+<td><code>ERP006</code></td>
+<td><code>auth.failure.1</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /8/action</td>
+<td>action</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-record-id="auth.failure.1" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/8/occurred_at" data-field="occurred_at">
+<td><code>ERP006</code></td>
+<td><code>auth.failure.1</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /8/occurred_at</td>
+<td>occurred_at</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-record-id="auth.failure.1" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/8/outcome" data-field="outcome">
+<td><code>ERP006</code></td>
+<td><code>auth.failure.1</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /8/outcome</td>
+<td>outcome</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-record-id="auth.failure.1" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/8/principal_id" data-field="principal_id">
+<td><code>ERP006</code></td>
+<td><code>auth.failure.1</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /8/principal_id</td>
+<td>principal_id</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-record-id="auth.failure.2" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/9/action" data-field="action">
+<td><code>ERP006</code></td>
+<td><code>auth.failure.2</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /9/action</td>
+<td>action</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-record-id="auth.failure.2" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/9/occurred_at" data-field="occurred_at">
+<td><code>ERP006</code></td>
+<td><code>auth.failure.2</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /9/occurred_at</td>
+<td>occurred_at</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-record-id="auth.failure.2" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/9/outcome" data-field="outcome">
+<td><code>ERP006</code></td>
+<td><code>auth.failure.2</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /9/outcome</td>
+<td>outcome</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-record-id="auth.failure.2" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/9/principal_id" data-field="principal_id">
+<td><code>ERP006</code></td>
+<td><code>auth.failure.2</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /9/principal_id</td>
+<td>principal_id</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-record-id="auth.failure.3" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/10/action" data-field="action">
+<td><code>ERP006</code></td>
+<td><code>auth.failure.3</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /10/action</td>
+<td>action</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-record-id="auth.failure.3" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/10/occurred_at" data-field="occurred_at">
+<td><code>ERP006</code></td>
+<td><code>auth.failure.3</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /10/occurred_at</td>
+<td>occurred_at</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-record-id="auth.failure.3" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/10/outcome" data-field="outcome">
+<td><code>ERP006</code></td>
+<td><code>auth.failure.3</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /10/outcome</td>
+<td>outcome</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-record-id="auth.failure.3" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/10/principal_id" data-field="principal_id">
+<td><code>ERP006</code></td>
+<td><code>auth.failure.3</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /10/principal_id</td>
+<td>principal_id</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-record-id="auth.failure.4" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/11/action" data-field="action">
+<td><code>ERP006</code></td>
+<td><code>auth.failure.4</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /11/action</td>
+<td>action</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-record-id="auth.failure.4" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/11/occurred_at" data-field="occurred_at">
+<td><code>ERP006</code></td>
+<td><code>auth.failure.4</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /11/occurred_at</td>
+<td>occurred_at</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-record-id="auth.failure.4" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/11/outcome" data-field="outcome">
+<td><code>ERP006</code></td>
+<td><code>auth.failure.4</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /11/outcome</td>
+<td>outcome</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-record-id="auth.failure.4" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/11/principal_id" data-field="principal_id">
+<td><code>ERP006</code></td>
+<td><code>auth.failure.4</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /11/principal_id</td>
+<td>principal_id</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-record-id="auth.failure.5" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/12/action" data-field="action">
+<td><code>ERP006</code></td>
+<td><code>auth.failure.5</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /12/action</td>
+<td>action</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-record-id="auth.failure.5" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/12/occurred_at" data-field="occurred_at">
+<td><code>ERP006</code></td>
+<td><code>auth.failure.5</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /12/occurred_at</td>
+<td>occurred_at</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-record-id="auth.failure.5" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/12/outcome" data-field="outcome">
+<td><code>ERP006</code></td>
+<td><code>auth.failure.5</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /12/outcome</td>
+<td>outcome</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f" data-record-id="auth.failure.5" data-source-path="rule-pack-findings.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/12/principal_id" data-field="principal_id">
+<td><code>ERP006</code></td>
+<td><code>auth.failure.5</code></td>
+<td>rule-pack-findings.json</td>
+<td>json</td>
+<td>json_pointer /12/principal_id</td>
+<td>principal_id</td></tr>
+</tbody></table>
+</section>
+<section id="rule-details">
+<h2>Rule details</h2>
+<article id="rule-erp001">
+<h3>ERP001 · Required audit logging is disabled</h3>
+<p>Disabled audit logging can materially reduce investigation and accountability evidence.</p>
+<p><strong>Required evidence:</strong> control_state</p>
+<p><strong>Limitation:</strong> ERP001 evaluates only supplied synthetic control-state evidence; it does not verify a live system or prove logging coverage.</p>
+<p><strong>Remediation:</strong> Review the audit logging configuration and enable the required control through an authorized change process.</p>
+</article>
+<article id="rule-erp002">
+<h3>ERP002 · Enabled privileged principal is inactive</h3>
+<p>Enabled principals with privileged permissions and prolonged inactivity can retain unnecessary access and increase account-misuse risk.</p>
+<p><strong>Required evidence:</strong> permission_assignment, principal</p>
+<p><strong>Limitation:</strong> ERP002 evaluates only supplied synthetic principal and permission-assignment evidence; it does not prove identity, assignment, or activity completeness.</p>
+<p><strong>Remediation:</strong> Review the principal&#x27;s current need for privileged access and disable or revalidate it through an authorized access-governance process.</p>
+</article>
+<article id="rule-erp003">
+<h3>ERP003 · Privileged permission is assigned directly</h3>
+<p>Direct privileged grants can bypass role-based governance and make access review more difficult.</p>
+<p><strong>Required evidence:</strong> permission_assignment</p>
+<p><strong>Limitation:</strong> ERP003 evaluates only assignment mode and configured capability names; it does not infer approval, justification, role design, or effective access.</p>
+<p><strong>Remediation:</strong> Review the direct assignment and replace or remove it through an authorized role-governance process when it is not explicitly justified.</p>
+</article>
+<article id="rule-erp004">
+<h3>ERP004 · Configured toxic permission pair is present</h3>
+<p>Combining configured conflicting capabilities can enable incompatible actions without independent oversight.</p>
+<p><strong>Required evidence:</strong> permission_assignment</p>
+<p><strong>Limitation:</strong> ERP004 evaluates only configured synthetic capability pairs; the defaults are not a vendor role matrix, customer policy, or authoritative segregation-of-duties model.</p>
+<p><strong>Remediation:</strong> Review the combined capabilities and separate or formally mitigate them through an authorized segregation-of-duties process.</p>
+</article>
+<article id="rule-erp005">
+<h3>ERP005 · Emergency access occurs outside the approved window</h3>
+<p>Successful use of emergency access outside an approved window can indicate unreviewed privileged activity.</p>
+<p><strong>Required evidence:</strong> auth_event, principal</p>
+<p><strong>Limitation:</strong> ERP005 evaluates only supplied synthetic principal and authentication evidence; it cannot determine business approval, ticket context, or live-session activity.</p>
+<p><strong>Remediation:</strong> Investigate the event&#x27;s authorization and context, then document or contain it through an approved emergency-access process.</p>
+</article>
+<article id="rule-erp006">
+<h3>ERP006 · Repeated authentication failures occur</h3>
+<p>Repeated sign-in failures in a short interval can indicate credential misuse or an operational access problem.</p>
+<p><strong>Required evidence:</strong> auth_event</p>
+<p><strong>Limitation:</strong> ERP006 evaluates only supplied synthetic sign-in outcomes; it cannot determine network source, device context, user intent, or root cause.</p>
+<p><strong>Remediation:</strong> Review the authentication context, validate the principal, and follow the appropriate incident-response or access-support process.</p>
+</article>
+</section>
+<section id="limitations">
+<h2>Limitations</h2>
+<p>Coverage is complete only for the supplied files and selected rules. A clean result does not prove absence of risk or source-system completeness.</p>
+</section>
+<section id="run-metadata">
+<h2>Run metadata</h2>
+<dl>
+<dt>Analysis time</dt><dd>2026-09-01T00:00:00Z</dd>
+<dt>Input records</dt><dd>13</dd>
+<dt>Report schema</dt><dd>erpsec.report/v1</dd>
+<dt>Tool</dt><dd>erp-security-evidence-workbench 0.1.0rc1</dd>
+</dl>
+</section>
+</main>
+</body>
+</html>

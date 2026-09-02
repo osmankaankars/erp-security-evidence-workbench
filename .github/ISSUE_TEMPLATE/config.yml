@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Private security report
+    url: https://github.com/osmankaankars/erp-security-evidence-workbench/security/advisories/new
+    about: Report suspected vulnerabilities privately; do not open a public issue.
+  - name: Project boundary and limitations
+    url: https://github.com/osmankaankars/erp-security-evidence-workbench/blob/main/docs/PRODUCT_BOUNDARY.md
+    about: Review supported behavior and explicit non-goals before proposing a change.

@@ -1,0 +1,109 @@
+{
+  "as_of": "2026-09-01T00:00:00Z",
+  "dataset_classification": "synthetic",
+  "generator": {
+    "path": "scripts/example_reports.py",
+    "version": "1.0.0"
+  },
+  "scenarios": [
+    {
+      "artifacts": [
+        {
+          "byte_count": 7880,
+          "format": "html",
+          "path": "clean-baseline.html",
+          "sha256": "b50320178410daf9f676abe2768bad8a578bd95125af5b24bdc6b7ffbb5f8c84"
+        },
+        {
+          "byte_count": 3064,
+          "format": "json",
+          "path": "clean-baseline.json",
+          "sha256": "f0866bbbd3b3e47289211105e14e9bd71a48c2a21cc2702fb8b4cf6292ca0234"
+        },
+        {
+          "byte_count": 14020,
+          "format": "sarif",
+          "path": "clean-baseline.sarif",
+          "sha256": "45e276d1d380dd116929d83df75234a9b67125bcf158c2d632b62af305149e41"
+        }
+      ],
+      "expected": {
+        "exit_code": 0,
+        "result": "no_findings"
+      },
+      "options": {
+        "as_of": "2026-09-01T00:00:00Z",
+        "selected_rules": [
+          "all"
+        ]
+      },
+      "provenance": {
+        "dataset_classification": "synthetic",
+        "inputs": [
+          {
+            "byte_count": 550,
+            "path": "examples/scenarios/clean-baseline/clean-events-controls.json",
+            "sha256": "25c51fbde72e676d3598cbe7d2a28d50e51033a3104ff1afdfb61f187936e0f5"
+          },
+          {
+            "byte_count": 291,
+            "path": "examples/scenarios/clean-baseline/clean-permissions.jsonl",
+            "sha256": "cd971508fdea0c722a21f3926a78e99eb3b7f02b5775e27d57334c3bb43dabf4"
+          },
+          {
+            "byte_count": 232,
+            "path": "examples/scenarios/clean-baseline/clean-principals.csv",
+            "sha256": "c914a99860abc949016f6ab30d0802ab938f2402c43f6d99e614ba10482b88c6"
+          }
+        ],
+        "origin": "in-repository fictional fixture"
+      },
+      "scenario_id": "clean-baseline"
+    },
+    {
+      "artifacts": [
+        {
+          "byte_count": 32239,
+          "format": "html",
+          "path": "rule-pack-findings.html",
+          "sha256": "80db46a6acaf77346c8b1b98e9cd22169df1b1e5461b0ae43212235031b3a023"
+        },
+        {
+          "byte_count": 24787,
+          "format": "json",
+          "path": "rule-pack-findings.json",
+          "sha256": "dd60bdc8addff09426a63f4f5bc70a15c3e180bc45337c8845719a609ca389ba"
+        },
+        {
+          "byte_count": 49449,
+          "format": "sarif",
+          "path": "rule-pack-findings.sarif",
+          "sha256": "074439251d601655cc8cef38348d313c1987eb999dac7a44eab3b9e8dad8c864"
+        }
+      ],
+      "expected": {
+        "exit_code": 1,
+        "result": "findings"
+      },
+      "options": {
+        "as_of": "2026-09-01T00:00:00Z",
+        "selected_rules": [
+          "all"
+        ]
+      },
+      "provenance": {
+        "dataset_classification": "synthetic",
+        "inputs": [
+          {
+            "byte_count": 3975,
+            "path": "examples/rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        ],
+        "origin": "in-repository fictional fixture"
+      },
+      "scenario_id": "rule-pack-findings"
+    }
+  ],
+  "schema_version": "erpsec.example-reports-manifest/v1"
+}

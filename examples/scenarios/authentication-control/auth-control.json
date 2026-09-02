@@ -1,0 +1,10 @@
+[
+  {
+    "control": "AUDIT_LOGGING",
+    "dataset_classification": "synthetic",
+    "enabled": false,
+    "record_id": "control.auth.audit",
+    "record_type": "control_state",
+    "schema_version": "erpsec.synthetic-evidence/v1"
+  }
+]

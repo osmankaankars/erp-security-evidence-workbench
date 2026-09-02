@@ -1,0 +1,8 @@
+{
+  "control": "AUDIT_LOGGING",
+  "dataset_classification": "synthetic",
+  "enabled": false,
+  "record_id": "control-audit-logging",
+  "record_type": "control_state",
+  "schema_version": "erpsec.synthetic-control-state/v1"
+}

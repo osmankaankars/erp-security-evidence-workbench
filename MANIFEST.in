@@ -1,0 +1,29 @@
+include LICENSE
+include README.md
+include pyproject.toml
+include MANIFEST.in
+include THIRD_PARTY_NOTICES.md
+recursive-include src/erp_security_evidence_workbench *.py
+
+prune .git
+prune .github
+prune .mypy_cache
+prune .pytest_cache
+prune .ruff_cache
+prune .venv
+prune benchmarks
+prune build
+prune dist
+prune docs
+prune examples
+prune release
+prune scripts
+prune tests
+
+global-exclude *.py[cod]
+global-exclude .DS_Store
+global-exclude *~
+global-exclude */__pycache__/*
+global-exclude */.mypy_cache/*
+global-exclude */.pytest_cache/*
+global-exclude */.ruff_cache/*

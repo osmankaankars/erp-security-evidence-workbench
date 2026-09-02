@@ -1,0 +1,130 @@
+[
+  {
+    "control": "AUDIT_LOGGING",
+    "dataset_classification": "synthetic",
+    "enabled": false,
+    "record_id": "control.audit",
+    "record_type": "control_state",
+    "schema_version": "erpsec.synthetic-evidence/v1"
+  },
+  {
+    "dataset_classification": "synthetic",
+    "enabled": true,
+    "last_active_at": "2026-05-01T00:00:00Z",
+    "principal_id": "old-admin",
+    "principal_kind": "human",
+    "record_id": "principal.old-admin",
+    "record_type": "principal",
+    "schema_version": "erpsec.synthetic-evidence/v1"
+  },
+  {
+    "assigned_at": "2026-01-01T00:00:00Z",
+    "assignment_mode": "direct",
+    "dataset_classification": "synthetic",
+    "permission": "ADMINISTER_SYSTEM",
+    "principal_id": "old-admin",
+    "record_id": "permission.admin",
+    "record_type": "permission_assignment",
+    "schema_version": "erpsec.synthetic-evidence/v1"
+  },
+  {
+    "dataset_classification": "synthetic",
+    "enabled": true,
+    "last_active_at": "2026-08-31T23:00:00Z",
+    "principal_id": "operator",
+    "principal_kind": "human",
+    "record_id": "principal.operator",
+    "record_type": "principal",
+    "schema_version": "erpsec.synthetic-evidence/v1"
+  },
+  {
+    "assigned_at": "2026-01-01T00:00:00Z",
+    "assignment_mode": "inherited",
+    "dataset_classification": "synthetic",
+    "permission": "CREATE_VENDOR",
+    "principal_id": "operator",
+    "record_id": "permission.create",
+    "record_type": "permission_assignment",
+    "schema_version": "erpsec.synthetic-evidence/v1"
+  },
+  {
+    "assigned_at": "2026-01-01T00:00:00Z",
+    "assignment_mode": "inherited",
+    "dataset_classification": "synthetic",
+    "permission": "APPROVE_PAYMENT",
+    "principal_id": "operator",
+    "record_id": "permission.approve",
+    "record_type": "permission_assignment",
+    "schema_version": "erpsec.synthetic-evidence/v1"
+  },
+  {
+    "dataset_classification": "synthetic",
+    "enabled": true,
+    "last_active_at": "2026-08-31T19:59:59Z",
+    "principal_id": "break-glass",
+    "principal_kind": "emergency",
+    "record_id": "principal.emergency",
+    "record_type": "principal",
+    "schema_version": "erpsec.synthetic-evidence/v1"
+  },
+  {
+    "action": "SIGN_IN",
+    "dataset_classification": "synthetic",
+    "occurred_at": "2026-08-31T19:59:59Z",
+    "outcome": "success",
+    "principal_id": "break-glass",
+    "record_id": "auth.emergency",
+    "record_type": "auth_event",
+    "schema_version": "erpsec.synthetic-evidence/v1"
+  },
+  {
+    "action": "SIGN_IN",
+    "dataset_classification": "synthetic",
+    "occurred_at": "2026-08-31T12:00:00Z",
+    "outcome": "failure",
+    "principal_id": "locked-user",
+    "record_id": "auth.failure.1",
+    "record_type": "auth_event",
+    "schema_version": "erpsec.synthetic-evidence/v1"
+  },
+  {
+    "action": "SIGN_IN",
+    "dataset_classification": "synthetic",
+    "occurred_at": "2026-08-31T12:03:00Z",
+    "outcome": "failure",
+    "principal_id": "locked-user",
+    "record_id": "auth.failure.2",
+    "record_type": "auth_event",
+    "schema_version": "erpsec.synthetic-evidence/v1"
+  },
+  {
+    "action": "SIGN_IN",
+    "dataset_classification": "synthetic",
+    "occurred_at": "2026-08-31T12:06:00Z",
+    "outcome": "failure",
+    "principal_id": "locked-user",
+    "record_id": "auth.failure.3",
+    "record_type": "auth_event",
+    "schema_version": "erpsec.synthetic-evidence/v1"
+  },
+  {
+    "action": "SIGN_IN",
+    "dataset_classification": "synthetic",
+    "occurred_at": "2026-08-31T12:09:00Z",
+    "outcome": "failure",
+    "principal_id": "locked-user",
+    "record_id": "auth.failure.4",
+    "record_type": "auth_event",
+    "schema_version": "erpsec.synthetic-evidence/v1"
+  },
+  {
+    "action": "SIGN_IN",
+    "dataset_classification": "synthetic",
+    "occurred_at": "2026-08-31T12:15:00Z",
+    "outcome": "failure",
+    "principal_id": "locked-user",
+    "record_id": "auth.failure.5",
+    "record_type": "auth_event",
+    "schema_version": "erpsec.synthetic-evidence/v1"
+  }
+]

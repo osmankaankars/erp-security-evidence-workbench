@@ -1,0 +1,94 @@
+{
+  "as_of": "2026-09-01T00:00:00Z",
+  "byte_count": 247744,
+  "claims_boundary": "Single-host synthetic observation input; not an SLA, security benchmark, capacity rating, or production workload.",
+  "dataset_classification": "synthetic",
+  "expected": {
+    "cli_exit_code": 1,
+    "evaluations": [
+      {
+        "rule_id": "ERP001",
+        "status": "matched"
+      },
+      {
+        "rule_id": "ERP002",
+        "status": "matched"
+      },
+      {
+        "rule_id": "ERP003",
+        "status": "matched"
+      },
+      {
+        "rule_id": "ERP004",
+        "status": "matched"
+      },
+      {
+        "rule_id": "ERP005",
+        "status": "matched"
+      },
+      {
+        "rule_id": "ERP006",
+        "status": "matched"
+      }
+    ],
+    "findings": [
+      {
+        "evidence_reference_count": 1,
+        "fingerprint": "52976c0de19409a63081f221614654a5ab84f058803a60fe4ef9e6ee20d63e37",
+        "rule_id": "ERP001"
+      },
+      {
+        "evidence_reference_count": 5,
+        "fingerprint": "2736b4e4225cc5176df94eb1aa1028aa101ceb8aa7bd4ef8eeedbe1868ca11e1",
+        "rule_id": "ERP002"
+      },
+      {
+        "evidence_reference_count": 2,
+        "fingerprint": "5250308d96df7b99e507635cd1c5236f0b644094d318cacc4dc829af39ddf2e5",
+        "rule_id": "ERP003"
+      },
+      {
+        "evidence_reference_count": 4,
+        "fingerprint": "957680236cc65d5fc4db1b907824be1c01ee48655ee7687d2a034a866c99fd1b",
+        "rule_id": "ERP004"
+      },
+      {
+        "evidence_reference_count": 6,
+        "fingerprint": "0cc13bcc7c820096ceab39a0e689d726ad8c499db25dc191f271bf6eeba53343",
+        "rule_id": "ERP005"
+      },
+      {
+        "evidence_reference_count": 20,
+        "fingerprint": "fc4ac80e3e4ef528755328b2e6c6eb9d31b265714b8b57d69e192e83ffc8cee6",
+        "rule_id": "ERP006"
+      }
+    ]
+  },
+  "format": "jsonl",
+  "generator": {
+    "path": "scripts/observed_performance.py",
+    "version": "1.0.0"
+  },
+  "max_line_bytes": 298,
+  "origin": "First-principles deterministic generator using fictional generic identifiers and fixed timestamps.",
+  "record_count": 900,
+  "record_type_counts": {
+    "auth_event": 200,
+    "change_event": 200,
+    "control_state": 50,
+    "permission_assignment": 150,
+    "principal": 150,
+    "role_assignment": 150
+  },
+  "scenario_id": "large-balanced-jsonl-v1",
+  "schema_version": "erpsec.observed-performance-scenario/v1",
+  "selected_rules": [
+    "ERP001",
+    "ERP002",
+    "ERP003",
+    "ERP004",
+    "ERP005",
+    "ERP006"
+  ],
+  "sha256": "405baf54be60287df31db2c7823b08280373499ab0b9bfce1dc94d38130e10d2"
+}

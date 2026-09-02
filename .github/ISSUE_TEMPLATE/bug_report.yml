@@ -1,0 +1,60 @@
+name: Bug report
+description: Report a reproducible problem using synthetic data only.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve the project. Do not include secrets, real ERP evidence,
+        employer/customer data, exploit payloads targeting third parties, or sensitive paths.
+        Security vulnerabilities must be reported privately through SECURITY.md.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: The package version or commit you tested.
+      placeholder: 0.1.0rc1
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, architecture, and full Python version.
+      placeholder: macOS 15 arm64, CPython 3.13.7
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Synthetic reproduction
+      description: Provide minimal steps and independently authored synthetic input.
+      placeholder: |
+        1. Run ...
+        2. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Remove sensitive paths, identifiers, and payload values from any logs.
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Safety confirmations
+      options:
+        - label: The report and reproducer contain only fictional, independently authored synthetic data.
+          required: true
+        - label: This is not a security vulnerability or confidential disclosure.
+          required: true
+        - label: I searched existing issues for the same problem.
+          required: true

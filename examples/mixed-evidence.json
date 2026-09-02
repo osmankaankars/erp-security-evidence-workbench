@@ -1,0 +1,20 @@
+[
+  {
+    "dataset_classification": "synthetic",
+    "enabled": true,
+    "last_active_at": "2026-09-01T00:00:00Z",
+    "principal_id": "principal-demo-user",
+    "principal_kind": "human",
+    "record_id": "principal-demo-user",
+    "record_type": "principal",
+    "schema_version": "erpsec.synthetic-evidence/v1"
+  },
+  {
+    "control": "AUDIT_LOGGING",
+    "dataset_classification": "synthetic",
+    "enabled": false,
+    "record_id": "control-audit-logging",
+    "record_type": "control_state",
+    "schema_version": "erpsec.synthetic-evidence/v1"
+  }
+]

@@ -1,0 +1,118 @@
+{
+  "evaluations": [
+    {
+      "rule_id": "ERP001",
+      "rule_version": "1.0.0",
+      "status": "not_matched"
+    },
+    {
+      "rule_id": "ERP002",
+      "rule_version": "1.0.0",
+      "status": "not_matched"
+    },
+    {
+      "rule_id": "ERP003",
+      "rule_version": "1.0.0",
+      "status": "not_matched"
+    },
+    {
+      "rule_id": "ERP004",
+      "rule_version": "1.0.0",
+      "status": "not_matched"
+    },
+    {
+      "rule_id": "ERP005",
+      "rule_version": "1.0.0",
+      "status": "not_matched"
+    },
+    {
+      "rule_id": "ERP006",
+      "rule_version": "1.0.0",
+      "status": "not_matched"
+    }
+  ],
+  "evidence_manifest": [
+    {
+      "record_id": "auth.clean.sign-in",
+      "record_type": "auth_event",
+      "source_ref": {
+        "adapter": "erpsec.json/v1",
+        "format": "json",
+        "json_pointer": "/1",
+        "path": "clean-events-controls.json",
+        "sha256": "25c51fbde72e676d3598cbe7d2a28d50e51033a3104ff1afdfb61f187936e0f5"
+      }
+    },
+    {
+      "record_id": "control.clean.audit",
+      "record_type": "control_state",
+      "source_ref": {
+        "adapter": "erpsec.json/v1",
+        "format": "json",
+        "json_pointer": "/0",
+        "path": "clean-events-controls.json",
+        "sha256": "25c51fbde72e676d3598cbe7d2a28d50e51033a3104ff1afdfb61f187936e0f5"
+      }
+    },
+    {
+      "record_id": "permission.clean.read",
+      "record_type": "permission_assignment",
+      "source_ref": {
+        "adapter": "erpsec.jsonl/v1",
+        "format": "jsonl",
+        "line": 1,
+        "path": "clean-permissions.jsonl",
+        "sha256": "cd971508fdea0c722a21f3926a78e99eb3b7f02b5775e27d57334c3bb43dabf4"
+      }
+    },
+    {
+      "record_id": "principal.clean.user",
+      "record_type": "principal",
+      "source_ref": {
+        "adapter": "erpsec.csv/v1",
+        "format": "csv",
+        "path": "clean-principals.csv",
+        "row": 2,
+        "sha256": "c914a99860abc949016f6ab30d0802ab938f2402c43f6d99e614ba10482b88c6"
+      }
+    }
+  ],
+  "findings": [],
+  "run": {
+    "as_of": "2026-09-01T00:00:00Z",
+    "coverage": "complete",
+    "input_count": 4,
+    "result": "no_findings"
+  },
+  "schema_version": "erpsec.report/v1",
+  "source_manifest": [
+    {
+      "adapter": "erpsec.json/v1",
+      "byte_count": 550,
+      "format": "json",
+      "path": "clean-events-controls.json",
+      "record_count": 2,
+      "sha256": "25c51fbde72e676d3598cbe7d2a28d50e51033a3104ff1afdfb61f187936e0f5"
+    },
+    {
+      "adapter": "erpsec.jsonl/v1",
+      "byte_count": 291,
+      "format": "jsonl",
+      "path": "clean-permissions.jsonl",
+      "record_count": 1,
+      "sha256": "cd971508fdea0c722a21f3926a78e99eb3b7f02b5775e27d57334c3bb43dabf4"
+    },
+    {
+      "adapter": "erpsec.csv/v1",
+      "byte_count": 232,
+      "format": "csv",
+      "path": "clean-principals.csv",
+      "record_count": 1,
+      "sha256": "c914a99860abc949016f6ab30d0802ab938f2402c43f6d99e614ba10482b88c6"
+    }
+  ],
+  "tool": {
+    "name": "erp-security-evidence-workbench",
+    "version": "0.1.0rc1"
+  }
+}

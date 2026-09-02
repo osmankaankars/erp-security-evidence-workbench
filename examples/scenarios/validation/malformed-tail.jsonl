@@ -1,0 +1,2 @@
+{"control":"AUDIT_LOGGING","dataset_classification":"synthetic","enabled":false,"record_id":"control.fixture.validation.malformed","record_type":"control_state","schema_version":"erpsec.synthetic-evidence/v1"}
+{"record_type":

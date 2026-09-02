@@ -1,0 +1,20 @@
+[
+  {
+    "control": "AUDIT_LOGGING",
+    "dataset_classification": "synthetic",
+    "enabled": true,
+    "record_id": "control.clean.audit",
+    "record_type": "control_state",
+    "schema_version": "erpsec.synthetic-evidence/v1"
+  },
+  {
+    "action": "SIGN_IN",
+    "dataset_classification": "synthetic",
+    "occurred_at": "2026-09-01T00:00:00Z",
+    "outcome": "success",
+    "principal_id": "fixture-clean-user",
+    "record_id": "auth.clean.sign-in",
+    "record_type": "auth_event",
+    "schema_version": "erpsec.synthetic-evidence/v1"
+  }
+]

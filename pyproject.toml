@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools==84.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "erp-security-evidence-workbench"
+dynamic = ["version"]
+description = "Offline, input-read-only analysis of synthetic ERP security evidence."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+authors = [{ name = "Osman Kaan Kars" }]
+license = "MIT"
+license-files = ["LICENSE"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Operating System :: POSIX",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Security",
+]
+
+[project.optional-dependencies]
+dev = [
+    "build==1.6.0",
+    "jsonschema==4.26.0",
+    "mypy==1.20.2",
+    "pytest==8.4.2",
+    "ruff==0.16.5",
+    "setuptools==84.0.0",
+    "wheel==0.48.0",
+]
+
+[project.scripts]
+erpsec = "erp_security_evidence_workbench.cli:entrypoint"
+
+[project.urls]
+Changelog = "https://github.com/osmankaankars/erp-security-evidence-workbench/blob/main/CHANGELOG.md"
+Issues = "https://github.com/osmankaankars/erp-security-evidence-workbench/issues"
+Repository = "https://github.com/osmankaankars/erp-security-evidence-workbench"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+version = { attr = "erp_security_evidence_workbench.__version__" }
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-config --strict-markers"
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "SIM", "UP"]
+
+[tool.mypy]
+files = ["src"]
+pretty = true
+python_version = "3.11"
+show_error_codes = true
+strict = true
+warn_unused_configs = true

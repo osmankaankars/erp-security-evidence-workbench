@@ -1,0 +1,1049 @@
+{
+  "as_of": "2026-09-01T00:00:00Z",
+  "dataset_classification": "synthetic",
+  "fixtures": [
+    {
+      "byte_count": 1536,
+      "format": "jsonl",
+      "intent": "Provide generic stale, exact-boundary, direct privileged, and configured toxic-pair assignments for the access-governance replay.",
+      "origin": "first-principles deterministic generator",
+      "path": "access-governance/access-permissions.jsonl",
+      "record_count": 5,
+      "sha256": "0ed7a3b4d4f9d71fe9aa7de36114249c2fcf7b99cc6dbd09661bc54a59f79ee3"
+    },
+    {
+      "byte_count": 615,
+      "format": "csv",
+      "intent": "Provide fictional principals on both sides of the inactivity cutoff plus active principals for direct-grant and toxic-pair evidence.",
+      "origin": "first-principles deterministic generator",
+      "path": "access-governance/access-principals.csv",
+      "record_count": 4,
+      "sha256": "19b0bd33e0658d892dfee9655d960f93a1441c8727bde61526eca251d29dc6c8"
+    },
+    {
+      "byte_count": 237,
+      "format": "json",
+      "intent": "Provide one explicitly disabled generic audit-logging control.",
+      "origin": "first-principles deterministic generator",
+      "path": "authentication-control/auth-control.json",
+      "record_count": 1,
+      "sha256": "5727ab291f7e7ae1c7840ab4d02e63e296de37cbaad53fce4a75c9f706025c5a"
+    },
+    {
+      "byte_count": 3503,
+      "format": "jsonl",
+      "intent": "Provide one out-of-window emergency sign-in and one inclusive five-failure burst using fictional identifiers and fixed timestamps.",
+      "origin": "first-principles deterministic generator",
+      "path": "authentication-control/auth-events.jsonl",
+      "record_count": 13,
+      "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+    },
+    {
+      "byte_count": 518,
+      "format": "csv",
+      "intent": "Provide one fictional emergency principal and separate fictional principals for matching and just-outside failure windows.",
+      "origin": "first-principles deterministic generator",
+      "path": "authentication-control/auth-principals.csv",
+      "record_count": 3,
+      "sha256": "5ec68f63d0c7ee7f7cb474cdf3a4239e6601d2648476a303b1c3bcf29b2b84d8"
+    },
+    {
+      "byte_count": 550,
+      "format": "json",
+      "intent": "Provide enabled audit logging and one successful sign-in by a non-emergency fictional principal.",
+      "origin": "first-principles deterministic generator",
+      "path": "clean-baseline/clean-events-controls.json",
+      "record_count": 2,
+      "sha256": "25c51fbde72e676d3598cbe7d2a28d50e51033a3104ff1afdfb61f187936e0f5"
+    },
+    {
+      "byte_count": 291,
+      "format": "jsonl",
+      "intent": "Provide one inherited, non-privileged generic permission for the clean replay.",
+      "origin": "first-principles deterministic generator",
+      "path": "clean-baseline/clean-permissions.jsonl",
+      "record_count": 1,
+      "sha256": "cd971508fdea0c722a21f3926a78e99eb3b7f02b5775e27d57334c3bb43dabf4"
+    },
+    {
+      "byte_count": 232,
+      "format": "csv",
+      "intent": "Provide one fictional enabled human principal with current activity for the complete clean replay.",
+      "origin": "first-principles deterministic generator",
+      "path": "clean-baseline/clean-principals.csv",
+      "record_count": 1,
+      "sha256": "c914a99860abc949016f6ab30d0802ab938f2402c43f6d99e614ba10482b88c6"
+    },
+    {
+      "byte_count": 339,
+      "format": "json",
+      "intent": "Verify that an unsupported field containing an injection-shaped sentinel fails closed without diagnostic echo or report publication.",
+      "origin": "first-principles deterministic generator",
+      "path": "validation/adversarial-extra-field.json",
+      "record_count": 1,
+      "sha256": "e24ed3bb38720d6b7d031e73fc308e1f34f541978d2d8c3e35414092c0de17dd"
+    },
+    {
+      "byte_count": 348,
+      "format": "json",
+      "intent": "Verify that a principal-only source cannot produce a clean audit-logging result.",
+      "origin": "first-principles deterministic generator",
+      "path": "validation/incomplete-principal.json",
+      "record_count": 1,
+      "sha256": "565ff209ec827ad80d632b327b6511f196f2cce0dc902b97142576c47c823580"
+    },
+    {
+      "byte_count": 226,
+      "format": "jsonl",
+      "intent": "Verify that a malformed trailing JSONL record invalidates the complete source and publishes no report.",
+      "origin": "first-principles deterministic generator",
+      "path": "validation/malformed-tail.jsonl",
+      "sha256": "76a6c89d0f18d2fe52e3c2a2cd39cfa302c2f5a734d925a931e61095372346a6"
+    }
+  ],
+  "generator": {
+    "path": "scripts/synthetic_corpus.py",
+    "version": "1.0.0"
+  },
+  "scenarios": [
+    {
+      "expected": {
+        "evaluations": [
+          {
+            "rule_id": "ERP002",
+            "rule_version": "1.0.0",
+            "status": "matched"
+          },
+          {
+            "rule_id": "ERP003",
+            "rule_version": "1.0.0",
+            "status": "matched"
+          },
+          {
+            "rule_id": "ERP004",
+            "rule_version": "1.0.0",
+            "status": "matched"
+          }
+        ],
+        "exit_code": 1,
+        "findings": [
+          {
+            "evidence_refs": [
+              {
+                "record_id": "permission.access.stale-admin",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "permission",
+                  "format": "jsonl",
+                  "line": 5,
+                  "path": "access-permissions.jsonl",
+                  "sha256": "0ed7a3b4d4f9d71fe9aa7de36114249c2fcf7b99cc6dbd09661bc54a59f79ee3"
+                }
+              },
+              {
+                "record_id": "permission.access.stale-admin",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "principal_id",
+                  "format": "jsonl",
+                  "line": 5,
+                  "path": "access-permissions.jsonl",
+                  "sha256": "0ed7a3b4d4f9d71fe9aa7de36114249c2fcf7b99cc6dbd09661bc54a59f79ee3"
+                }
+              },
+              {
+                "record_id": "principal.access.stale",
+                "source_ref": {
+                  "adapter": "erpsec.csv/v1",
+                  "field": "enabled",
+                  "format": "csv",
+                  "path": "access-principals.csv",
+                  "row": 5,
+                  "sha256": "19b0bd33e0658d892dfee9655d960f93a1441c8727bde61526eca251d29dc6c8"
+                }
+              },
+              {
+                "record_id": "principal.access.stale",
+                "source_ref": {
+                  "adapter": "erpsec.csv/v1",
+                  "field": "last_active_at",
+                  "format": "csv",
+                  "path": "access-principals.csv",
+                  "row": 5,
+                  "sha256": "19b0bd33e0658d892dfee9655d960f93a1441c8727bde61526eca251d29dc6c8"
+                }
+              },
+              {
+                "record_id": "principal.access.stale",
+                "source_ref": {
+                  "adapter": "erpsec.csv/v1",
+                  "field": "principal_id",
+                  "format": "csv",
+                  "path": "access-principals.csv",
+                  "row": 5,
+                  "sha256": "19b0bd33e0658d892dfee9655d960f93a1441c8727bde61526eca251d29dc6c8"
+                }
+              }
+            ],
+            "fingerprint": "5fcaa53c2b2dfa4876d13b290bfe0466380b073950f65b30919f3c8037f5ef31",
+            "rule_id": "ERP002",
+            "rule_version": "1.0.0"
+          },
+          {
+            "evidence_refs": [
+              {
+                "record_id": "permission.access.direct-admin",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "assignment_mode",
+                  "format": "jsonl",
+                  "line": 4,
+                  "path": "access-permissions.jsonl",
+                  "sha256": "0ed7a3b4d4f9d71fe9aa7de36114249c2fcf7b99cc6dbd09661bc54a59f79ee3"
+                }
+              },
+              {
+                "record_id": "permission.access.direct-admin",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "permission",
+                  "format": "jsonl",
+                  "line": 4,
+                  "path": "access-permissions.jsonl",
+                  "sha256": "0ed7a3b4d4f9d71fe9aa7de36114249c2fcf7b99cc6dbd09661bc54a59f79ee3"
+                }
+              }
+            ],
+            "fingerprint": "ea1222dbc95da3713f7aa4fc325417e90ad5c6de52c902177b5f44c0f9f46125",
+            "rule_id": "ERP003",
+            "rule_version": "1.0.0"
+          },
+          {
+            "evidence_refs": [
+              {
+                "record_id": "permission.access.approve-payment",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "permission",
+                  "format": "jsonl",
+                  "line": 1,
+                  "path": "access-permissions.jsonl",
+                  "sha256": "0ed7a3b4d4f9d71fe9aa7de36114249c2fcf7b99cc6dbd09661bc54a59f79ee3"
+                }
+              },
+              {
+                "record_id": "permission.access.approve-payment",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "principal_id",
+                  "format": "jsonl",
+                  "line": 1,
+                  "path": "access-permissions.jsonl",
+                  "sha256": "0ed7a3b4d4f9d71fe9aa7de36114249c2fcf7b99cc6dbd09661bc54a59f79ee3"
+                }
+              },
+              {
+                "record_id": "permission.access.create-vendor",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "permission",
+                  "format": "jsonl",
+                  "line": 3,
+                  "path": "access-permissions.jsonl",
+                  "sha256": "0ed7a3b4d4f9d71fe9aa7de36114249c2fcf7b99cc6dbd09661bc54a59f79ee3"
+                }
+              },
+              {
+                "record_id": "permission.access.create-vendor",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "principal_id",
+                  "format": "jsonl",
+                  "line": 3,
+                  "path": "access-permissions.jsonl",
+                  "sha256": "0ed7a3b4d4f9d71fe9aa7de36114249c2fcf7b99cc6dbd09661bc54a59f79ee3"
+                }
+              }
+            ],
+            "fingerprint": "28cebe7564a901c9ace0646d74373bbd40af951f9ce4b73d72c4d0af8f7aea4e",
+            "rule_id": "ERP004",
+            "rule_version": "1.0.0"
+          }
+        ],
+        "output_present": true,
+        "records": [
+          {
+            "record_id": "permission.access.approve-payment",
+            "record_type": "permission_assignment",
+            "source": {
+              "locator": {
+                "line": 1
+              },
+              "path": "access-permissions.jsonl"
+            }
+          },
+          {
+            "record_id": "permission.access.boundary-admin",
+            "record_type": "permission_assignment",
+            "source": {
+              "locator": {
+                "line": 2
+              },
+              "path": "access-permissions.jsonl"
+            }
+          },
+          {
+            "record_id": "permission.access.create-vendor",
+            "record_type": "permission_assignment",
+            "source": {
+              "locator": {
+                "line": 3
+              },
+              "path": "access-permissions.jsonl"
+            }
+          },
+          {
+            "record_id": "permission.access.direct-admin",
+            "record_type": "permission_assignment",
+            "source": {
+              "locator": {
+                "line": 4
+              },
+              "path": "access-permissions.jsonl"
+            }
+          },
+          {
+            "record_id": "permission.access.stale-admin",
+            "record_type": "permission_assignment",
+            "source": {
+              "locator": {
+                "line": 5
+              },
+              "path": "access-permissions.jsonl"
+            }
+          },
+          {
+            "record_id": "principal.access.boundary",
+            "record_type": "principal",
+            "source": {
+              "locator": {
+                "row": 2
+              },
+              "path": "access-principals.csv"
+            }
+          },
+          {
+            "record_id": "principal.access.direct",
+            "record_type": "principal",
+            "source": {
+              "locator": {
+                "row": 3
+              },
+              "path": "access-principals.csv"
+            }
+          },
+          {
+            "record_id": "principal.access.sod",
+            "record_type": "principal",
+            "source": {
+              "locator": {
+                "row": 4
+              },
+              "path": "access-principals.csv"
+            }
+          },
+          {
+            "record_id": "principal.access.stale",
+            "record_type": "principal",
+            "source": {
+              "locator": {
+                "row": 5
+              },
+              "path": "access-principals.csv"
+            }
+          }
+        ]
+      },
+      "input_paths": [
+        "access-governance/access-permissions.jsonl",
+        "access-governance/access-principals.csv"
+      ],
+      "scenario_id": "access-governance",
+      "selected_rules": [
+        "ERP002",
+        "ERP003",
+        "ERP004"
+      ]
+    },
+    {
+      "expected": {
+        "evaluations": [
+          {
+            "rule_id": "ERP001",
+            "rule_version": "1.0.0",
+            "status": "matched"
+          },
+          {
+            "rule_id": "ERP005",
+            "rule_version": "1.0.0",
+            "status": "matched"
+          },
+          {
+            "rule_id": "ERP006",
+            "rule_version": "1.0.0",
+            "status": "matched"
+          }
+        ],
+        "exit_code": 1,
+        "findings": [
+          {
+            "evidence_refs": [
+              {
+                "record_id": "control.auth.audit",
+                "source_ref": {
+                  "adapter": "erpsec.json/v1",
+                  "format": "json",
+                  "json_pointer": "/0/enabled",
+                  "path": "auth-control.json",
+                  "sha256": "5727ab291f7e7ae1c7840ab4d02e63e296de37cbaad53fce4a75c9f706025c5a"
+                }
+              }
+            ],
+            "fingerprint": "5e8e54ccb2d8a4e08413e1c52c0938f2646bc01b767508ba383a8e4dca1eab53",
+            "rule_id": "ERP001",
+            "rule_version": "1.0.0"
+          },
+          {
+            "evidence_refs": [
+              {
+                "record_id": "auth.emergency.outside",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "action",
+                  "format": "jsonl",
+                  "line": 3,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.emergency.outside",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "occurred_at",
+                  "format": "jsonl",
+                  "line": 3,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.emergency.outside",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "outcome",
+                  "format": "jsonl",
+                  "line": 3,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.emergency.outside",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "principal_id",
+                  "format": "jsonl",
+                  "line": 3,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "principal.auth.emergency",
+                "source_ref": {
+                  "adapter": "erpsec.csv/v1",
+                  "field": "principal_id",
+                  "format": "csv",
+                  "path": "auth-principals.csv",
+                  "row": 2,
+                  "sha256": "5ec68f63d0c7ee7f7cb474cdf3a4239e6601d2648476a303b1c3bcf29b2b84d8"
+                }
+              },
+              {
+                "record_id": "principal.auth.emergency",
+                "source_ref": {
+                  "adapter": "erpsec.csv/v1",
+                  "field": "principal_kind",
+                  "format": "csv",
+                  "path": "auth-principals.csv",
+                  "row": 2,
+                  "sha256": "5ec68f63d0c7ee7f7cb474cdf3a4239e6601d2648476a303b1c3bcf29b2b84d8"
+                }
+              }
+            ],
+            "fingerprint": "d30f1e317f1680d2e7951e59098e2da7ee33dc5dd4ac46dc6880658dbe9bd7e1",
+            "rule_id": "ERP005",
+            "rule_version": "1.0.0"
+          },
+          {
+            "evidence_refs": [
+              {
+                "record_id": "auth.failure.match.1",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "action",
+                  "format": "jsonl",
+                  "line": 4,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.failure.match.1",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "occurred_at",
+                  "format": "jsonl",
+                  "line": 4,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.failure.match.1",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "outcome",
+                  "format": "jsonl",
+                  "line": 4,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.failure.match.1",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "principal_id",
+                  "format": "jsonl",
+                  "line": 4,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.failure.match.2",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "action",
+                  "format": "jsonl",
+                  "line": 5,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.failure.match.2",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "occurred_at",
+                  "format": "jsonl",
+                  "line": 5,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.failure.match.2",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "outcome",
+                  "format": "jsonl",
+                  "line": 5,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.failure.match.2",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "principal_id",
+                  "format": "jsonl",
+                  "line": 5,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.failure.match.3",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "action",
+                  "format": "jsonl",
+                  "line": 6,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.failure.match.3",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "occurred_at",
+                  "format": "jsonl",
+                  "line": 6,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.failure.match.3",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "outcome",
+                  "format": "jsonl",
+                  "line": 6,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.failure.match.3",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "principal_id",
+                  "format": "jsonl",
+                  "line": 6,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.failure.match.4",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "action",
+                  "format": "jsonl",
+                  "line": 7,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.failure.match.4",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "occurred_at",
+                  "format": "jsonl",
+                  "line": 7,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.failure.match.4",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "outcome",
+                  "format": "jsonl",
+                  "line": 7,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.failure.match.4",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "principal_id",
+                  "format": "jsonl",
+                  "line": 7,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.failure.match.5",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "action",
+                  "format": "jsonl",
+                  "line": 8,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.failure.match.5",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "occurred_at",
+                  "format": "jsonl",
+                  "line": 8,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.failure.match.5",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "outcome",
+                  "format": "jsonl",
+                  "line": 8,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              },
+              {
+                "record_id": "auth.failure.match.5",
+                "source_ref": {
+                  "adapter": "erpsec.jsonl/v1",
+                  "field": "principal_id",
+                  "format": "jsonl",
+                  "line": 8,
+                  "path": "auth-events.jsonl",
+                  "sha256": "489472829e417c31570d56c278cc226cb10653ba91c6f4e649e9ee9a2d0ddb49"
+                }
+              }
+            ],
+            "fingerprint": "847311517adac28d910ef1cf15a26dbed13a993b17d78eb3cbd15165ef0fb657",
+            "rule_id": "ERP006",
+            "rule_version": "1.0.0"
+          }
+        ],
+        "output_present": true,
+        "records": [
+          {
+            "record_id": "auth.emergency.boundary-end",
+            "record_type": "auth_event",
+            "source": {
+              "locator": {
+                "line": 1
+              },
+              "path": "auth-events.jsonl"
+            }
+          },
+          {
+            "record_id": "auth.emergency.boundary-start",
+            "record_type": "auth_event",
+            "source": {
+              "locator": {
+                "line": 2
+              },
+              "path": "auth-events.jsonl"
+            }
+          },
+          {
+            "record_id": "auth.emergency.outside",
+            "record_type": "auth_event",
+            "source": {
+              "locator": {
+                "line": 3
+              },
+              "path": "auth-events.jsonl"
+            }
+          },
+          {
+            "record_id": "auth.failure.clean.1",
+            "record_type": "auth_event",
+            "source": {
+              "locator": {
+                "line": 9
+              },
+              "path": "auth-events.jsonl"
+            }
+          },
+          {
+            "record_id": "auth.failure.clean.2",
+            "record_type": "auth_event",
+            "source": {
+              "locator": {
+                "line": 10
+              },
+              "path": "auth-events.jsonl"
+            }
+          },
+          {
+            "record_id": "auth.failure.clean.3",
+            "record_type": "auth_event",
+            "source": {
+              "locator": {
+                "line": 11
+              },
+              "path": "auth-events.jsonl"
+            }
+          },
+          {
+            "record_id": "auth.failure.clean.4",
+            "record_type": "auth_event",
+            "source": {
+              "locator": {
+                "line": 12
+              },
+              "path": "auth-events.jsonl"
+            }
+          },
+          {
+            "record_id": "auth.failure.clean.5",
+            "record_type": "auth_event",
+            "source": {
+              "locator": {
+                "line": 13
+              },
+              "path": "auth-events.jsonl"
+            }
+          },
+          {
+            "record_id": "auth.failure.match.1",
+            "record_type": "auth_event",
+            "source": {
+              "locator": {
+                "line": 4
+              },
+              "path": "auth-events.jsonl"
+            }
+          },
+          {
+            "record_id": "auth.failure.match.2",
+            "record_type": "auth_event",
+            "source": {
+              "locator": {
+                "line": 5
+              },
+              "path": "auth-events.jsonl"
+            }
+          },
+          {
+            "record_id": "auth.failure.match.3",
+            "record_type": "auth_event",
+            "source": {
+              "locator": {
+                "line": 6
+              },
+              "path": "auth-events.jsonl"
+            }
+          },
+          {
+            "record_id": "auth.failure.match.4",
+            "record_type": "auth_event",
+            "source": {
+              "locator": {
+                "line": 7
+              },
+              "path": "auth-events.jsonl"
+            }
+          },
+          {
+            "record_id": "auth.failure.match.5",
+            "record_type": "auth_event",
+            "source": {
+              "locator": {
+                "line": 8
+              },
+              "path": "auth-events.jsonl"
+            }
+          },
+          {
+            "record_id": "control.auth.audit",
+            "record_type": "control_state",
+            "source": {
+              "locator": {
+                "json_pointer": "/0"
+              },
+              "path": "auth-control.json"
+            }
+          },
+          {
+            "record_id": "principal.auth.emergency",
+            "record_type": "principal",
+            "source": {
+              "locator": {
+                "row": 2
+              },
+              "path": "auth-principals.csv"
+            }
+          },
+          {
+            "record_id": "principal.auth.failure-clean",
+            "record_type": "principal",
+            "source": {
+              "locator": {
+                "row": 3
+              },
+              "path": "auth-principals.csv"
+            }
+          },
+          {
+            "record_id": "principal.auth.failure-match",
+            "record_type": "principal",
+            "source": {
+              "locator": {
+                "row": 4
+              },
+              "path": "auth-principals.csv"
+            }
+          }
+        ]
+      },
+      "input_paths": [
+        "authentication-control/auth-control.json",
+        "authentication-control/auth-events.jsonl",
+        "authentication-control/auth-principals.csv"
+      ],
+      "scenario_id": "authentication-control",
+      "selected_rules": [
+        "ERP001",
+        "ERP005",
+        "ERP006"
+      ]
+    },
+    {
+      "expected": {
+        "evaluations": [
+          {
+            "rule_id": "ERP001",
+            "rule_version": "1.0.0",
+            "status": "not_matched"
+          },
+          {
+            "rule_id": "ERP002",
+            "rule_version": "1.0.0",
+            "status": "not_matched"
+          },
+          {
+            "rule_id": "ERP003",
+            "rule_version": "1.0.0",
+            "status": "not_matched"
+          },
+          {
+            "rule_id": "ERP004",
+            "rule_version": "1.0.0",
+            "status": "not_matched"
+          },
+          {
+            "rule_id": "ERP005",
+            "rule_version": "1.0.0",
+            "status": "not_matched"
+          },
+          {
+            "rule_id": "ERP006",
+            "rule_version": "1.0.0",
+            "status": "not_matched"
+          }
+        ],
+        "exit_code": 0,
+        "findings": [],
+        "output_present": true,
+        "records": [
+          {
+            "record_id": "auth.clean.sign-in",
+            "record_type": "auth_event",
+            "source": {
+              "locator": {
+                "json_pointer": "/1"
+              },
+              "path": "clean-events-controls.json"
+            }
+          },
+          {
+            "record_id": "control.clean.audit",
+            "record_type": "control_state",
+            "source": {
+              "locator": {
+                "json_pointer": "/0"
+              },
+              "path": "clean-events-controls.json"
+            }
+          },
+          {
+            "record_id": "permission.clean.read",
+            "record_type": "permission_assignment",
+            "source": {
+              "locator": {
+                "line": 1
+              },
+              "path": "clean-permissions.jsonl"
+            }
+          },
+          {
+            "record_id": "principal.clean.user",
+            "record_type": "principal",
+            "source": {
+              "locator": {
+                "row": 2
+              },
+              "path": "clean-principals.csv"
+            }
+          }
+        ]
+      },
+      "input_paths": [
+        "clean-baseline/clean-events-controls.json",
+        "clean-baseline/clean-permissions.jsonl",
+        "clean-baseline/clean-principals.csv"
+      ],
+      "scenario_id": "clean-baseline",
+      "selected_rules": [
+        "ERP001",
+        "ERP002",
+        "ERP003",
+        "ERP004",
+        "ERP005",
+        "ERP006"
+      ]
+    }
+  ],
+  "schema_version": "erpsec.synthetic-corpus-manifest/v1",
+  "validation_cases": [
+    {
+      "expected": {
+        "diagnostic": "error: input record does not match the supported field contract\n",
+        "diagnostic_excludes": [
+          "do-not-echo-fixture-sentinel-9f74c2</script>"
+        ],
+        "exit_code": 2,
+        "output_present": false
+      },
+      "input_paths": [
+        "validation/adversarial-extra-field.json"
+      ],
+      "selected_rules": [
+        "ERP001"
+      ],
+      "validation_id": "adversarial-extra-field"
+    },
+    {
+      "expected": {
+        "diagnostic": "error: evidence coverage is incomplete\n",
+        "diagnostic_excludes": [],
+        "exit_code": 2,
+        "output_present": false
+      },
+      "input_paths": [
+        "validation/incomplete-principal.json"
+      ],
+      "selected_rules": [
+        "ERP001"
+      ],
+      "validation_id": "incomplete-principal"
+    },
+    {
+      "expected": {
+        "diagnostic": "error: input contains malformed JSON\n",
+        "diagnostic_excludes": [],
+        "exit_code": 2,
+        "output_present": false
+      },
+      "input_paths": [
+        "validation/malformed-tail.jsonl"
+      ],
+      "selected_rules": [
+        "ERP001"
+      ],
+      "validation_id": "malformed-tail"
+    }
+  ]
+}

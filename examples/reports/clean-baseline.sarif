@@ -1,0 +1,365 @@
+{
+  "$schema": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/schemas/sarif-schema-2.1.0.json",
+  "runs": [
+    {
+      "artifacts": [
+        {
+          "hashes": {
+            "sha-256": "25c51fbde72e676d3598cbe7d2a28d50e51033a3104ff1afdfb61f187936e0f5"
+          },
+          "length": 550,
+          "location": {
+            "index": 0,
+            "uri": "clean-events-controls.json"
+          },
+          "properties": {
+            "erpsec.adapter": "erpsec.json/v1",
+            "erpsec.format": "json",
+            "erpsec.recordCount": 2
+          },
+          "roles": [
+            "analysisTarget"
+          ]
+        },
+        {
+          "hashes": {
+            "sha-256": "cd971508fdea0c722a21f3926a78e99eb3b7f02b5775e27d57334c3bb43dabf4"
+          },
+          "length": 291,
+          "location": {
+            "index": 1,
+            "uri": "clean-permissions.jsonl"
+          },
+          "properties": {
+            "erpsec.adapter": "erpsec.jsonl/v1",
+            "erpsec.format": "jsonl",
+            "erpsec.recordCount": 1
+          },
+          "roles": [
+            "analysisTarget"
+          ]
+        },
+        {
+          "hashes": {
+            "sha-256": "c914a99860abc949016f6ab30d0802ab938f2402c43f6d99e614ba10482b88c6"
+          },
+          "length": 232,
+          "location": {
+            "index": 2,
+            "uri": "clean-principals.csv"
+          },
+          "properties": {
+            "erpsec.adapter": "erpsec.csv/v1",
+            "erpsec.format": "csv",
+            "erpsec.recordCount": 1
+          },
+          "roles": [
+            "analysisTarget"
+          ]
+        }
+      ],
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "properties": {
+        "erpsec.asOf": "2026-09-01T00:00:00Z",
+        "erpsec.coverage": "complete",
+        "erpsec.evaluations": [
+          {
+            "rule_id": "ERP001",
+            "rule_version": "1.0.0",
+            "status": "not_matched"
+          },
+          {
+            "rule_id": "ERP002",
+            "rule_version": "1.0.0",
+            "status": "not_matched"
+          },
+          {
+            "rule_id": "ERP003",
+            "rule_version": "1.0.0",
+            "status": "not_matched"
+          },
+          {
+            "rule_id": "ERP004",
+            "rule_version": "1.0.0",
+            "status": "not_matched"
+          },
+          {
+            "rule_id": "ERP005",
+            "rule_version": "1.0.0",
+            "status": "not_matched"
+          },
+          {
+            "rule_id": "ERP006",
+            "rule_version": "1.0.0",
+            "status": "not_matched"
+          }
+        ],
+        "erpsec.inputCount": 4,
+        "erpsec.reportSchemaVersion": "erpsec.report/v1",
+        "erpsec.result": "no_findings",
+        "erpsec.syntheticEvidenceOnly": true
+      },
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "erp-security-evidence-workbench",
+          "rules": [
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "Disabled audit logging can materially reduce investigation and accountability evidence."
+              },
+              "help": {
+                "text": "ERP001 evaluates only supplied synthetic control-state evidence; it does not verify a live system or prove logging coverage. Remediation: Review the audit logging configuration and enable the required control through an authorized change process."
+              },
+              "id": "ERP001",
+              "properties": {
+                "erpsec.fixedConditions": [
+                  {
+                    "default": "AUDIT_LOGGING",
+                    "description": "Generic control that must be represented in supplied evidence.",
+                    "name": "control"
+                  },
+                  {
+                    "default": false,
+                    "description": "Explicit disabled state matched by this rule.",
+                    "name": "enabled"
+                  }
+                ],
+                "erpsec.parameters": [],
+                "erpsec.requiredEvidenceTypes": [
+                  "control_state"
+                ],
+                "erpsec.ruleVersion": "1.0.0",
+                "erpsec.severity": "high"
+              },
+              "shortDescription": {
+                "text": "Required audit logging is disabled"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "Enabled principals with privileged permissions and prolonged inactivity can retain unnecessary access and increase account-misuse risk."
+              },
+              "help": {
+                "text": "ERP002 evaluates only supplied synthetic principal and permission-assignment evidence; it does not prove identity, assignment, or activity completeness. Remediation: Review the principal's current need for privileged access and disable or revalidate it through an authorized access-governance process."
+              },
+              "id": "ERP002",
+              "properties": {
+                "erpsec.fixedConditions": [
+                  {
+                    "default": true,
+                    "description": "Only explicitly enabled principals are matched by this rule.",
+                    "name": "enabled"
+                  }
+                ],
+                "erpsec.parameters": [
+                  {
+                    "default": 90,
+                    "description": "Days before the explicit analysis time; exact equality is clean.",
+                    "name": "inactive_days"
+                  },
+                  {
+                    "default": [
+                      "ADMINISTER_SYSTEM",
+                      "APPROVE_PAYMENT"
+                    ],
+                    "description": "Configured generic capabilities treated as privileged.",
+                    "name": "privileged_permissions"
+                  }
+                ],
+                "erpsec.requiredEvidenceTypes": [
+                  "permission_assignment",
+                  "principal"
+                ],
+                "erpsec.ruleVersion": "1.0.0",
+                "erpsec.severity": "high"
+              },
+              "shortDescription": {
+                "text": "Enabled privileged principal is inactive"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "Direct privileged grants can bypass role-based governance and make access review more difficult."
+              },
+              "help": {
+                "text": "ERP003 evaluates only assignment mode and configured capability names; it does not infer approval, justification, role design, or effective access. Remediation: Review the direct assignment and replace or remove it through an authorized role-governance process when it is not explicitly justified."
+              },
+              "id": "ERP003",
+              "properties": {
+                "erpsec.fixedConditions": [
+                  {
+                    "default": "direct",
+                    "description": "Only explicitly direct assignments are matched by this rule.",
+                    "name": "assignment_mode"
+                  }
+                ],
+                "erpsec.parameters": [
+                  {
+                    "default": [
+                      "ADMINISTER_SYSTEM",
+                      "APPROVE_PAYMENT"
+                    ],
+                    "description": "Configured generic capabilities treated as privileged.",
+                    "name": "privileged_permissions"
+                  }
+                ],
+                "erpsec.requiredEvidenceTypes": [
+                  "permission_assignment"
+                ],
+                "erpsec.ruleVersion": "1.0.0",
+                "erpsec.severity": "high"
+              },
+              "shortDescription": {
+                "text": "Privileged permission is assigned directly"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "Combining configured conflicting capabilities can enable incompatible actions without independent oversight."
+              },
+              "help": {
+                "text": "ERP004 evaluates only configured synthetic capability pairs; the defaults are not a vendor role matrix, customer policy, or authoritative segregation-of-duties model. Remediation: Review the combined capabilities and separate or formally mitigate them through an authorized segregation-of-duties process."
+              },
+              "id": "ERP004",
+              "properties": {
+                "erpsec.fixedConditions": [],
+                "erpsec.parameters": [
+                  {
+                    "default": [
+                      [
+                        "CREATE_VENDOR",
+                        "APPROVE_PAYMENT"
+                      ]
+                    ],
+                    "description": "Configured unordered pairs of generic capabilities.",
+                    "name": "toxic_permission_pairs"
+                  }
+                ],
+                "erpsec.requiredEvidenceTypes": [
+                  "permission_assignment"
+                ],
+                "erpsec.ruleVersion": "1.0.0",
+                "erpsec.severity": "high"
+              },
+              "shortDescription": {
+                "text": "Configured toxic permission pair is present"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "Successful use of emergency access outside an approved window can indicate unreviewed privileged activity."
+              },
+              "help": {
+                "text": "ERP005 evaluates only supplied synthetic principal and authentication evidence; it cannot determine business approval, ticket context, or live-session activity. Remediation: Investigate the event's authorization and context, then document or contain it through an approved emergency-access process."
+              },
+              "id": "ERP005",
+              "properties": {
+                "erpsec.fixedConditions": [
+                  {
+                    "default": "SIGN_IN",
+                    "description": "Generic successful authentication action evaluated by this rule.",
+                    "name": "action"
+                  },
+                  {
+                    "default": "success",
+                    "description": "Successful outcome required by this rule.",
+                    "name": "outcome"
+                  },
+                  {
+                    "default": "emergency",
+                    "description": "Only explicitly emergency principals are matched by this rule.",
+                    "name": "principal_kind"
+                  }
+                ],
+                "erpsec.parameters": [
+                  {
+                    "default": 4,
+                    "description": "Closed approved window ending at the explicit analysis time.",
+                    "name": "emergency_window_hours"
+                  }
+                ],
+                "erpsec.requiredEvidenceTypes": [
+                  "auth_event",
+                  "principal"
+                ],
+                "erpsec.ruleVersion": "1.0.0",
+                "erpsec.severity": "high"
+              },
+              "shortDescription": {
+                "text": "Emergency access occurs outside the approved window"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "Repeated sign-in failures in a short interval can indicate credential misuse or an operational access problem."
+              },
+              "help": {
+                "text": "ERP006 evaluates only supplied synthetic sign-in outcomes; it cannot determine network source, device context, user intent, or root cause. Remediation: Review the authentication context, validate the principal, and follow the appropriate incident-response or access-support process."
+              },
+              "id": "ERP006",
+              "properties": {
+                "erpsec.fixedConditions": [
+                  {
+                    "default": "SIGN_IN",
+                    "description": "Generic authentication action evaluated by this rule.",
+                    "name": "action"
+                  },
+                  {
+                    "default": "failure",
+                    "description": "Failed outcome required by this rule.",
+                    "name": "outcome"
+                  }
+                ],
+                "erpsec.parameters": [
+                  {
+                    "default": 5,
+                    "description": "Failed sign-in events required for one deterministic burst.",
+                    "name": "auth_failure_threshold"
+                  },
+                  {
+                    "default": 15,
+                    "description": "Inclusive interval spanning the first and last triggering event.",
+                    "name": "auth_failure_window_minutes"
+                  }
+                ],
+                "erpsec.requiredEvidenceTypes": [
+                  "auth_event"
+                ],
+                "erpsec.ruleVersion": "1.0.0",
+                "erpsec.severity": "medium"
+              },
+              "shortDescription": {
+                "text": "Repeated authentication failures occur"
+              }
+            }
+          ],
+          "version": "0.1.0rc1"
+        }
+      }
+    }
+  ],
+  "version": "2.1.0"
+}

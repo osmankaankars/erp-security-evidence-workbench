@@ -1,0 +1,680 @@
+{
+  "evaluations": [
+    {
+      "rule_id": "ERP001",
+      "rule_version": "1.0.0",
+      "status": "matched"
+    },
+    {
+      "rule_id": "ERP002",
+      "rule_version": "1.0.0",
+      "status": "matched"
+    },
+    {
+      "rule_id": "ERP003",
+      "rule_version": "1.0.0",
+      "status": "matched"
+    },
+    {
+      "rule_id": "ERP004",
+      "rule_version": "1.0.0",
+      "status": "matched"
+    },
+    {
+      "rule_id": "ERP005",
+      "rule_version": "1.0.0",
+      "status": "matched"
+    },
+    {
+      "rule_id": "ERP006",
+      "rule_version": "1.0.0",
+      "status": "matched"
+    }
+  ],
+  "evidence_manifest": [
+    {
+      "record_id": "auth.emergency",
+      "record_type": "auth_event",
+      "source_ref": {
+        "adapter": "erpsec.json/v1",
+        "format": "json",
+        "json_pointer": "/7",
+        "path": "rule-pack-findings.json",
+        "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+      }
+    },
+    {
+      "record_id": "auth.failure.1",
+      "record_type": "auth_event",
+      "source_ref": {
+        "adapter": "erpsec.json/v1",
+        "format": "json",
+        "json_pointer": "/8",
+        "path": "rule-pack-findings.json",
+        "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+      }
+    },
+    {
+      "record_id": "auth.failure.2",
+      "record_type": "auth_event",
+      "source_ref": {
+        "adapter": "erpsec.json/v1",
+        "format": "json",
+        "json_pointer": "/9",
+        "path": "rule-pack-findings.json",
+        "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+      }
+    },
+    {
+      "record_id": "auth.failure.3",
+      "record_type": "auth_event",
+      "source_ref": {
+        "adapter": "erpsec.json/v1",
+        "format": "json",
+        "json_pointer": "/10",
+        "path": "rule-pack-findings.json",
+        "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+      }
+    },
+    {
+      "record_id": "auth.failure.4",
+      "record_type": "auth_event",
+      "source_ref": {
+        "adapter": "erpsec.json/v1",
+        "format": "json",
+        "json_pointer": "/11",
+        "path": "rule-pack-findings.json",
+        "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+      }
+    },
+    {
+      "record_id": "auth.failure.5",
+      "record_type": "auth_event",
+      "source_ref": {
+        "adapter": "erpsec.json/v1",
+        "format": "json",
+        "json_pointer": "/12",
+        "path": "rule-pack-findings.json",
+        "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+      }
+    },
+    {
+      "record_id": "control.audit",
+      "record_type": "control_state",
+      "source_ref": {
+        "adapter": "erpsec.json/v1",
+        "format": "json",
+        "json_pointer": "/0",
+        "path": "rule-pack-findings.json",
+        "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+      }
+    },
+    {
+      "record_id": "permission.admin",
+      "record_type": "permission_assignment",
+      "source_ref": {
+        "adapter": "erpsec.json/v1",
+        "format": "json",
+        "json_pointer": "/2",
+        "path": "rule-pack-findings.json",
+        "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+      }
+    },
+    {
+      "record_id": "permission.approve",
+      "record_type": "permission_assignment",
+      "source_ref": {
+        "adapter": "erpsec.json/v1",
+        "format": "json",
+        "json_pointer": "/5",
+        "path": "rule-pack-findings.json",
+        "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+      }
+    },
+    {
+      "record_id": "permission.create",
+      "record_type": "permission_assignment",
+      "source_ref": {
+        "adapter": "erpsec.json/v1",
+        "format": "json",
+        "json_pointer": "/4",
+        "path": "rule-pack-findings.json",
+        "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+      }
+    },
+    {
+      "record_id": "principal.emergency",
+      "record_type": "principal",
+      "source_ref": {
+        "adapter": "erpsec.json/v1",
+        "format": "json",
+        "json_pointer": "/6",
+        "path": "rule-pack-findings.json",
+        "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+      }
+    },
+    {
+      "record_id": "principal.old-admin",
+      "record_type": "principal",
+      "source_ref": {
+        "adapter": "erpsec.json/v1",
+        "format": "json",
+        "json_pointer": "/1",
+        "path": "rule-pack-findings.json",
+        "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+      }
+    },
+    {
+      "record_id": "principal.operator",
+      "record_type": "principal",
+      "source_ref": {
+        "adapter": "erpsec.json/v1",
+        "format": "json",
+        "json_pointer": "/3",
+        "path": "rule-pack-findings.json",
+        "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+      }
+    }
+  ],
+  "findings": [
+    {
+      "description": "The supplied control-state evidence explicitly marks required audit logging as disabled.",
+      "evidence_refs": [
+        {
+          "record_id": "control.audit",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/0/enabled",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        }
+      ],
+      "fingerprint": "c83e136a4166eed08297bced0454e3389e8cf909e10d030c0e80b3874ca8bee2",
+      "limitation": "ERP001 evaluates only supplied synthetic control-state evidence; it does not verify a live system or prove logging coverage.",
+      "remediation": "Review the audit logging configuration and enable the required control through an authorized change process.",
+      "required_evidence_types": [
+        "control_state"
+      ],
+      "rule_id": "ERP001",
+      "rule_version": "1.0.0",
+      "severity": "high",
+      "severity_rationale": "Disabled audit logging can materially reduce investigation and accountability evidence.",
+      "title": "Required audit logging is disabled"
+    },
+    {
+      "description": "The supplied evidence shows an enabled principal with a configured privileged permission and activity older than the configured cutoff.",
+      "evidence_refs": [
+        {
+          "record_id": "permission.admin",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/2/permission",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "permission.admin",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/2/principal_id",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "principal.old-admin",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/1/enabled",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "principal.old-admin",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/1/last_active_at",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "principal.old-admin",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/1/principal_id",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        }
+      ],
+      "fingerprint": "989835a7946d769806d6d1cd60fa422aa926df97ab19ad5bfefb7b40ea9eebea",
+      "limitation": "ERP002 evaluates only supplied synthetic principal and permission-assignment evidence; it does not prove identity, assignment, or activity completeness.",
+      "remediation": "Review the principal's current need for privileged access and disable or revalidate it through an authorized access-governance process.",
+      "required_evidence_types": [
+        "permission_assignment",
+        "principal"
+      ],
+      "rule_id": "ERP002",
+      "rule_version": "1.0.0",
+      "severity": "high",
+      "severity_rationale": "Enabled principals with privileged permissions and prolonged inactivity can retain unnecessary access and increase account-misuse risk.",
+      "title": "Enabled privileged principal is inactive"
+    },
+    {
+      "description": "The supplied evidence shows a configured privileged permission assigned directly rather than inherited through a role.",
+      "evidence_refs": [
+        {
+          "record_id": "permission.admin",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/2/assignment_mode",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "permission.admin",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/2/permission",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        }
+      ],
+      "fingerprint": "9c756796dbd430284e7a8e94c8a598ee473a1b81f6f7aa751f5c36b986f95786",
+      "limitation": "ERP003 evaluates only assignment mode and configured capability names; it does not infer approval, justification, role design, or effective access.",
+      "remediation": "Review the direct assignment and replace or remove it through an authorized role-governance process when it is not explicitly justified.",
+      "required_evidence_types": [
+        "permission_assignment"
+      ],
+      "rule_id": "ERP003",
+      "rule_version": "1.0.0",
+      "severity": "high",
+      "severity_rationale": "Direct privileged grants can bypass role-based governance and make access review more difficult.",
+      "title": "Privileged permission is assigned directly"
+    },
+    {
+      "description": "The supplied evidence assigns both capabilities in a configured toxic permission pair to the same principal.",
+      "evidence_refs": [
+        {
+          "record_id": "permission.approve",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/5/permission",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "permission.approve",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/5/principal_id",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "permission.create",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/4/permission",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "permission.create",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/4/principal_id",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        }
+      ],
+      "fingerprint": "35111b769b133da44ef20f2084c6f76b1b8fb7f7f88a8298a9881257cde08c76",
+      "limitation": "ERP004 evaluates only configured synthetic capability pairs; the defaults are not a vendor role matrix, customer policy, or authoritative segregation-of-duties model.",
+      "remediation": "Review the combined capabilities and separate or formally mitigate them through an authorized segregation-of-duties process.",
+      "required_evidence_types": [
+        "permission_assignment"
+      ],
+      "rule_id": "ERP004",
+      "rule_version": "1.0.0",
+      "severity": "high",
+      "severity_rationale": "Combining configured conflicting capabilities can enable incompatible actions without independent oversight.",
+      "title": "Configured toxic permission pair is present"
+    },
+    {
+      "description": "The supplied evidence shows successful emergency sign-in activity outside the configured approved window.",
+      "evidence_refs": [
+        {
+          "record_id": "auth.emergency",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/7/action",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.emergency",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/7/occurred_at",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.emergency",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/7/outcome",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.emergency",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/7/principal_id",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "principal.emergency",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/6/principal_id",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "principal.emergency",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/6/principal_kind",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        }
+      ],
+      "fingerprint": "88e2ecea43af64d3becf70208b8e526d1bfda332d77d1cc93f8b3a19c7b99486",
+      "limitation": "ERP005 evaluates only supplied synthetic principal and authentication evidence; it cannot determine business approval, ticket context, or live-session activity.",
+      "remediation": "Investigate the event's authorization and context, then document or contain it through an approved emergency-access process.",
+      "required_evidence_types": [
+        "auth_event",
+        "principal"
+      ],
+      "rule_id": "ERP005",
+      "rule_version": "1.0.0",
+      "severity": "high",
+      "severity_rationale": "Successful use of emergency access outside an approved window can indicate unreviewed privileged activity.",
+      "title": "Emergency access occurs outside the approved window"
+    },
+    {
+      "description": "The supplied evidence contains the configured number of failed sign-in events for one principal within the configured interval.",
+      "evidence_refs": [
+        {
+          "record_id": "auth.failure.1",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/8/action",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.failure.1",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/8/occurred_at",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.failure.1",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/8/outcome",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.failure.1",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/8/principal_id",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.failure.2",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/9/action",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.failure.2",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/9/occurred_at",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.failure.2",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/9/outcome",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.failure.2",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/9/principal_id",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.failure.3",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/10/action",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.failure.3",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/10/occurred_at",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.failure.3",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/10/outcome",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.failure.3",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/10/principal_id",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.failure.4",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/11/action",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.failure.4",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/11/occurred_at",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.failure.4",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/11/outcome",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.failure.4",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/11/principal_id",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.failure.5",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/12/action",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.failure.5",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/12/occurred_at",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.failure.5",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/12/outcome",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        },
+        {
+          "record_id": "auth.failure.5",
+          "source_ref": {
+            "adapter": "erpsec.json/v1",
+            "format": "json",
+            "json_pointer": "/12/principal_id",
+            "path": "rule-pack-findings.json",
+            "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+          }
+        }
+      ],
+      "fingerprint": "8162e4b9557203cc8a49bbd549c18ed58516ba3765c76068b05ea5a547ebc87f",
+      "limitation": "ERP006 evaluates only supplied synthetic sign-in outcomes; it cannot determine network source, device context, user intent, or root cause.",
+      "remediation": "Review the authentication context, validate the principal, and follow the appropriate incident-response or access-support process.",
+      "required_evidence_types": [
+        "auth_event"
+      ],
+      "rule_id": "ERP006",
+      "rule_version": "1.0.0",
+      "severity": "medium",
+      "severity_rationale": "Repeated sign-in failures in a short interval can indicate credential misuse or an operational access problem.",
+      "title": "Repeated authentication failures occur"
+    }
+  ],
+  "run": {
+    "as_of": "2026-09-01T00:00:00Z",
+    "coverage": "complete",
+    "input_count": 13,
+    "result": "findings"
+  },
+  "schema_version": "erpsec.report/v1",
+  "source_manifest": [
+    {
+      "adapter": "erpsec.json/v1",
+      "byte_count": 3975,
+      "format": "json",
+      "path": "rule-pack-findings.json",
+      "record_count": 13,
+      "sha256": "ebb07d2a20f1fba22f4ea639fbb04feb340bb6bd6bf8826c7552b1319678055c"
+    }
+  ],
+  "tool": {
+    "name": "erp-security-evidence-workbench",
+    "version": "0.1.0rc1"
+  }
+}
