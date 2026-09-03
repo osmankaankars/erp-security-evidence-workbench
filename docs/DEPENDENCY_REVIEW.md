@@ -2,7 +2,7 @@
 
 ## Scope and conclusion
 
-The `0.1.0rc1` candidate declares no application runtime dependencies:
+The `0.2.0rc1` candidate declares no application runtime dependencies:
 
 ```toml
 dependencies = []
@@ -20,15 +20,24 @@ vulnerability inventory.
 | Build | `setuptools==84.0.0` | PEP 517 build backend | Development/build only |
 | Development | `build==1.6.0` | PEP 517 frontend | Not imported at runtime |
 | Development | `jsonschema==4.26.0` | Offline SARIF schema validation | Not imported at runtime |
-| Development | `mypy==1.20.2` | Static type checking | Not imported at runtime |
-| Development | `pytest==8.4.2` | Tests | Synthetic fixtures only |
+| Development | `mypy==2.3.1` | Static type checking | Not imported at runtime |
+| Development | `pytest==9.1.1` | Tests | Synthetic fixtures only |
 | Development | `ruff==0.16.5` | Lint and format checks | Not imported at runtime |
 | Development | `wheel==0.48.0` | Build and package smoke | Not imported at runtime |
 
-A local candidate matrix exercised exact CPython `3.11.14`, `3.12.12`, `3.13.7`, and
-`3.14.5` environments with compilation, Ruff, strict mypy, pytest, index-disabled installed-package
-smoke, and `pip check`. This is environment-qualified engineering evidence, not legal advice or a
-vulnerability audit.
+The prior `0.1.0rc1` candidate was exercised locally on exact CPython `3.11.14`, `3.12.12`,
+`3.13.7`, and `3.14.5` environments. The current `0.2.0rc1` implementation has so far been
+exercised locally on CPython `3.11.14`; the release gate still requires fresh full tests and
+installed-package smoke on Python 3.11–3.14 plus the exact-revision GitHub Actions matrix. This is
+environment-qualified engineering evidence, not legal advice or a vulnerability audit.
+
+For this candidate, direct pins were reviewed against their official package metadata. Mypy moved
+from `1.20.2` to `2.3.1`. Pytest moved from `8.4.2` to `9.1.1`, outside the affected `<9.0.3`
+range reported for GHSA-6w46-j5rx-g56g / CVE-2025-71176. The release policy, artifact tests, and
+notice inventory were synchronized with those reviewed pins. Standalone Dependabot branches remain
+expected to fail the exact-pin policy until a maintainer reviews the proposed versions and updates
+all release metadata together; merging this candidate supersedes the two stale version-only PRs.
+This records the current failure cause and correction; it is not a transitive vulnerability audit.
 
 Observed transitive development packages include `attrs`, `iniconfig`,
 `jsonschema-specifications`, `librt`, `mypy_extensions`, `packaging`, `pathspec`, `pluggy`,
@@ -67,6 +76,11 @@ The workflow in `.github/workflows/ci.yml`:
 - declares `ubuntu-24.04` and `macos-15` with Python 3.11–3.14;
 - invokes the same `make check` gate used locally;
 - grants no repository write, secret, artifact-upload, or OIDC permission.
+
+The separate `.github/workflows/codeql.yml` workflow analyzes Python on pushes, pull requests, a
+monthly schedule, and manual dispatch. It uses commit-SHA-pinned checkout and CodeQL actions,
+disables checkout credential persistence, and grants only `contents: read` plus the
+`security-events: write` permission required to upload its analysis result.
 
 `contents: read` constrains the GitHub token, not the runner. A job still creates a virtual
 environment, resolves development tools, writes its ephemeral filesystem, and executes checked-out

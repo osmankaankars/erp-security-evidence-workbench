@@ -12,7 +12,20 @@ from erp_security_evidence_workbench.cli import main
 
 SCHEMA = "erpsec.synthetic-evidence/v1"
 AS_OF = "2026-09-01T00:00:00Z"
-RULE_IDS = ("ERP001", "ERP002", "ERP003", "ERP004", "ERP005", "ERP006")
+CORE_RULE_IDS = (
+    "ERP001",
+    "ERP002",
+    "ERP003",
+    "ERP004",
+    "ERP005",
+    "ERP006",
+)
+CATALOG_RULE_IDS = (
+    *CORE_RULE_IDS,
+    "ERP007",
+    "ERP008",
+    "ERP009",
+)
 
 
 def _record(record_type: str, record_id: str, **fields: object) -> dict[str, object]:
@@ -153,13 +166,13 @@ def test_rules_command_emits_deterministic_machine_readable_catalog(
     assert first.out == second.out
     assert first.out.endswith("\n")
     assert hashlib.sha256(first.out.encode()).hexdigest() == (
-        "c196234926d347d153e4796180c3299073665a99372456d3ba83537e9e24f2fc"
+        "02d6f596f736e8ae82782c75efd1e698d717311f5a57f74bf15eefb19c505ed8"
     )
     catalog_document = json.loads(first.out)
     assert catalog_document["schema_version"] == "erpsec.rule-catalog/v1"
     catalog = catalog_document["rules"]
-    assert [item["rule_id"] for item in catalog] == list(RULE_IDS)
-    assert [item["rule_version"] for item in catalog] == ["1.0.0"] * 6
+    assert [item["rule_id"] for item in catalog] == list(CATALOG_RULE_IDS)
+    assert [item["rule_version"] for item in catalog] == ["1.0.0"] * 9
     for item in catalog:
         assert {
             "fixed_conditions",
@@ -217,10 +230,10 @@ def test_rule_all_produces_six_evaluations_and_six_scenario_findings(tmp_path: P
     assert _analyze(input_path, output_path, rule_args=("--rule", "all")) == 1
 
     report = json.loads(output_path.read_text(encoding="utf-8"))
-    assert [evaluation["rule_id"] for evaluation in report["evaluations"]] == list(RULE_IDS)
+    assert [evaluation["rule_id"] for evaluation in report["evaluations"]] == list(CORE_RULE_IDS)
     assert all(evaluation["status"] == "matched" for evaluation in report["evaluations"])
     assert len(report["findings"]) == 6
-    assert {finding["rule_id"] for finding in report["findings"]} == set(RULE_IDS)
+    assert {finding["rule_id"] for finding in report["findings"]} == set(CORE_RULE_IDS)
 
 
 def test_rule_all_missing_required_record_types_never_publishes_partial_report(

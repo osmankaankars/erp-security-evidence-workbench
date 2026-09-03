@@ -1,0 +1,1 @@
+{"action":"UPDATE_PROFILE","dataset_classification":"synthetic","object_id":"profile-lab-analyst","occurred_at":"2026-09-01T12:20:00Z","outcome":"success","principal_id":"analyst-8","record_id":"clean-change-1","record_type":"change_event","schema_version":"erpsec.synthetic-evidence/v1"}

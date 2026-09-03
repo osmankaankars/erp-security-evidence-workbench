@@ -1,12 +1,12 @@
 # Report formats
 
-This document defines the `0.1.0rc1` report contract. All formats are deterministic projections of
+This document defines the `0.2.0rc1` report contracts. All formats are deterministic projections of
 the same validated, synthetic-only rule-engine result; none represents a live-system or compliance
 conclusion.
 
-The `analyze` command requires an explicit `--format json`, `--format html`, or
+The `analyze` and `replay` commands require an explicit `--format json`, `--format html`, or
 `--format sarif`. The output suffix is not inferred, and the output path must be new and distinct
-from every input path.
+from every input path, including the replay manifest and every declared replay source.
 
 All three serializers receive the same engine-validated findings and evaluations. A finding keeps
 the same rule ID, rule version, native severity, stable fingerprint, and field-level evidence
@@ -16,8 +16,19 @@ documented below.
 
 ## JSON
 
-JSON is the canonical `erpsec.report/v1` contract. It contains the complete minimized evidence and
-source manifests, selected-rule evaluations, findings, run metadata, and tool version.
+`analyze` JSON remains the canonical `erpsec.report/v1` contract. It contains the complete minimized
+evidence and source manifests, selected-rule evaluations, findings, run metadata, and tool version.
+
+`replay` JSON uses `erpsec.report/v2`. It preserves the v1 members and adds:
+
+- `replay`: replay ID and manifest basename, schema, and SHA-256;
+- `correlations`: stable IDs, opaque dedupe keys, rule identity, closed-window semantics, and
+  ordered evidence-chain steps;
+- `correlation_id` on each correlated finding;
+- `source_id` in replay source-manifest entries and replay source/correlation counts in `run`.
+
+This is an intentional additive schema boundary. A v2 consumer must not silently treat correlation
+metadata as a v1 document. See the [Replay contract](REPLAY_CONTRACT.md).
 
 ## HTML
 
@@ -26,6 +37,10 @@ field-level evidence locations, rule details, limitations, and run metadata. It 
 hash-authorized inline stylesheet and no JavaScript, external CSS, fonts, images, forms, trackers,
 or network-capable resources. Dynamic text and attributes are context escaped; source basenames
 are displayed as text and never linked.
+
+For v2 replay reports, HTML adds a correlation-episode section and stable
+`data-correlation-id` hooks on both findings and episode articles. Each episode shows its explicit
+window and ordered source/record/time/explanation chain. It adds no active content.
 
 The clean-state wording is deliberately qualified. “No findings in supplied evidence” means only
 that the selected rules did not match the fully processed supplied files. It does not prove
@@ -37,6 +52,10 @@ SARIF output targets version 2.1.0. Selected rules appear once in the driver cat
 references that catalog entry and preserves the canonical fingerprint and native severity.
 `high` maps to SARIF `error`, and `medium` maps to `warning`; an unmapped future severity fails
 rendering rather than being silently downgraded.
+
+For v2 replay reports, each correlated result includes `erpsec.correlationId`; the run properties
+include `erpsec.correlations` and `erpsec.replay`. These namespaced properties preserve the canonical
+v2 data without changing the SARIF 2.1.0 envelope.
 
 Only relative, percent-encoded source basenames are emitted as artifact URIs. CSV rows and JSONL
 lines map to SARIF `region.startLine`. JSON evidence keeps its exact RFC 6901 pointer in location
@@ -139,4 +158,11 @@ PYTHONPATH=src python3.11 -m erp_security_evidence_workbench analyze \
   --as-of 2026-09-01T00:00:00Z \
   --format sarif \
   --output /tmp/erpsec-report.sarif.json
+
+PYTHONPATH=src python3.11 -m erp_security_evidence_workbench replay \
+  examples/replay/detection-correlation/replay-manifest.json \
+  --as-of 2026-09-01T12:45:00Z \
+  --rule all \
+  --format json \
+  --output /tmp/erpsec-replay-report.json
 ```

@@ -2,13 +2,12 @@
 
 ## Overview
 
-This document covers the `0.1.0rc1` implementation of ERP Security Evidence Workbench. The product
+This document covers the `0.2.0rc1` implementation of ERP Security Evidence Workbench. The product
 boundary is a Python 3.11+ command-line process that accepts explicitly
 named local synthetic CSV, JSON, or JSONL files, normalizes a fixed schema, evaluates a fixed
 registry of deterministic rules, renders JSON/HTML/SARIF bytes, and publishes one new local report.
 It has no connector, service, account, credential, remediation, telemetry, or runtime network
-path (`src/erp_security_evidence_workbench/cli.py:36-59`,
-`src/erp_security_evidence_workbench/ingest.py:32-120`).
+path (`cli._parser`, `cli.main`, `ingest.load_evidence`, and `replay.load_replay_manifest`).
 
 The actual data flow is:
 
@@ -17,14 +16,20 @@ operator paths and options
         |
         v
 CLI validation -> descriptor-anchored adapters -> canonical evidence bundle
-        -> coverage + deterministic rules -> bounded evidence references
+        -> optional digest-pinned replay adapters -> coverage + deterministic rules
+        -> bounded evidence references and correlation episodes
         -> JSON / static HTML / SARIF renderer -> no-overwrite local publisher
 ```
 
 The report is built in memory before any publication path is created. Input normalization does not
-retain an arbitrary raw record object; it constructs one of six fixed canonical record types and a
-minimized source reference (`src/erp_security_evidence_workbench/normalization.py:56-105`,
-`src/erp_security_evidence_workbench/models.py:31-109`).
+retain an arbitrary raw record object; it constructs a fixed canonical record type and a
+minimized source reference (`normalization.normalize_payload`, the replay normalizers, and
+`src/erp_security_evidence_workbench/models.py`).
+
+Replay adds a local manifest trust boundary: every basename-local source must be a distinct regular
+file, match a declared SHA-256 digest, use an allowlisted adapter, declare synthetic classification,
+and limit IP data to documentation ranges. The digest detects mismatch but is not a signature or
+source-authenticity proof. A manifest cannot declare a URL or executable command.
 
 ## Assets and security objectives
 
@@ -37,7 +42,7 @@ minimized source reference (`src/erp_security_evidence_workbench/normalization.p
 - Keep runtime offline and subprocess-free.
 - Keep diagnostics generic; do not echo records, paths, identifiers, exception text, or
   credential-like values.
-- Bound source parsing and pathological custom-rule evidence fan-out before rendering.
+- Bound source parsing and pathological fixed-rule evidence fan-out before rendering.
 
 Reports are not confidentiality-free artifacts. JSON always includes minimized source and evidence
 manifests, so even a clean JSON report contains basenames, SHA-256 digests, format/adapter IDs,
@@ -51,7 +56,7 @@ synthetic evidence is authorized.
 
 1. **Operator to CLI.** Arguments and requested paths are untrusted strings. Argument failures use
    a fixed diagnostic instead of reflecting the supplied value
-   (`src/erp_security_evidence_workbench/cli.py:28-33`).
+   (`cli._SafeArgumentParser`).
 2. **Filesystem namespace to opened descriptors.** Source and output parent directories are opened
    once; final-component operations use a basename plus `dir_fd`. Before an input descriptor can be
    acquired, the adapter blocks `SIGINT` for the complete descriptor-owning scope, checks a pending
@@ -59,15 +64,14 @@ synthetic evidence is authorized.
    makes bounded close attempts for both owned descriptors, and only then restores the prior
    thread mask. Its binary wrapper is non-owning. Inputs use `O_NOFOLLOW`, regular-file checks,
    identity/state comparisons before and after parsing, and a parent-binding check
-   (`src/erp_security_evidence_workbench/adapters.py:104-332`).
+   (`adapters.parse_source` and its descriptor helpers).
 3. **Untrusted bytes to canonical model.** Bounded adapters parse the complete source and strict
    normalization rejects unknown fields, unsupported types, non-synthetic classification, invalid
-   identifiers, and duplicate record IDs (`src/erp_security_evidence_workbench/adapters.py:335-591`,
-   `src/erp_security_evidence_workbench/normalization.py:56-105`,
-   `src/erp_security_evidence_workbench/ingest.py:93-95`).
+   identifiers, and duplicate record IDs (`adapters._parse_open_source`,
+   `normalization.normalize_payload`, `ingest.load_evidence`, and the replay normalizers).
 4. **Canonical model to finding engine.** Coverage is checked before evaluation. The run is rejected
    if retained finding evidence would exceed 30,000 references
-   (`src/erp_security_evidence_workbench/rules.py:401-445`).
+   (`rules._preflight_coverage` and `rules.evaluate_rules`).
 5. **In-memory report to filesystem.** The publisher requests a random exclusive temporary no
    broader than mode `0600` in the opened parent, forces exact mode `0600` before writing, writes and
    file-syncs the complete bytes, links a
@@ -82,13 +86,15 @@ synthetic evidence is authorized.
    `fchmod` can leave only an empty file no broader than `0600`; later partial/complete residuals are
    exactly `0600`. If the complete final link was created but its verification failed, one or both of the
    mode-`0600` final and temporary names can remain while the operation reports failure
-   (`src/erp_security_evidence_workbench/reporting.py:264-635`).
+   (`reporting.write_new_report` and its descriptor-relative publication helpers).
 6. **Development supply chain.** Runtime dependencies are empty. Development dependencies and two
-   GitHub Actions are a separate trust boundary; actions are pinned by full commit SHA, the GitHub
-   token is limited to `contents: read`, and checkout credentials are not persisted. The workflow
-   still writes its ephemeral runner filesystem, resolves development dependencies, and executes
-   checked-out pull-request code with the runner's process and network authority
-   (`pyproject.toml:5-36`, `Makefile:8-33`, `.github/workflows/ci.yml:1-36`).
+   GitHub Actions workflows are a separate trust boundary; actions are pinned by full commit SHA
+   and checkout credentials are not persisted. The CI token is limited to `contents: read`.
+   CodeQL additionally receives only `security-events: write`, which is required to upload its
+   analysis result. Each workflow still writes its ephemeral runner filesystem, resolves or uses
+   development tooling, and executes checked-out code with the runner's process and network
+   authority (`pyproject.toml:5-36`, `Makefile:8-33`, `.github/workflows/ci.yml`, and
+   `.github/workflows/codeql.yml`).
    Source-snapshot generation additionally trusts the local Git executable and object database. It
    requires one resolvable committed `HEAD`, rejects dirty tracked/index state and non-ordinary
    index flags, reads only regular-file blobs from that exact tree, and rechecks state and `HEAD`
@@ -103,9 +109,7 @@ synthetic evidence is authorized.
    delivery can cross a peer-thread boundary before Python records a returned descriptor. The
    embedding process owns correct sequencing, signal/thread
    policy, matching rule parameters, retention, and any transport
-   (`src/erp_security_evidence_workbench/cli.py:84-134`,
-   `src/erp_security_evidence_workbench/reporting.py:49-137`,
-   `src/erp_security_evidence_workbench/reporting.py:264-299`).
+   (`cli.main`, the `reporting.build_*_report` functions, and `reporting.write_new_report`).
 
 Supported filesystem hardening assumes a local POSIX host with the Python `dir_fd`, `O_NOFOLLOW`,
 `O_DIRECTORY`, `fchmod`, `fsync`, and hard-link behavior exercised on macOS/Linux. The operator is
@@ -117,8 +121,10 @@ effective directory access remains an operator/host assumption.
 
 - An author of a malformed or adversarial local input file.
 - A concurrent local process able to alter an input name/file or the requested output directory.
-- An untrusted pull-request author whose checked-out code may execute on the CI runner. Repository
-  API authority is token-read-only; runner filesystem, process, and network authority are separate.
+- An untrusted pull-request author whose checked-out code may execute on a workflow runner. The CI
+  token is repository-read-only; the CodeQL token additionally has narrowly scoped
+  `security-events: write` authority. Runner filesystem, process, and network authority are
+  separate.
 
 The following are outside the guaranteed boundary: a compromised operator account, a malicious
 process with unrestricted access under the same user ID, a compromised Python interpreter or
@@ -136,12 +142,12 @@ only when the behavior is reproduced; resolved reproductions are recorded separa
 | Priority | Surface | Control and evidence | Residual risk |
 | --- | --- | --- | --- |
 | High | Input path substitution, symlink, FIFO/device swap, or in-read mutation | Descriptor-relative `O_NOFOLLOW` open, nonblocking open before regular-file check, pre/open/post identity and state comparisons, parent-binding verification, and dedicated filesystem-hardening tests | A same-UID process can continue racing after the last verification point; this is detection at defined checkpoints, not an immutable filesystem snapshot |
-| High | Forged, partial, or overwritten final report | Exclusive random temporary requested no broader than `0600`, exact `fchmod(0600)` before writing, complete direct descriptor writes plus `fsync`, exclusive hard link, inode/mode/size verification, no-overwrite collision handling, parent-binding verification, and interrupt cleanup (`src/erp_security_evidence_workbench/reporting.py:264-635`) | Portable Python cannot link directly from an unnamed file descriptor on both macOS and Linux; trusted-directory/same-UID assumptions remain |
-| Medium | Resource exhaustion | Per-source, aggregate, line/row, scalar, object, depth, and record ceilings plus a 30,000 finding-evidence-reference ceiling (`src/erp_security_evidence_workbench/adapters.py:21-65`, `src/erp_security_evidence_workbench/rules.py:34-38`) | A valid maximum input/report can still use material CPU, memory, and disk; there is no performance or service-level claim |
+| High | Forged, partial, or overwritten final report | Exclusive random temporary requested no broader than `0600`, exact `fchmod(0600)` before writing, complete direct descriptor writes plus `fsync`, exclusive hard link, inode/mode/size verification, no-overwrite collision handling, parent-binding verification, and interrupt cleanup (`reporting.write_new_report` and its publication helpers) | Portable Python cannot link directly from an unnamed file descriptor on both macOS and Linux; trusted-directory/same-UID assumptions remain |
+| Medium | Resource exhaustion | Per-source, aggregate, line/row, scalar, object, depth, and record ceilings plus a 30,000 finding-evidence-reference ceiling (`adapters.IngestLimits`, `rules.MAX_FINDING_EVIDENCE_REFS`) | A valid maximum input/report can still use material CPU, memory, and disk; there is no performance or service-level claim |
 | Medium | Evidence or credential disclosure | Fixed diagnostics, no arbitrary raw payload retention, minimized provenance, output escaping, and privacy canaries across all report formats | Basenames and record IDs are intentionally reportable and are not secret-scanned or silently redacted |
-| Medium | HTML/SARIF injection or network-capable output | HTML context escaping, fixed CSP and no active/external resources; SARIF uses structured JSON and relative percent-encoded basename URIs (`src/erp_security_evidence_workbench/html_report.py:1-329`, `src/erp_security_evidence_workbench/sarif_report.py:19-218`) | A downstream viewer has its own parser and security boundary; this project does not certify viewers |
-| Low | Runtime network/process escape | Runtime imports are standard-library/project code; tests monkeypatch common socket/process seams and installed-wheel probes reject `socket.*`, `subprocess.Popen`, `os.system`, `os.posix_spawn`, and `os.posix_spawnp` audit events (`tests/test_cli.py:821-837`, `scripts/package_smoke.py:21-47`) | The audit hook does not block every possible process primitive (for example, `os.fork`) and is verification-only; development bootstrap and CI use package/network/process infrastructure |
-| Low | CI action or dependency compromise | Official actions pinned to full SHAs, GitHub token limited to `contents: read`, checkout credentials disabled; runtime dependency set empty | Pull-request code and development dependencies execute with ephemeral runner process/filesystem and available network authority; requirements are not hash-locked and no vulnerability-database conclusion is claimed |
+| Medium | HTML/SARIF injection or network-capable output | HTML context escaping, fixed CSP and no active/external resources; SARIF uses structured JSON and relative percent-encoded basename URIs (`html_report.render_html_report`, `sarif_report.render_sarif_report`) | A downstream viewer has its own parser and security boundary; this project does not certify viewers |
+| Low | Runtime network/process escape | Runtime imports are standard-library/project code; tests monkeypatch common socket/process seams and installed-wheel probes reject `socket.*`, `subprocess.Popen`, `os.system`, `os.posix_spawn`, and `os.posix_spawnp` audit events (`tests/test_cli.py`, `tests/test_replay_v2.py`, and `scripts/package_smoke.py`) | The audit hook does not block every possible process primitive (for example, `os.fork`) and is verification-only; development bootstrap and CI use package/network/process infrastructure |
+| Low | CI action or dependency compromise | Official actions pinned to full SHAs; CI token limited to `contents: read`; CodeQL token limited to `contents: read` plus `security-events: write`; checkout credentials disabled; runtime dependency set empty | Pull-request code and development dependencies execute with ephemeral runner process/filesystem and available network authority; requirements are not hash-locked and no vulnerability-database conclusion is claimed |
 | Low | Misleading revision-bound source snapshot through working-tree substitution or unresolved Git state | Snapshot paths and bytes come from one resolved `HEAD` tree and regular-file blobs; staged/unstaged changes, hidden index flags, unsupported entries, Git failures, and a changed `HEAD` fail closed; regression tests cover linked worktrees and ignored internal files | A compromised Git executable or object database is outside this tool's independent verification boundary; the manifest is not signed |
 
 ## Severity calibration

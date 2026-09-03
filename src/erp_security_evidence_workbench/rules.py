@@ -17,13 +17,18 @@ from erp_security_evidence_workbench.errors import (
 from erp_security_evidence_workbench.models import (
     AuthEvent,
     CanonicalRecord,
+    ChangeEvent,
     ControlState,
+    CorrelationEpisode,
+    CorrelationStep,
     EvidenceBundle,
     Finding,
     FindingEvidence,
+    ObservedEvent,
     PermissionAssignment,
     Principal,
     RuleEvaluation,
+    ThreatIndicator,
 )
 from erp_security_evidence_workbench.timestamps import normalize_rfc3339_seconds
 
@@ -164,6 +169,7 @@ class RuleRun:
 
     findings: tuple[Finding, ...]
     evaluations: tuple[RuleEvaluation, ...]
+    correlations: tuple[CorrelationEpisode, ...] = ()
 
 
 RULE_REGISTRY: tuple[RuleDefinition, ...] = (
@@ -384,9 +390,134 @@ RULE_REGISTRY: tuple[RuleDefinition, ...] = (
     ),
 )
 
+DETECTION_RULE_REGISTRY: tuple[RuleDefinition, ...] = (
+    RuleDefinition(
+        rule_id="ERP007",
+        rule_version="1.0.0",
+        title="Failed sign-ins are followed by a successful sign-in",
+        severity="high",
+        severity_rationale=(
+            "A success after repeated failures from the same synthetic source can warrant "
+            "review for credential misuse or an operational access issue."
+        ),
+        required_evidence_types=("observed_event",),
+        parameters=(),
+        fixed_conditions=(
+            RuleParameter(
+                name="failure_threshold",
+                default=3,
+                description="Exactly three preceding failures are retained in each episode.",
+            ),
+            RuleParameter(
+                name="maximum_window_seconds",
+                default=600,
+                description=(
+                    "At most 600 seconds from the first retained failure through a strictly "
+                    "later success; the 600-second boundary is inclusive."
+                ),
+            ),
+            RuleParameter(
+                name="action",
+                default="SIGN_IN",
+                description="Generic authentication action evaluated by this rule.",
+            ),
+        ),
+        limitation=(
+            "ERP007 evaluates only supplied synthetic events and cannot establish attacker "
+            "identity, intent, device context, or source-system completeness."
+        ),
+        remediation=(
+            "Review the correlated evidence chain, validate the principal and source context, "
+            "and follow an authorized incident-response or access-support process."
+        ),
+    ),
+    RuleDefinition(
+        rule_id="ERP008",
+        rule_version="1.0.0",
+        title="Successful sign-in matches a local synthetic threat indicator",
+        severity="high",
+        severity_rationale=(
+            "A successful sign-in from an address present in a supplied local indicator set can "
+            "justify prioritized human review."
+        ),
+        required_evidence_types=("observed_event", "threat_indicator"),
+        parameters=(),
+        fixed_conditions=(
+            RuleParameter(
+                name="action",
+                default="SIGN_IN",
+                description="Generic authentication action evaluated by this rule.",
+            ),
+            RuleParameter(
+                name="outcome",
+                default="success",
+                description="Only explicitly successful synthetic events are correlated.",
+            ),
+            RuleParameter(
+                name="indicator_validity",
+                default="inclusive",
+                description="Event time must be inside the closed indicator-validity interval.",
+            ),
+        ),
+        limitation=(
+            "ERP008 uses only a user-supplied local synthetic indicator file; it performs no "
+            "online lookup and does not assert that an address is malicious in the real world."
+        ),
+        remediation=(
+            "Validate the indicator source and event context, then follow the authorized triage "
+            "process before taking any containment action."
+        ),
+    ),
+    RuleDefinition(
+        rule_id="ERP009",
+        rule_version="1.0.0",
+        title="Successful sign-in precedes a sensitive change",
+        severity="medium",
+        severity_rationale=(
+            "A sensitive change shortly after authentication can warrant review of authorization "
+            "and change-management context."
+        ),
+        required_evidence_types=("change_event", "observed_event"),
+        parameters=(),
+        fixed_conditions=(
+            RuleParameter(
+                name="maximum_window_seconds",
+                default=1800,
+                description=(
+                    "Sensitive change must occur strictly after the successful sign-in and no "
+                    "more than 1,800 seconds later."
+                ),
+            ),
+            RuleParameter(
+                name="sensitive_actions",
+                default=("DISABLE_AUDIT", "GRANT_PRIVILEGE"),
+                description="Fixed vendor-neutral synthetic change actions.",
+            ),
+            RuleParameter(
+                name="outcome",
+                default="success",
+                description="Both the sign-in and change must have successful outcomes.",
+            ),
+        ),
+        limitation=(
+            "ERP009 identifies a supplied synthetic timing pattern only; it does not determine "
+            "malicious intent, policy violation, or whether the change was approved."
+        ),
+        remediation=(
+            "Review the authentication and change evidence against the authorized change record "
+            "and escalate only through the documented investigation process."
+        ),
+    ),
+)
+
+FULL_RULE_REGISTRY = (*RULE_REGISTRY, *DETECTION_RULE_REGISTRY)
 ALL_RULE_IDS: tuple[str, ...] = tuple(definition.rule_id for definition in RULE_REGISTRY)
+DETECTION_RULE_IDS: tuple[str, ...] = tuple(
+    definition.rule_id for definition in DETECTION_RULE_REGISTRY
+)
+FULL_RULE_IDS = (*ALL_RULE_IDS, *DETECTION_RULE_IDS)
 DEFAULT_RULE_PARAMETERS = RuleParameters()
-_DEFINITIONS_BY_ID = {definition.rule_id: definition for definition in RULE_REGISTRY}
+_DEFINITIONS_BY_ID = {definition.rule_id: definition for definition in FULL_RULE_REGISTRY}
 
 
 def evaluate(bundle: EvidenceBundle) -> tuple[Finding, ...]:
@@ -442,13 +573,22 @@ def evaluate_rules(
         )
         for definition, rule_findings in findings_by_rule
     )
-    return RuleRun(findings=findings, evaluations=evaluations)
+    correlations_by_id = {
+        finding.correlation.correlation_id: finding.correlation
+        for finding in findings
+        if finding.correlation is not None
+    }
+    return RuleRun(
+        findings=findings,
+        evaluations=evaluations,
+        correlations=tuple(correlations_by_id[key] for key in sorted(correlations_by_id)),
+    )
 
 
 def build_rule_catalog() -> bytes:
     """Serialize the stable rule registry as deterministic JSON."""
     document = {
-        "rules": [definition.to_dict() for definition in RULE_REGISTRY],
+        "rules": [definition.to_dict() for definition in FULL_RULE_REGISTRY],
         "schema_version": RULE_CATALOG_SCHEMA_VERSION,
     }
     return (
@@ -472,7 +612,9 @@ def _selected_definitions(selected_rule_ids: Sequence[str]) -> tuple[RuleDefinit
     if any(rule_id not in _DEFINITIONS_BY_ID for rule_id in selected):
         raise InputValidationError("rule selection is unsupported")
     selected_set = set(selected)
-    return tuple(definition for definition in RULE_REGISTRY if definition.rule_id in selected_set)
+    return tuple(
+        definition for definition in FULL_RULE_REGISTRY if definition.rule_id in selected_set
+    )
 
 
 def _preflight_coverage(
@@ -492,6 +634,8 @@ def _preflight_coverage(
         raise IncompleteEvidenceError("evidence coverage is incomplete")
 
     selected_ids = {definition.rule_id for definition in definitions}
+    if selected_ids.intersection(DETECTION_RULE_IDS) and bundle.replay is None:
+        raise IncompleteEvidenceError("replay evidence coverage is incomplete")
     if "ERP001" in selected_ids and not any(
         isinstance(record, ControlState) and record.control == "AUDIT_LOGGING"
         for record in bundle.records
@@ -794,6 +938,289 @@ def _evaluate_erp006(
     return tuple(findings)
 
 
+def _evaluate_erp007(
+    bundle: EvidenceBundle,
+    as_of: datetime,
+    parameters: RuleParameters,
+    definition: RuleDefinition,
+) -> tuple[Finding, ...]:
+    del parameters
+    threshold = 3
+    maximum = timedelta(seconds=600)
+    events_by_key: dict[tuple[str, str, str], list[ObservedEvent]] = {}
+    for record in bundle.records:
+        if (
+            isinstance(record, ObservedEvent)
+            and record.action == "SIGN_IN"
+            and _as_datetime(record.occurred_at) <= as_of
+        ):
+            key = (record.source_id, record.principal_id, record.source_address)
+            events_by_key.setdefault(key, []).append(record)
+
+    findings: list[Finding] = []
+    for key in sorted(events_by_key):
+        ordered = sorted(
+            events_by_key[key],
+            key=lambda item: (item.occurred_at, item.record_id),
+        )
+        for success in ordered:
+            if success.outcome != "success":
+                continue
+            success_time = _as_datetime(success.occurred_at)
+            failures = [
+                item
+                for item in ordered
+                if item.outcome == "failure"
+                and _as_datetime(item.occurred_at) < success_time
+                and success_time - _as_datetime(item.occurred_at) <= maximum
+            ]
+            if len(failures) < threshold:
+                continue
+            retained = tuple(failures[-threshold:])
+            records: tuple[CanonicalRecord, ...] = (*retained, success)
+            correlation = _correlation(
+                bundle,
+                definition,
+                records,
+                dedupe_material={
+                    "principal_id": key[1],
+                    "source_address": key[2],
+                    "source_id": key[0],
+                },
+                window_start=retained[0].occurred_at,
+                window_end=success.occurred_at,
+                maximum_seconds=600,
+                summaries=(*("Failed synthetic sign-in" for _ in retained), "Successful sign-in"),
+                fields=(
+                    *(
+                        (
+                            "action",
+                            "occurred_at",
+                            "outcome",
+                            "principal_id",
+                            "source_address",
+                        )
+                        for _ in retained
+                    ),
+                    (
+                        "action",
+                        "occurred_at",
+                        "outcome",
+                        "principal_id",
+                        "source_address",
+                    ),
+                ),
+            )
+            evidence = tuple(
+                FindingEvidence(record, field)
+                for record in records
+                for field in (
+                    "action",
+                    "occurred_at",
+                    "outcome",
+                    "principal_id",
+                    "source_address",
+                )
+            )
+            findings.append(
+                _finding(
+                    definition,
+                    description=(
+                        "Three failed synthetic sign-ins from the same source and principal are "
+                        "timestamped strictly before a success inside the inclusive ten-minute "
+                        "window."
+                    ),
+                    evidence=evidence,
+                    correlation=correlation,
+                )
+            )
+            break
+    return tuple(findings)
+
+
+def _evaluate_erp008(
+    bundle: EvidenceBundle,
+    as_of: datetime,
+    parameters: RuleParameters,
+    definition: RuleDefinition,
+) -> tuple[Finding, ...]:
+    del parameters
+    indicators_by_value: dict[str, list[ThreatIndicator]] = {}
+    for record in bundle.records:
+        if isinstance(record, ThreatIndicator):
+            indicators_by_value.setdefault(record.value, []).append(record)
+
+    findings: list[Finding] = []
+    seen_dedupe_keys: set[str] = set()
+    events = sorted(
+        (
+            record
+            for record in bundle.records
+            if isinstance(record, ObservedEvent)
+            and record.action == "SIGN_IN"
+            and record.outcome == "success"
+            and _as_datetime(record.occurred_at) <= as_of
+        ),
+        key=lambda item: (item.occurred_at, item.record_id),
+    )
+    for event in events:
+        event_time = _as_datetime(event.occurred_at)
+        matching = sorted(
+            (
+                indicator
+                for indicator in indicators_by_value.get(event.source_address, [])
+                if _as_datetime(indicator.valid_from)
+                <= event_time
+                <= _as_datetime(indicator.valid_until)
+            ),
+            key=lambda item: (item.indicator_id, item.record_id),
+        )
+        if not matching:
+            continue
+        indicator = matching[0]
+        dedupe_material = {
+            "principal_id": event.principal_id,
+            "source_address": event.source_address,
+            "source_id": event.source_id,
+        }
+        dedupe_key = _stable_digest({"rule_id": definition.rule_id, **dedupe_material})
+        if dedupe_key in seen_dedupe_keys:
+            continue
+        seen_dedupe_keys.add(dedupe_key)
+        maximum_seconds = int(
+            (
+                _as_datetime(indicator.valid_until) - _as_datetime(indicator.valid_from)
+            ).total_seconds()
+        )
+        correlation = _correlation(
+            bundle,
+            definition,
+            (indicator, event),
+            dedupe_material=dedupe_material,
+            window_start=indicator.valid_from,
+            window_end=indicator.valid_until,
+            maximum_seconds=maximum_seconds,
+            summaries=("Local synthetic IP indicator", "Successful sign-in from matched address"),
+            fields=(
+                ("value", "valid_from", "valid_until", "confidence"),
+                ("source_address", "action", "outcome", "occurred_at"),
+            ),
+        )
+        findings.append(
+            _finding(
+                definition,
+                description=(
+                    "A successful synthetic sign-in source address exactly matches a supplied "
+                    "local synthetic indicator during its inclusive validity interval."
+                ),
+                evidence=(
+                    FindingEvidence(indicator, "value"),
+                    FindingEvidence(indicator, "valid_from"),
+                    FindingEvidence(indicator, "valid_until"),
+                    FindingEvidence(event, "source_address"),
+                    FindingEvidence(event, "action"),
+                    FindingEvidence(event, "occurred_at"),
+                    FindingEvidence(event, "outcome"),
+                ),
+                correlation=correlation,
+            )
+        )
+    return tuple(findings)
+
+
+def _evaluate_erp009(
+    bundle: EvidenceBundle,
+    as_of: datetime,
+    parameters: RuleParameters,
+    definition: RuleDefinition,
+) -> tuple[Finding, ...]:
+    del parameters
+    maximum = timedelta(seconds=1800)
+    sensitive_actions = {"DISABLE_AUDIT", "GRANT_PRIVILEGE"}
+    successes_by_principal: dict[str, list[ObservedEvent]] = {}
+    for record in bundle.records:
+        if (
+            isinstance(record, ObservedEvent)
+            and record.action == "SIGN_IN"
+            and record.outcome == "success"
+            and _as_datetime(record.occurred_at) <= as_of
+        ):
+            successes_by_principal.setdefault(record.principal_id, []).append(record)
+
+    findings: list[Finding] = []
+    seen_dedupe_keys: set[str] = set()
+    changes = sorted(
+        (
+            record
+            for record in bundle.records
+            if isinstance(record, ChangeEvent)
+            and record.action in sensitive_actions
+            and record.outcome == "success"
+            and _as_datetime(record.occurred_at) <= as_of
+        ),
+        key=lambda item: (item.occurred_at, item.record_id),
+    )
+    for change in changes:
+        change_time = _as_datetime(change.occurred_at)
+        candidates = sorted(
+            (
+                event
+                for event in successes_by_principal.get(change.principal_id, [])
+                if _as_datetime(event.occurred_at)
+                < change_time
+                <= _as_datetime(event.occurred_at) + maximum
+            ),
+            key=lambda item: (item.occurred_at, item.record_id),
+        )
+        if not candidates:
+            continue
+        sign_in = candidates[-1]
+        dedupe_material = {
+            "action": change.action,
+            "object_id": change.object_id,
+            "principal_id": change.principal_id,
+        }
+        dedupe_key = _stable_digest({"rule_id": definition.rule_id, **dedupe_material})
+        if dedupe_key in seen_dedupe_keys:
+            continue
+        seen_dedupe_keys.add(dedupe_key)
+        correlation = _correlation(
+            bundle,
+            definition,
+            (sign_in, change),
+            dedupe_material=dedupe_material,
+            window_start=sign_in.occurred_at,
+            window_end=change.occurred_at,
+            maximum_seconds=1800,
+            summaries=("Successful sign-in", "Successful sensitive synthetic change"),
+            fields=(
+                ("principal_id", "occurred_at", "outcome"),
+                ("principal_id", "object_id", "action", "occurred_at", "outcome"),
+            ),
+        )
+        findings.append(
+            _finding(
+                definition,
+                description=(
+                    "A successful synthetic sign-in is followed by a successful sensitive change "
+                    "for the same principal inside the inclusive thirty-minute window."
+                ),
+                evidence=(
+                    FindingEvidence(sign_in, "principal_id"),
+                    FindingEvidence(sign_in, "occurred_at"),
+                    FindingEvidence(sign_in, "outcome"),
+                    FindingEvidence(change, "principal_id"),
+                    FindingEvidence(change, "object_id"),
+                    FindingEvidence(change, "action"),
+                    FindingEvidence(change, "occurred_at"),
+                    FindingEvidence(change, "outcome"),
+                ),
+                correlation=correlation,
+            )
+        )
+    return tuple(findings)
+
+
 Evaluator = Callable[
     [EvidenceBundle, datetime, RuleParameters, RuleDefinition],
     tuple[Finding, ...],
@@ -805,6 +1232,9 @@ _EVALUATORS: dict[str, Evaluator] = {
     "ERP004": _evaluate_erp004,
     "ERP005": _evaluate_erp005,
     "ERP006": _evaluate_erp006,
+    "ERP007": _evaluate_erp007,
+    "ERP008": _evaluate_erp008,
+    "ERP009": _evaluate_erp009,
 }
 
 
@@ -814,6 +1244,7 @@ def _finding(
     description: str,
     evidence: tuple[FindingEvidence, ...],
     finding_key: str | None = None,
+    correlation: CorrelationEpisode | None = None,
 ) -> Finding:
     records = tuple(item.record for item in evidence)
     return Finding(
@@ -829,7 +1260,91 @@ def _finding(
         remediation=definition.remediation,
         required_evidence_types=definition.required_evidence_types,
         supporting_evidence=evidence,
+        correlation=correlation,
     )
+
+
+def _correlation(
+    bundle: EvidenceBundle,
+    definition: RuleDefinition,
+    records: tuple[CanonicalRecord, ...],
+    *,
+    dedupe_material: dict[str, str],
+    window_start: str,
+    window_end: str,
+    maximum_seconds: int,
+    summaries: tuple[str, ...],
+    fields: tuple[tuple[str, ...], ...],
+) -> CorrelationEpisode:
+    if len(records) != len(summaries) or len(records) != len(fields):
+        raise ValueError("correlation step definitions are inconsistent")
+    dedupe_key = _stable_digest(
+        {
+            "dedupe": dedupe_material,
+            "rule_id": definition.rule_id,
+            "rule_version": definition.rule_version,
+        }
+    )
+    correlation_id = _stable_digest(
+        {
+            "dedupe_key": dedupe_key,
+            "record_ids": [record.record_id for record in records],
+            "rule_id": definition.rule_id,
+            "rule_version": definition.rule_version,
+            "window_end": window_end,
+            "window_start": window_start,
+        }
+    )
+    source_ids = {
+        source.path: source.source_id for source in bundle.sources if source.source_id is not None
+    }
+    steps = tuple(
+        CorrelationStep(
+            position=index,
+            source_id=(
+                record.source_id
+                if isinstance(record, (ObservedEvent, ThreatIndicator))
+                else source_ids.get(record.source_ref.path, "")
+            ),
+            record=record,
+            occurred_at=_correlation_time(record),
+            summary=summary,
+            fields=step_fields,
+        )
+        for index, (record, summary, step_fields) in enumerate(
+            zip(records, summaries, fields, strict=True),
+            start=1,
+        )
+    )
+    return CorrelationEpisode(
+        correlation_id=correlation_id,
+        dedupe_key=dedupe_key,
+        rule_id=definition.rule_id,
+        rule_version=definition.rule_version,
+        window_start=window_start,
+        window_end=window_end,
+        maximum_seconds=maximum_seconds,
+        steps=steps,
+    )
+
+
+def _stable_digest(material: dict[str, Any]) -> str:
+    return hashlib.sha256(
+        json.dumps(
+            material,
+            ensure_ascii=True,
+            separators=(",", ":"),
+            sort_keys=True,
+        ).encode()
+    ).hexdigest()
+
+
+def _correlation_time(record: CanonicalRecord) -> str:
+    if isinstance(record, ThreatIndicator):
+        return record.valid_from
+    if isinstance(record, (ObservedEvent, AuthEvent, ChangeEvent)):
+        return record.occurred_at
+    raise ValueError("record type cannot be used as a correlation step")
 
 
 def _fingerprint(

@@ -38,10 +38,11 @@ engine-coherent report document
 
 ### Command surface
 
-`cli.py` defines two commands: `rules`, which emits the deterministic catalog, and `analyze`, which
-requires explicit input paths, analysis time, output format, and a new output path. It maps clean,
-finding, and failure states to exit codes `0`, `1`, and `2`. Argument and operational diagnostics
-are deliberately generic.
+`cli.py` defines `rules`, `analyze`, and `replay`. `rules` emits the deterministic catalog;
+`analyze` accepts explicit canonical evidence paths; `replay` accepts one digest-pinned synthetic
+multi-source manifest. Both analysis commands require an explicit analysis time, format, and new
+output path and map clean, finding, and failure states to exit codes `0`, `1`, and `2`. Argument and
+operational diagnostics are deliberately generic.
 
 ### Input adapters and normalization
 
@@ -55,12 +56,24 @@ fail closed.
 missing required field, incomplete selected-rule coverage, or exceeded resource ceiling rejects
 the complete run. Arbitrary source payload objects are not retained after normalization.
 
+`replay.py` validates the manifest/source contract, basename-local paths, distinct regular-file
+identities, declared SHA-256 digests, allowlisted adapters, synthetic classification, and
+documentation-range IP addresses. It normalizes ERP-neutral honeypot events, local synthetic IP
+indicators, and existing canonical evidence into one v2 bundle. It contains no URL, socket, feed,
+subprocess, live connector, or write-back surface.
+
 ### Rule engine
 
-`rules.py` contains a static, ordered registry of six versioned rules. Coverage is checked before
+`rules.py` contains a static, ordered registry of six evidence rules and three replay rules.
+Coverage is checked before
 evaluation. Evaluators consume only the canonical evidence bundle, a normalized UTC analysis time,
 and validated `RuleParameters`. Results use stable ordering, full SHA-256 semantic identifiers, and
 exact evidence references. The accepted finding-evidence fanout is capped before report creation.
+
+Replay rules add a closed-window correlation model. The engine hashes stable semantic grouping
+into an opaque dedupe key, retains the earliest qualifying episode per key, and hashes rule
+identity, ordered records, and explicit endpoints into a stable correlation ID. Ordered steps keep
+their source identity, timestamp, explanation, and decisive field references.
 
 There is no dynamic rule loading or executable configuration. Rule changes follow
 `docs/RULE_AUTHORING.md`.
@@ -68,7 +81,8 @@ There is no dynamic rule loading or executable configuration. Rule changes follo
 ### Report projections
 
 `reporting.py` reconstructs and validates rule outcomes before producing a canonical report
-document. JSON serializes that document directly; `html_report.py` renders an escaped, static,
+document. `analyze` retains `erpsec.report/v1`; replay correlation data uses the additive
+`erpsec.report/v2` contract. JSON serializes that document directly; `html_report.py` renders an escaped, static,
 self-contained investigation view; `sarif_report.py` creates the structured SARIF projection.
 Each format describes the same selected rules, evaluations, findings, fingerprints, severities,
 and evidence semantics, subject to its documented privacy minimization.

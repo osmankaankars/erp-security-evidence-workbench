@@ -6,7 +6,7 @@ ERP Security Evidence Workbench is authorized only for independently generated s
 The `dataset_classification: synthetic` field is enforced, but it is a contract marker rather than
 a content classifier. The tool cannot determine whether a user mislabeled real, personal,
 employer, customer, credential, or secret material
-(`src/erp_security_evidence_workbench/normalization.py:56-82`).
+(`normalize_payload` and the replay adapter normalizers).
 
 There is no telemetry, analytics, account, cookie, session, connector, remote schema retrieval, or
 runtime network call. Runtime dependencies are empty (`pyproject.toml:5-11`).
@@ -15,17 +15,16 @@ runtime network call. Runtime dependencies are empty (`pyproject.toml:5-11`).
 
 | Stage | Data handled | Retention/disclosure behavior |
 | --- | --- | --- |
-| Input | Explicit local CSV, JSON, or JSONL bytes | Opened read-only and consumed under fixed limits; the tool does not rewrite the source. Raw bytes exist transiently in ordinary Python process memory, which is not securely zeroed. Files remain owned and retained by the operator. |
-| Normalization | Six fixed typed records | Only allowed typed fields and minimized `SourceRef` values enter the canonical bundle; unknown/raw payload fields are rejected, not retained. |
-| Evaluation | Canonical records, selected rules, explicit analysis time | Deterministic in-memory findings reference the exact supporting canonical records and fields; report serialization emits only their record IDs and locators. Cumulative finding evidence is capped at 30,000 references. |
-| Report | JSON, HTML, or SARIF bytes | JSON always includes minimized source and evidence manifests: basenames, SHA-256 digests, formats, adapter IDs, byte/record counts, record IDs, and exact locators—even when clean. SARIF always includes the minimized source inventory and adds record IDs/locators only for finding results. HTML exposes only the source basename, format, record ID, and locator for rendered findings and has no source inventory when clean. All formats include bounded result/run metadata appropriate to that projection. |
+| Input | Explicit local CSV, JSON, or JSONL bytes; for replay, one manifest plus its digest-pinned basename-local sources | Opened read-only and consumed under fixed limits; the tool does not rewrite the source. Raw bytes exist transiently in ordinary Python process memory, which is not securely zeroed. Files remain owned and retained by the operator. |
+| Normalization | Fixed evidence, observed-event, and threat-indicator records | Only allowed typed fields and minimized `SourceRef` values enter the canonical bundle; unknown/raw payload fields are rejected, not retained. |
+| Evaluation | Canonical records, selected rules, explicit analysis time | Deterministic in-memory findings reference exact supporting records and fields. Replay episodes additionally retain source IDs, ordered record IDs, timestamps, opaque hashes, and fixed explanations. Cumulative finding evidence is capped at 30,000 references. |
+| Report | JSON, HTML, or SARIF bytes | JSON always includes minimized source and evidence manifests. Replay v2 also includes the manifest basename/digest, source IDs, correlation window timestamps, record IDs, and field locators. It does not serialize the source address or indicator value itself. SARIF retains the canonical replay and correlation objects in namespaced properties; HTML renders the bounded correlation chain but omits the replay manifest object and clean source inventory. Every format must still be treated as potentially sensitive. |
 | Diagnostic | A fixed user-facing error category | Does not include the supplied path, raw record, identifier, exception string, or secret-like canary. |
 | Publication | New local report plus a private temporary hard link during commit | Temporary creation requests mode `0600`, so an acquisition-time empty residual is no broader than `0600`; the publisher forces exact `0600` before writing, and the final hard link shares that inode. Every unlink is bounded best effort. Repeated unlink failure may leave an empty acquisition-time name, or a later partial/complete exact-`0600` temporary. After the final link, only fully written bytes are involved, but failed link verification can leave one or both complete private names even when the operation reports failure. Retention and deletion of every residual/final report name are the operator's responsibility. |
 
-Canonical serialization and evidence-reference fields are defined in
-`src/erp_security_evidence_workbench/models.py:202-383`; source manifest serialization is in
-`src/erp_security_evidence_workbench/models.py:235-254`. Report construction consumes that bounded
-model rather than the original records (`src/erp_security_evidence_workbench/reporting.py:110-198`).
+Canonical serialization, evidence references, source manifests, and correlation episodes are
+defined in `src/erp_security_evidence_workbench/models.py`. Report construction consumes that
+bounded model rather than the original records (`reporting._prepare_report`).
 
 ## Intentional provenance versus secrets
 
@@ -40,6 +39,8 @@ Therefore:
 - report files must be handled as potentially sensitive even when the authorized input is
   synthetic;
 - generated semantic IDs are SHA-256 integrity identities, not an anonymization guarantee;
+- replay dedupe keys and correlation IDs are deterministic identities, not encryption or
+  anonymity guarantees;
 - source SHA-256 digests in JSON and SARIF are integrity metadata, not encryption;
 - clean SARIF retains the minimized artifact inventory so a reviewer can see which sources were
   evaluated; it does not contain semantic record fields or raw rows.

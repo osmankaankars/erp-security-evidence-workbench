@@ -17,7 +17,6 @@ from typing import Any, BinaryIO, Literal, NoReturn
 
 from erp_security_evidence_workbench.errors import InputValidationError
 from erp_security_evidence_workbench.normalization import (
-    INPUT_SCHEMA_VERSION,
     LEGACY_INPUT_SCHEMA_VERSION,
     expected_input_fields,
 )
@@ -398,8 +397,6 @@ def _parse_jsonl(
         item = _decode_json(raw_line, limits=limits)
         if not isinstance(item, dict):
             raise InputValidationError("JSONL lines must contain record objects")
-        if item.get("schema_version") != INPUT_SCHEMA_VERSION:
-            raise InputValidationError("JSONL record schema version is unsupported")
         located.append(LocatedPayload(payload=item, line=line_number))
         if len(located) > limits.max_source_records:
             raise InputValidationError("input exceeds the record count limit")

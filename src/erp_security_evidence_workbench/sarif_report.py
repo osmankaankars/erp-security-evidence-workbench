@@ -32,6 +32,18 @@ def render_sarif_report(
         _result(finding, rule_indexes=rule_indexes, artifact_indexes=artifact_indexes)
         for finding in findings
     ]
+    run_properties: dict[str, Any] = {
+        "erpsec.asOf": run["as_of"],
+        "erpsec.coverage": run["coverage"],
+        "erpsec.evaluations": evaluations,
+        "erpsec.inputCount": run["input_count"],
+        "erpsec.reportSchemaVersion": report["schema_version"],
+        "erpsec.result": run["result"],
+        "erpsec.syntheticEvidenceOnly": True,
+    }
+    if "correlations" in report:
+        run_properties["erpsec.correlations"] = report["correlations"]
+        run_properties["erpsec.replay"] = report["replay"]
 
     document: dict[str, Any] = {
         "$schema": SARIF_SCHEMA_URI,
@@ -39,15 +51,7 @@ def render_sarif_report(
             {
                 "artifacts": artifacts,
                 "invocations": [{"executionSuccessful": True}],
-                "properties": {
-                    "erpsec.asOf": run["as_of"],
-                    "erpsec.coverage": run["coverage"],
-                    "erpsec.evaluations": evaluations,
-                    "erpsec.inputCount": run["input_count"],
-                    "erpsec.reportSchemaVersion": report["schema_version"],
-                    "erpsec.result": run["result"],
-                    "erpsec.syntheticEvidenceOnly": True,
-                },
+                "properties": run_properties,
                 "results": results,
                 "tool": {
                     "driver": {
@@ -103,6 +107,16 @@ def _result(
     fingerprint = _string(finding["fingerprint"])
     if rule_id not in rule_indexes:
         raise OutputError("report rule reference is inconsistent")
+    properties: dict[str, Any] = {
+        "erpsec.findingId": fingerprint,
+        "erpsec.limitation": finding["limitation"],
+        "erpsec.remediation": finding["remediation"],
+        "erpsec.requiredEvidenceTypes": finding["required_evidence_types"],
+        "erpsec.ruleVersion": finding["rule_version"],
+        "erpsec.severity": severity,
+    }
+    if "correlation_id" in finding:
+        properties["erpsec.correlationId"] = finding["correlation_id"]
     return {
         "fingerprints": {"erpsec/v1": fingerprint},
         "level": _level(severity),
@@ -111,14 +125,7 @@ def _result(
             for evidence in _mapping_sequence(finding["evidence_refs"])
         ],
         "message": {"text": _string(finding["description"])},
-        "properties": {
-            "erpsec.findingId": fingerprint,
-            "erpsec.limitation": finding["limitation"],
-            "erpsec.remediation": finding["remediation"],
-            "erpsec.requiredEvidenceTypes": finding["required_evidence_types"],
-            "erpsec.ruleVersion": finding["rule_version"],
-            "erpsec.severity": severity,
-        },
+        "properties": properties,
         "ruleId": rule_id,
         "ruleIndex": rule_indexes[rule_id],
     }

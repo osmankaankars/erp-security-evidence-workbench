@@ -21,8 +21,8 @@ from scripts import build_release
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = PROJECT_ROOT / "scripts" / "build_release.py"
 RELEASE_SCRIPT = PROJECT_ROOT / "scripts" / "release_artifacts.py"
-WHEEL_NAME = "erp_security_evidence_workbench-0.1.0rc1-py3-none-any.whl"
-SDIST_NAME = "erp_security_evidence_workbench-0.1.0rc1.tar.gz"
+WHEEL_NAME = "erp_security_evidence_workbench-0.2.0rc1-py3-none-any.whl"
+SDIST_NAME = "erp_security_evidence_workbench-0.2.0rc1.tar.gz"
 
 
 def _run(*arguments: str, expected_exit: int = 0) -> subprocess.CompletedProcess[str]:
@@ -76,7 +76,7 @@ def test_two_rc_builds_are_byte_identical(tmp_path: Path) -> None:
     assert manifest["schema_version"] == "erpsec.build-manifest/v1"
     assert manifest["package"] == {
         "distribution": "erp-security-evidence-workbench",
-        "version": "0.1.0rc1",
+        "version": "0.2.0rc1",
     }
     assert manifest["source"]["vcs_revision"] is None
     assert manifest["source"]["vcs_state"] == "unavailable"
@@ -135,13 +135,13 @@ def test_two_rc_builds_are_byte_identical(tmp_path: Path) -> None:
 
     with zipfile.ZipFile(first / WHEEL_NAME) as wheel:
         assert wheel.infolist()
-        metadata = wheel.read("erp_security_evidence_workbench-0.1.0rc1.dist-info/METADATA").decode(
+        metadata = wheel.read("erp_security_evidence_workbench-0.2.0rc1.dist-info/METADATA").decode(
             "utf-8"
         )
         assert "License-Expression: MIT\n" in metadata
         assert "License-File: LICENSE\n" in metadata
         assert (
-            wheel.read("erp_security_evidence_workbench-0.1.0rc1.dist-info/licenses/LICENSE")
+            wheel.read("erp_security_evidence_workbench-0.2.0rc1.dist-info/licenses/LICENSE")
             == (PROJECT_ROOT / "LICENSE").read_bytes()
         )
         for member in wheel.infolist():
@@ -151,7 +151,7 @@ def test_two_rc_builds_are_byte_identical(tmp_path: Path) -> None:
 
     with tarfile.open(first / SDIST_NAME, "r:gz") as sdist:
         assert sdist.getmembers()
-        license_member = sdist.extractfile("erp_security_evidence_workbench-0.1.0rc1/LICENSE")
+        license_member = sdist.extractfile("erp_security_evidence_workbench-0.2.0rc1/LICENSE")
         assert license_member is not None
         assert license_member.read() == (PROJECT_ROOT / "LICENSE").read_bytes()
         for member in sdist.getmembers():

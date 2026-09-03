@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src &#x27;none&#x27;; style-src &#x27;sha256-DKzZMcmupOlQbwnYarnHWP9OkAHxrMGt2RG2BY5nu9U=&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ERP Security Evidence Report</title>
+<style>body{margin:0;background:#f4f7f9;color:#17212b;font:15px/1.5 system-ui,sans-serif}main{max-width:1080px;margin:auto;padding:32px}h1,h2,h3{line-height:1.2}section{background:#fff;border:1px solid #d8e0e6;border-radius:10px;margin:16px 0;padding:20px}.scope{border-left:5px solid #176b87}.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.metric{background:#edf4f7;border-radius:8px;padding:12px}.finding{border-left:5px solid #a03c2f}.severity-high{color:#8e2d22}.severity-medium{color:#765500}table{border-collapse:collapse;width:100%}th,td{border-bottom:1px solid #d8e0e6;padding:9px;text-align:left;vertical-align:top}code{overflow-wrap:anywhere}dt{font-weight:700}dd{margin:0 0 10px}.muted{color:#52616b}.state{font-weight:700}</style>
+</head>
+<body data-run-result="no_findings">
+<main>
+<h1>ERP Security Evidence Report</h1>
+<section id="scope" class="scope">
+<h2>Scope</h2>
+<p>This offline reference project analyzes supplied synthetic evidence only. It does not inspect a live system, establish compliance, or replace human review.</p>
+</section>
+<section id="summary">
+<h2>Summary</h2>
+<div class="summary">
+<div class="metric"><strong>Result</strong><br>no_findings</div>
+<div class="metric"><strong>Findings</strong><br>0</div>
+<div class="metric"><strong>Selected rules</strong><br>3</div>
+<div class="metric"><strong>Coverage</strong><br>complete</div>
+</div>
+<p class="state">No findings in supplied evidence.</p><p>This does not prove absence of risk or source-system completeness.</p>
+<p>Severity summary: high=0, medium=0.</p>
+</section>
+<section id="rule-evaluations">
+<h2>Rule evaluations</h2>
+<table><thead><tr><th>Rule</th><th>Version</th><th>Status</th></tr></thead><tbody>
+<tr data-erpsec-role="evaluation" data-rule-id="ERP007" data-status="not_matched">
+<td><code>ERP007</code></td>
+<td>1.0.0</td>
+<td>not_matched</td></tr>
+<tr data-erpsec-role="evaluation" data-rule-id="ERP008" data-status="not_matched">
+<td><code>ERP008</code></td>
+<td>1.0.0</td>
+<td>not_matched</td></tr>
+<tr data-erpsec-role="evaluation" data-rule-id="ERP009" data-status="not_matched">
+<td><code>ERP009</code></td>
+<td>1.0.0</td>
+<td>not_matched</td></tr>
+</tbody></table>
+</section>
+<section id="skipped-evaluations">
+<h2>Skipped evaluations</h2>
+<p>None. This version fails the complete run when selected-rule evidence is insufficient and does not publish a report.</p>
+</section>
+<section id="findings">
+<h2>Findings</h2>
+<p class="muted">No finding records were emitted.</p>
+</section>
+<section id="correlations">
+<h2>Correlation episodes</h2>
+<p class="muted">No correlation episodes were emitted.</p>
+</section>
+<section id="evidence">
+<h2>Finding-linked evidence</h2>
+<p class="muted">No finding-linked evidence.</p>
+</section>
+<section id="rule-details">
+<h2>Rule details</h2>
+<article id="rule-erp007">
+<h3>ERP007 · Failed sign-ins are followed by a successful sign-in</h3>
+<p>A success after repeated failures from the same synthetic source can warrant review for credential misuse or an operational access issue.</p>
+<p><strong>Required evidence:</strong> observed_event</p>
+<p><strong>Limitation:</strong> ERP007 evaluates only supplied synthetic events and cannot establish attacker identity, intent, device context, or source-system completeness.</p>
+<p><strong>Remediation:</strong> Review the correlated evidence chain, validate the principal and source context, and follow an authorized incident-response or access-support process.</p>
+</article>
+<article id="rule-erp008">
+<h3>ERP008 · Successful sign-in matches a local synthetic threat indicator</h3>
+<p>A successful sign-in from an address present in a supplied local indicator set can justify prioritized human review.</p>
+<p><strong>Required evidence:</strong> observed_event, threat_indicator</p>
+<p><strong>Limitation:</strong> ERP008 uses only a user-supplied local synthetic indicator file; it performs no online lookup and does not assert that an address is malicious in the real world.</p>
+<p><strong>Remediation:</strong> Validate the indicator source and event context, then follow the authorized triage process before taking any containment action.</p>
+</article>
+<article id="rule-erp009">
+<h3>ERP009 · Successful sign-in precedes a sensitive change</h3>
+<p>A sensitive change shortly after authentication can warrant review of authorization and change-management context.</p>
+<p><strong>Required evidence:</strong> change_event, observed_event</p>
+<p><strong>Limitation:</strong> ERP009 identifies a supplied synthetic timing pattern only; it does not determine malicious intent, policy violation, or whether the change was approved.</p>
+<p><strong>Remediation:</strong> Review the authentication and change evidence against the authorized change record and escalate only through the documented investigation process.</p>
+</article>
+</section>
+<section id="limitations">
+<h2>Limitations</h2>
+<p>Coverage is complete only for the supplied files and selected rules. A clean result does not prove absence of risk or source-system completeness.</p>
+</section>
+<section id="run-metadata">
+<h2>Run metadata</h2>
+<dl>
+<dt>Analysis time</dt><dd>2026-09-01T12:45:00Z</dd>
+<dt>Input records</dt><dd>5</dd>
+<dt>Report schema</dt><dd>erpsec.report/v2</dd>
+<dt>Tool</dt><dd>erp-security-evidence-workbench 0.2.0rc1</dd>
+</dl>
+</section>
+</main>
+</body>
+</html>

@@ -3,8 +3,8 @@
 ## Candidate identity
 
 - Distribution: `erp-security-evidence-workbench`
-- Version: `0.1.0rc1`
-- Intended tag: `v0.1.0rc1`
+- Version: `0.2.0rc1`
+- Intended tag: `v0.2.0rc1`
 - Release type: GitHub prerelease
 - License: MIT
 - Runtime dependencies: none
@@ -22,14 +22,15 @@ The tagged revision is acceptable only when every applicable item below is fresh
 1. compilation, Ruff lint/format, strict mypy, and the complete pytest suite;
 2. full tests and installed-package smoke on CPython 3.11, 3.12, 3.13, and 3.14;
 3. deterministic synthetic-corpus and committed example-report checks;
-4. two byte-identical wheel and source-distribution builds at the recorded epoch;
-5. exact archive-member, path-safety, SPDX, checksum, and fail-closed resolved-`HEAD`
+4. deterministic installed multi-source replay for both finding and clean synthetic scenarios;
+5. two byte-identical wheel and source-distribution builds at the recorded epoch;
+6. exact archive-member, path-safety, SPDX, checksum, and fail-closed resolved-`HEAD`
    tree/blob-bound source-snapshot checks;
-6. clean index-disabled installation and CLI smoke from wheel and source distribution;
-7. deterministic large synthetic JSONL generation and an environment-qualified local observation;
-8. secret, local-path, symlink, provenance, dependency, privacy, and claims review;
-9. focused code/security, packaging/supply-chain, and documentation review;
-10. a successful GitHub Actions matrix for the exact release revision.
+7. clean index-disabled installation and CLI smoke from wheel and source distribution;
+8. deterministic large synthetic JSONL generation and an environment-qualified local observation;
+9. secret, local-path, symlink, provenance, dependency, privacy, and claims review;
+10. focused code/security, packaging/supply-chain, and documentation review;
+11. a successful GitHub Actions matrix for the exact release revision.
 
 A generated artifact is not accepted merely because a build command exits successfully. Any failed
 or unavailable item must be disclosed in the release notes.

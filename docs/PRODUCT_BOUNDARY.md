@@ -12,11 +12,13 @@ another ERP vendor.
 
 ## Supported behavior
 
-- Read up to 32 explicitly supplied ordinary local `.csv`, `.json`, or `.jsonl` files.
-- Accept only records using schema `erpsec.synthetic-evidence/v1` and
-  `dataset_classification: synthetic`.
-- Normalize six record types: `principal`, `role_assignment`, `permission_assignment`,
-  `auth_event`, `change_event`, and `control_state`.
+- `analyze` reads up to 32 explicitly supplied ordinary local `.csv`, `.json`, or `.jsonl`
+  evidence files; `replay` reads one manifest plus 2–32 declared local source files.
+- Accept only the fixed core/replay schemas documented in [REPLAY_CONTRACT.md](REPLAY_CONTRACT.md),
+  each with `dataset_classification: synthetic`.
+- Normalize six core evidence types (`principal`, `role_assignment`, `permission_assignment`,
+  `auth_event`, `change_event`, and `control_state`) plus replay-only `observed_event` and
+  `threat_indicator` records.
 - Preserve the legacy single-object `erpsec.synthetic-control-state/v1` JSON compatibility path.
 - Generate a deterministic full SHA-256 identifier from canonical semantic content when
   `record_id` is omitted, and reject duplicate identifiers across the input set.
@@ -25,6 +27,8 @@ another ERP vendor.
   symbolic link, require a regular file, and compare identity and mutation-sensitive state around
   parsing.
 - Evaluate a selected subset of six versioned ERP-neutral rules documented in [RULES.md](RULES.md).
+- Replay two or more digest-pinned local synthetic sources through three additional fixed
+  detection/correlation rules, using only allowlisted adapters and documentation-range IP data.
 - Reject a run before report construction if accepted finding evidence exceeds 30,000 references.
 - Render deterministic JSON, self-contained HTML, or SARIF 2.1.0 from the same engine-validated
   outcome.
@@ -34,7 +38,8 @@ another ERP vendor.
 
 ## Report boundary
 
-JSON is the canonical `erpsec.report/v1` representation. HTML is static and self-contained, with
+`analyze` JSON is the canonical `erpsec.report/v1` representation; `replay` uses the additive
+`erpsec.report/v2` correlation contract. HTML is static and self-contained, with
 escaped dynamic values, one hash-authorized inline stylesheet, and no JavaScript or external
 resources. SARIF contains relative percent-encoded source basenames and uses physical line locations
 for CSV/JSONL where available; JSON retains its RFC 6901 pointer without an invented line or column.
@@ -57,16 +62,18 @@ behavior. All records, identifiers, timestamps, capabilities, and event sequence
 from first principles for this repository. They must not be transformed from real or organizational
 material.
 
-The corpus manifest and checksums are development metadata, not additions to the evidence or report
-schemas. The helper may generate into a new or empty directory and replay `analyze` into temporary
-report paths. It does not add an installed replay command, execute commands from a manifest, install
-a runtime dependency, or connect to another system.
+The original corpus manifest and checksums remain development metadata. Separately,
+`examples/replay/` contains one finding and one clean scenario for the installed `replay` command.
+Replay manifests declare data paths and adapters only; they cannot contain or execute commands.
+The runtime adds no dependency and does not connect to another system.
 
 ## Resource bounds
 
-- Maximum 1 MiB and 1,000 records per input file.
-- Maximum 32 input files and 32 MiB of source bytes per run.
-- Maximum 5,000 records across one run.
+- Maximum 1 MiB and 1,000 parser records per input file.
+- `analyze` accepts at most 32 evidence files; `replay` accepts one manifest plus 2–32 declared
+  source files.
+- Maximum 32 MiB across input bytes; replay counts its manifest and declared sources together.
+- Maximum 5,000 normalized evidence records across one run.
 - Maximum 64 KiB per JSONL line or CSV physical row, 4,096 characters per scalar, 32 fields per
   object, and JSON nesting depth 8.
 - Maximum 30,000 accepted finding evidence references per run.
@@ -79,6 +86,8 @@ These are rejection ceilings, not CPU, memory, throughput, latency, or service-l
 - Live SAP, Oracle, ERP, database, cloud, RFC, OData, CDS, or API connectivity.
 - Runtime URL input, network discovery, outbound calls, telemetry, analytics, update checks, or
   remote schema retrieval.
+- Online threat-intelligence feeds or claims that a synthetic documentation-range address is a
+  real-world indicator.
 - Credentials, secrets, tokens, cookies, accounts, or sessions.
 - Exploitation, brute forcing, active scanning, subprocess integrations, or writeback.
 - Automated remediation or a conclusion that a finding is a complete security or compliance

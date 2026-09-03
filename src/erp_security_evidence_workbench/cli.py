@@ -10,13 +10,16 @@ from typing import NoReturn
 
 from erp_security_evidence_workbench.errors import InputValidationError, WorkbenchError
 from erp_security_evidence_workbench.ingest import load_control_state, load_evidence
+from erp_security_evidence_workbench.replay import load_replay_manifest, replay_input_paths
 from erp_security_evidence_workbench.reporting import (
+    REPLAY_REPORT_SCHEMA_VERSION,
     REPORT_FORMATS,
     build_report,
     write_new_report,
 )
 from erp_security_evidence_workbench.rules import (
     ALL_RULE_IDS,
+    DETECTION_RULE_IDS,
     RULE_ID,
     build_rule_catalog,
     evaluate_rules,
@@ -55,6 +58,21 @@ def _parser() -> _SafeArgumentParser:
         choices=(*ALL_RULE_IDS, "all"),
         dest="selected_rules",
         help="rule ID to evaluate; repeat for multiple rules or use 'all'",
+    )
+    replay = subcommands.add_parser(
+        "replay",
+        help="replay a digest-pinned synthetic multi-source manifest",
+    )
+    replay.add_argument("manifest", type=Path, help="synthetic replay manifest")
+    replay.add_argument("--as-of", required=True, help="timezone-aware ISO 8601 analysis time")
+    replay.add_argument("--format", required=True, choices=REPORT_FORMATS, help="report format")
+    replay.add_argument("--output", required=True, type=Path, help="new report path")
+    replay.add_argument(
+        "--rule",
+        action="append",
+        choices=(*DETECTION_RULE_IDS, "all"),
+        dest="selected_rules",
+        help="replay rule ID; repeat for multiple rules or use 'all'",
     )
     subcommands.add_parser("rules", help="print the deterministic JSON rule catalog")
     return parser
@@ -104,6 +122,20 @@ def _selected_rule_ids(values: list[str] | None) -> tuple[str, ...]:
     return tuple(rule_id for rule_id in ALL_RULE_IDS if rule_id in selected_set)
 
 
+def _selected_replay_rule_ids(values: list[str] | None) -> tuple[str, ...]:
+    if values is None:
+        return DETECTION_RULE_IDS
+    selected = tuple(values)
+    if "all" in selected:
+        if selected != ("all",):
+            raise InputValidationError("'all' cannot be combined with individual rules")
+        return DETECTION_RULE_IDS
+    if len(set(selected)) != len(selected):
+        raise InputValidationError("rule selections must be unique")
+    selected_set = set(selected)
+    return tuple(rule_id for rule_id in DETECTION_RULE_IDS if rule_id in selected_set)
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """Run the command-line interface."""
     try:
@@ -112,16 +144,29 @@ def main(argv: Sequence[str] | None = None) -> int:
             sys.stdout.write(build_rule_catalog().decode("ascii"))
             return 0
 
-        inputs = tuple(arguments.inputs)
-        if any(_paths_alias(input_path, arguments.output) for input_path in inputs):
-            raise InputValidationError("input and output must be different paths")
-
         as_of = _canonical_as_of(arguments.as_of)
-        bundle = load_control_state(inputs[0]) if len(inputs) == 1 else load_evidence(inputs)
+        report_schema_version = "erpsec.report/v1"
+        if arguments.command == "replay":
+            if _paths_alias(arguments.manifest, arguments.output):
+                raise InputValidationError("input and output must be different paths")
+            bundle = load_replay_manifest(arguments.manifest)
+            if any(
+                _paths_alias(input_path, arguments.output)
+                for input_path in replay_input_paths(arguments.manifest, bundle)
+            ):
+                raise InputValidationError("input and output must be different paths")
+            selected_rule_ids = _selected_replay_rule_ids(arguments.selected_rules)
+            report_schema_version = REPLAY_REPORT_SCHEMA_VERSION
+        else:
+            inputs = tuple(arguments.inputs)
+            if any(_paths_alias(input_path, arguments.output) for input_path in inputs):
+                raise InputValidationError("input and output must be different paths")
+            bundle = load_control_state(inputs[0]) if len(inputs) == 1 else load_evidence(inputs)
+            selected_rule_ids = _selected_rule_ids(arguments.selected_rules)
         rule_run = evaluate_rules(
             bundle,
             as_of=as_of,
-            selected_rule_ids=_selected_rule_ids(arguments.selected_rules),
+            selected_rule_ids=selected_rule_ids,
         )
         findings = rule_run.findings
         report = build_report(
@@ -130,6 +175,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             findings,
             as_of=as_of,
             evaluations=rule_run.evaluations,
+            schema_version=report_schema_version,
         )
         write_new_report(arguments.output, report)
     except WorkbenchError as exc:

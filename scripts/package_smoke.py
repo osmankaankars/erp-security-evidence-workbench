@@ -653,6 +653,9 @@ def _assert_rule_catalog(output: str) -> None:
         "ERP004",
         "ERP005",
         "ERP006",
+        "ERP007",
+        "ERP008",
+        "ERP009",
     ]:
         raise RuntimeError("installed CLI emitted an unexpected rule catalog")
 
@@ -714,6 +717,35 @@ def _assert_scenario_report(
         raise RuntimeError("installed CLI emitted unexpected scenario run metadata")
 
 
+def _assert_replay_report(report_path: Path) -> None:
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    if report.get("schema_version") != "erpsec.report/v2":
+        raise RuntimeError("installed replay emitted an unexpected report schema")
+    replay = report.get("replay")
+    if not isinstance(replay, dict) or replay.get("replay_id") != (
+        "scenario-detection-correlation"
+    ):
+        raise RuntimeError("installed replay omitted its manifest identity")
+    evaluations = report.get("evaluations")
+    if not isinstance(evaluations, list) or [item.get("rule_id") for item in evaluations] != [
+        "ERP007",
+        "ERP008",
+        "ERP009",
+    ]:
+        raise RuntimeError("installed replay emitted unexpected evaluations")
+    correlations = report.get("correlations")
+    findings = report.get("findings")
+    if (
+        not isinstance(correlations, list)
+        or not isinstance(findings, list)
+        or len(correlations) != 3
+        or len(findings) != 3
+        or {item.get("correlation_id") for item in correlations}
+        != {item.get("correlation_id") for item in findings}
+    ):
+        raise RuntimeError("installed replay emitted inconsistent correlations")
+
+
 def main() -> None:
     environment = _clean_environment()
     with tempfile.TemporaryDirectory(prefix="erpsec-package-smoke-") as temporary_name:
@@ -738,6 +770,7 @@ def main() -> None:
         clean_scenario_report_path = temporary_root / "clean-scenario-report.json"
         access_scenario_report_path = temporary_root / "access-scenario-report.json"
         auth_scenario_report_path = temporary_root / "auth-scenario-report.json"
+        replay_report_path = temporary_root / "replay-report.json"
 
         shutil.copytree(PROJECT_ROOT, source_copy, ignore=COPY_IGNORE)
         wheelhouse.mkdir()
@@ -830,8 +863,8 @@ def main() -> None:
             cwd=temporary_root,
             environment=environment,
         )
-        if "analyze" not in help_result.stdout:
-            raise RuntimeError("installed console-script help omitted the analyze command")
+        if not {"analyze", "replay"} <= set(help_result.stdout.split()):
+            raise RuntimeError("installed console-script help omitted a required command")
 
         module_help_result = _run(
             [
@@ -844,8 +877,8 @@ def main() -> None:
             cwd=temporary_root,
             environment=environment,
         )
-        if "analyze" not in module_help_result.stdout:
-            raise RuntimeError("installed module help omitted the analyze command")
+        if not {"analyze", "replay"} <= set(module_help_result.stdout.split()):
+            raise RuntimeError("installed module help omitted a required command")
 
         catalog_result = _run_installed_cli(
             installed_python,
@@ -977,6 +1010,32 @@ def main() -> None:
             expected_finding_ids=("ERP001", "ERP005", "ERP006"),
             expected_record_count=17,
         )
+
+        _run_installed_cli(
+            installed_python,
+            [
+                "replay",
+                str(
+                    source_copy
+                    / "examples"
+                    / "replay"
+                    / "detection-correlation"
+                    / "replay-manifest.json"
+                ),
+                "--as-of",
+                "2026-09-01T12:45:00Z",
+                "--format",
+                "json",
+                "--output",
+                str(replay_report_path),
+                "--rule",
+                "all",
+            ],
+            cwd=temporary_root,
+            environment=environment,
+            expected_exit=1,
+        )
+        _assert_replay_report(replay_report_path)
 
         _run_installed_cli(
             installed_python,

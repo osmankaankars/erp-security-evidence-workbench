@@ -27,9 +27,9 @@ from typing import BinaryIO
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 PROJECT_NAME = "erp-security-evidence-workbench"
-PROJECT_VERSION = "0.1.0rc1"
-EXPECTED_WHEEL_NAME = "erp_security_evidence_workbench-0.1.0rc1-py3-none-any.whl"
-EXPECTED_DIST_INFO = "erp_security_evidence_workbench-0.1.0rc1.dist-info"
+PROJECT_VERSION = "0.2.0rc1"
+EXPECTED_WHEEL_NAME = "erp_security_evidence_workbench-0.2.0rc1-py3-none-any.whl"
+EXPECTED_DIST_INFO = "erp_security_evidence_workbench-0.2.0rc1.dist-info"
 EXPECTED_LICENSE_EXPRESSION = "MIT"
 EXPECTED_LICENSE_FILE = "LICENSE"
 PROJECT_LICENSE = PROJECT_ROOT / EXPECTED_LICENSE_FILE
@@ -207,13 +207,17 @@ def _member_kind_from_zip(information: zipfile.ZipInfo) -> tuple[str, int | None
     encoded_mode = information.external_attr >> 16
     file_type = stat.S_IFMT(encoded_mode)
     mode = stat.S_IMODE(encoded_mode) if encoded_mode else None
-    if information.is_dir():
-        return "directory", mode
     if file_type == stat.S_IFLNK:
         return "symlink", mode
-    if file_type in {0, stat.S_IFREG}:
-        return "file", mode
-    return "special", mode
+    if file_type not in {0, stat.S_IFDIR, stat.S_IFREG}:
+        return "special", mode
+    if information.is_dir():
+        if file_type in {0, stat.S_IFDIR} and information.file_size == 0:
+            return "directory", mode
+        return "special", mode
+    if file_type == stat.S_IFDIR:
+        return "special", mode
+    return "file", mode
 
 
 def _open_archive_input(path: Path) -> BinaryIO:
@@ -637,7 +641,7 @@ def _spdx_document(
 
 def _validate_project_wheel_identity(wheel_path: Path) -> tuple[str, ...]:
     if wheel_path.name != EXPECTED_WHEEL_NAME:
-        raise ReleaseArtifactError("SPDX input is not the expected 0.1.0rc1 wheel filename")
+        raise ReleaseArtifactError("SPDX input is not the expected 0.2.0rc1 wheel filename")
     metadata_name = f"{EXPECTED_DIST_INFO}/METADATA"
     license_name = f"{EXPECTED_DIST_INFO}/licenses/{EXPECTED_LICENSE_FILE}"
     try:

@@ -22,8 +22,8 @@ from erp_security_evidence_workbench.errors import (
 from erp_security_evidence_workbench.models import EvidenceBundle, Finding, RuleEvaluation
 from erp_security_evidence_workbench.rules import (
     DEFAULT_RULE_PARAMETERS,
+    FULL_RULE_REGISTRY,
     RULE_ID,
-    RULE_REGISTRY,
     RuleDefinition,
     RuleParameters,
     evaluate_rules,
@@ -31,6 +31,7 @@ from erp_security_evidence_workbench.rules import (
 from erp_security_evidence_workbench.timestamps import normalize_rfc3339_seconds
 
 REPORT_SCHEMA_VERSION = "erpsec.report/v1"
+REPLAY_REPORT_SCHEMA_VERSION = "erpsec.report/v2"
 REPORT_FORMATS = ("json", "html", "sarif")
 _TEMPORARY_NAME_ATTEMPTS = 16
 
@@ -53,6 +54,7 @@ def build_json_report(
     as_of: str,
     evaluations: tuple[RuleEvaluation, ...] | None = None,
     parameters: RuleParameters = DEFAULT_RULE_PARAMETERS,
+    schema_version: str = REPORT_SCHEMA_VERSION,
 ) -> bytes:
     """Build canonical report bytes for identical inputs and options."""
     report, _ = _prepare_report(
@@ -61,6 +63,7 @@ def build_json_report(
         as_of=as_of,
         evaluations=evaluations,
         parameters=parameters,
+        schema_version=schema_version,
     )
     return _canonical_json(report)
 
@@ -72,6 +75,7 @@ def build_html_report(
     as_of: str,
     evaluations: tuple[RuleEvaluation, ...] | None = None,
     parameters: RuleParameters = DEFAULT_RULE_PARAMETERS,
+    schema_version: str = REPORT_SCHEMA_VERSION,
 ) -> bytes:
     """Build deterministic self-contained HTML from validated results."""
     from erp_security_evidence_workbench.html_report import render_html_report
@@ -82,6 +86,7 @@ def build_html_report(
         as_of=as_of,
         evaluations=evaluations,
         parameters=parameters,
+        schema_version=schema_version,
     )
     return render_html_report(report, definitions)
 
@@ -93,6 +98,7 @@ def build_sarif_report(
     as_of: str,
     evaluations: tuple[RuleEvaluation, ...] | None = None,
     parameters: RuleParameters = DEFAULT_RULE_PARAMETERS,
+    schema_version: str = REPORT_SCHEMA_VERSION,
 ) -> bytes:
     """Build deterministic SARIF 2.1.0 from validated results."""
     from erp_security_evidence_workbench.sarif_report import render_sarif_report
@@ -103,6 +109,7 @@ def build_sarif_report(
         as_of=as_of,
         evaluations=evaluations,
         parameters=parameters,
+        schema_version=schema_version,
     )
     return render_sarif_report(report, definitions)
 
@@ -115,6 +122,7 @@ def build_report(
     as_of: str,
     evaluations: tuple[RuleEvaluation, ...] | None = None,
     parameters: RuleParameters = DEFAULT_RULE_PARAMETERS,
+    schema_version: str = REPORT_SCHEMA_VERSION,
 ) -> bytes:
     """Build the explicitly selected report format through one validation seam."""
     report, definitions = _prepare_report(
@@ -123,6 +131,7 @@ def build_report(
         as_of=as_of,
         evaluations=evaluations,
         parameters=parameters,
+        schema_version=schema_version,
     )
     if report_format == "json":
         return _canonical_json(report)
@@ -144,6 +153,7 @@ def _prepare_report(
     as_of: str,
     evaluations: tuple[RuleEvaluation, ...] | None,
     parameters: RuleParameters,
+    schema_version: str,
 ) -> tuple[dict[str, Any], tuple[RuleDefinition, ...]]:
     """Create one engine-coherent document shared by every serializer."""
     if not bundle.complete or not bundle.records:
@@ -161,6 +171,15 @@ def _prepare_report(
         canonical_as_of = normalize_rfc3339_seconds(as_of)
     except ValueError as exc:
         raise InputValidationError("analysis time is invalid") from exc
+    if schema_version not in {REPORT_SCHEMA_VERSION, REPLAY_REPORT_SCHEMA_VERSION}:
+        raise InputValidationError("report schema version is invalid")
+    if schema_version == REPLAY_REPORT_SCHEMA_VERSION and bundle.replay is None:
+        raise InputValidationError("replay report requires validated replay metadata")
+    if schema_version == REPORT_SCHEMA_VERSION and any(
+        finding.correlation is not None for finding in findings
+    ):
+        raise InputValidationError("correlation findings require the replay report schema")
+
     report: dict[str, Any] = {
         "evidence_manifest": [
             {
@@ -187,13 +206,27 @@ def _prepare_report(
             "input_count": len(bundle.records),
             "result": "findings" if matched else "no_findings",
         },
-        "schema_version": REPORT_SCHEMA_VERSION,
+        "schema_version": schema_version,
         "tool": {
             "name": "erp-security-evidence-workbench",
             "version": __version__,
         },
     }
-    definitions_by_id = {definition.rule_id: definition for definition in RULE_REGISTRY}
+    if schema_version == REPLAY_REPORT_SCHEMA_VERSION:
+        assert bundle.replay is not None
+        correlations = {
+            finding.correlation.correlation_id: finding.correlation
+            for finding in findings
+            if finding.correlation is not None
+        }
+        report["correlations"] = [
+            correlations[correlation_id].to_dict() for correlation_id in sorted(correlations)
+        ]
+        report["replay"] = bundle.replay.to_dict()
+        report["run"]["correlation_count"] = len(correlations)
+        report["run"]["source_count"] = len(bundle.sources)
+
+    definitions_by_id = {definition.rule_id: definition for definition in FULL_RULE_REGISTRY}
     definitions = tuple(definitions_by_id[evaluation.rule_id] for evaluation in evaluations)
     return report, definitions
 
@@ -221,9 +254,11 @@ def _validated_results(
 ) -> tuple[tuple[Finding, ...], tuple[RuleEvaluation, ...]]:
     """Re-evaluate selected rules and accept only an engine-coherent result."""
     registry_versions = {
-        definition.rule_id: definition.rule_version for definition in RULE_REGISTRY
+        definition.rule_id: definition.rule_version for definition in FULL_RULE_REGISTRY
     }
-    registry_order = {definition.rule_id: index for index, definition in enumerate(RULE_REGISTRY)}
+    registry_order = {
+        definition.rule_id: index for index, definition in enumerate(FULL_RULE_REGISTRY)
+    }
     selected_rule_ids: tuple[str, ...]
     supplied_evaluations: tuple[RuleEvaluation, ...] | None
     if evaluations is None:

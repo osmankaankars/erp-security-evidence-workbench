@@ -23,15 +23,15 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = PROJECT_ROOT / "scripts" / "release_artifacts.py"
 WHEEL_POLICY = PROJECT_ROOT / "release" / "wheel-members.txt"
 SDIST_POLICY = PROJECT_ROOT / "release" / "sdist-members.txt"
-DIST_INFO = "erp_security_evidence_workbench-0.1.0rc1.dist-info"
-SDIST_ROOT = "erp_security_evidence_workbench-0.1.0rc1"
-WHEEL_NAME = "erp_security_evidence_workbench-0.1.0rc1-py3-none-any.whl"
+DIST_INFO = "erp_security_evidence_workbench-0.2.0rc1.dist-info"
+SDIST_ROOT = "erp_security_evidence_workbench-0.2.0rc1"
+WHEEL_NAME = "erp_security_evidence_workbench-0.2.0rc1-py3-none-any.whl"
 SECRET_CANARY = "ghp_SYNTHETIC_CREDENTIAL_CANARY_1234567890"
 PROJECT_DEV_REQUIREMENTS = (
     'build==1.6.0; extra == "dev"',
     'jsonschema==4.26.0; extra == "dev"',
-    'mypy==1.20.2; extra == "dev"',
-    'pytest==8.4.2; extra == "dev"',
+    'mypy==2.3.1; extra == "dev"',
+    'pytest==9.1.1; extra == "dev"',
     'ruff==0.16.5; extra == "dev"',
     'setuptools==84.0.0; extra == "dev"',
     'wheel==0.48.0; extra == "dev"',
@@ -149,7 +149,7 @@ def _project_wheel(
         for line in WHEEL_POLICY.read_text(encoding="utf-8").splitlines()
         if line and not line.startswith("#")
     ]
-    metadata = b"Metadata-Version: 2.4\nName: erp-security-evidence-workbench\nVersion: 0.1.0rc1\n"
+    metadata = b"Metadata-Version: 2.4\nName: erp-security-evidence-workbench\nVersion: 0.2.0rc1\n"
     if license_expression is not None:
         metadata += f"License-Expression: {license_expression}\n".encode()
     if license_file is not None:
@@ -203,6 +203,75 @@ def test_inspect_accepts_only_the_exact_wheel_policy(tmp_path: Path) -> None:
         "status": "accepted",
     }
     assert str(tmp_path) not in completed.stdout
+
+
+@pytest.mark.parametrize(
+    ("file_type", "data", "diagnostic"),
+    [
+        (stat.S_IFLNK, b"sample/__init__.py", "link red flag"),
+        (stat.S_IFIFO, b"", "special-file red flag"),
+        (stat.S_IFREG, b"", "special-file red flag"),
+        (stat.S_IFDIR, SECRET_CANARY.encode(), "special-file red flag"),
+    ],
+)
+def test_inspect_rejects_trailing_slash_entries_with_inconsistent_zip_metadata(
+    tmp_path: Path,
+    file_type: int,
+    data: bytes,
+    diagnostic: str,
+) -> None:
+    wheel, names = _safe_wheel(tmp_path / "sample-1.0-py3-none-any.whl")
+    with zipfile.ZipFile(wheel, "a") as archive:
+        information, content = _zip_member(
+            "sample/",
+            data,
+            mode=0o755,
+            file_type=file_type,
+        )
+        archive.writestr(information, content)
+    policy = tmp_path / "wheel-members.txt"
+    _write_policy(policy, names)
+
+    completed = _run(
+        "inspect",
+        "--kind",
+        "wheel",
+        "--archive",
+        str(wheel),
+        "--policy",
+        str(policy),
+        expected_exit=2,
+    )
+
+    assert diagnostic in completed.stderr
+    assert SECRET_CANARY not in completed.stderr
+    assert completed.stdout == ""
+
+
+def test_inspect_accepts_empty_directory_with_consistent_zip_metadata(tmp_path: Path) -> None:
+    wheel, names = _safe_wheel(tmp_path / "sample-1.0-py3-none-any.whl")
+    with zipfile.ZipFile(wheel, "a") as archive:
+        information, data = _zip_member(
+            "sample/",
+            b"",
+            mode=0o755,
+            file_type=stat.S_IFDIR,
+        )
+        archive.writestr(information, data)
+    policy = tmp_path / "wheel-members.txt"
+    _write_policy(policy, names)
+
+    completed = _run(
+        "inspect",
+        "--kind",
+        "wheel",
+        "--archive",
+        str(wheel),
+        "--policy",
+        str(policy),
+    )
+
+    assert json.loads(completed.stdout)["status"] == "accepted"
 
 
 @pytest.mark.parametrize(
@@ -367,7 +436,7 @@ def test_spdx_sbom_is_deterministic_for_actual_dependency_free_policy(
     assert len(document["packages"]) == 1
     package = document["packages"][0]
     assert package["name"] == "erp-security-evidence-workbench"
-    assert package["versionInfo"] == "0.1.0rc1"
+    assert package["versionInfo"] == "0.2.0rc1"
     assert package["filesAnalyzed"] is False
     assert package["licenseConcluded"] == "NOASSERTION"
     assert package["licenseDeclared"] == "MIT"

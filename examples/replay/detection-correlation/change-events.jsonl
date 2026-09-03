@@ -1,0 +1,1 @@
+{"action":"GRANT_PRIVILEGE","dataset_classification":"synthetic","object_id":"role-lab-operator","occurred_at":"2026-09-01T12:20:00Z","outcome":"success","principal_id":"analyst-7","record_id":"change-1","record_type":"change_event","schema_version":"erpsec.synthetic-evidence/v1"}

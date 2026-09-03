@@ -12,19 +12,19 @@
           "byte_count": 7880,
           "format": "html",
           "path": "clean-baseline.html",
-          "sha256": "b50320178410daf9f676abe2768bad8a578bd95125af5b24bdc6b7ffbb5f8c84"
+          "sha256": "bb78859818e0fe76796d318578626df416968bc1e4de4c728b98aece2d672769"
         },
         {
           "byte_count": 3064,
           "format": "json",
           "path": "clean-baseline.json",
-          "sha256": "f0866bbbd3b3e47289211105e14e9bd71a48c2a21cc2702fb8b4cf6292ca0234"
+          "sha256": "ad4c8c2c974ca5f5208e5723f885466039c852d8f70f430fed5e65e2f44f9e45"
         },
         {
           "byte_count": 14020,
           "format": "sarif",
           "path": "clean-baseline.sarif",
-          "sha256": "45e276d1d380dd116929d83df75234a9b67125bcf158c2d632b62af305149e41"
+          "sha256": "a97920a3ad1dfaed37245e37853a365bb9626d1f48f3a54ca2f6060c803c054d"
         }
       ],
       "expected": {
@@ -66,19 +66,19 @@
           "byte_count": 32239,
           "format": "html",
           "path": "rule-pack-findings.html",
-          "sha256": "80db46a6acaf77346c8b1b98e9cd22169df1b1e5461b0ae43212235031b3a023"
+          "sha256": "54b020e148ace4c42f9166b376562a3d72a1fe35d002d05f42a95f189461d852"
         },
         {
           "byte_count": 24787,
           "format": "json",
           "path": "rule-pack-findings.json",
-          "sha256": "dd60bdc8addff09426a63f4f5bc70a15c3e180bc45337c8845719a609ca389ba"
+          "sha256": "e834bc959ef67708203eee20bbfe584424172d3c363e38b5e348f74b13825181"
         },
         {
           "byte_count": 49449,
           "format": "sarif",
           "path": "rule-pack-findings.sarif",
-          "sha256": "074439251d601655cc8cef38348d313c1987eb999dac7a44eab3b9e8dad8c864"
+          "sha256": "fcae4228c127b7fc214f9d5264f454ee7e0ad12daf95a8ed5ea0a6d3b4b52677"
         }
       ],
       "expected": {

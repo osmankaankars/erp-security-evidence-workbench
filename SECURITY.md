@@ -6,7 +6,8 @@ This project is currently a prerelease. Security reports are accepted for the fo
 
 | Version | Security reports |
 | --- | --- |
-| `0.1.0rc1` | Accepted |
+| `0.2.0rc1` | Accepted |
+| `0.1.0rc1` | Not supported |
 | Earlier development snapshots | Not supported |
 
 ## Reporting a vulnerability
@@ -28,8 +29,9 @@ will coordinate validation and disclosure through the private advisory.
 
 ## Security boundary
 
-The CLI accepts explicit local synthetic CSV, JSON, or JSONL files, validates a fixed schema,
-evaluates deterministic rules, and may publish one new local JSON, HTML, or SARIF report. It has no
+The CLI accepts explicit local synthetic CSV, JSON, or JSONL files, and a digest-pinned local replay
+manifest, validates fixed schemas, evaluates deterministic rules, and may publish one new local
+JSON, HTML, or SARIF report. It has no
 ERP connector, credential collection, network scanner, writeback, remediation, telemetry, or
 third-party runtime dependency.
 

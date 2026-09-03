@@ -1,0 +1,126 @@
+{
+  "correlations": [],
+  "evaluations": [
+    {
+      "rule_id": "ERP007",
+      "rule_version": "1.0.0",
+      "status": "not_matched"
+    },
+    {
+      "rule_id": "ERP008",
+      "rule_version": "1.0.0",
+      "status": "not_matched"
+    },
+    {
+      "rule_id": "ERP009",
+      "rule_version": "1.0.0",
+      "status": "not_matched"
+    }
+  ],
+  "evidence_manifest": [
+    {
+      "record_id": "clean-change-1",
+      "record_type": "change_event",
+      "source_ref": {
+        "adapter": "erpsec.synthetic-evidence/v1",
+        "format": "jsonl",
+        "line": 1,
+        "path": "change-events.jsonl",
+        "sha256": "b1529a1f03522a9187a21e375ed8a29cb44483de01550cea832fe49eff2300fb"
+      }
+    },
+    {
+      "record_id": "clean-event-1",
+      "record_type": "observed_event",
+      "source_ref": {
+        "adapter": "erpsec.synthetic-honeypot/v1",
+        "format": "jsonl",
+        "line": 1,
+        "path": "honeypot-events.jsonl",
+        "sha256": "aabdcf4447202ea856d6dbbe97f87acd7b3fd778c97bb021f1c8d07011bbbf64"
+      }
+    },
+    {
+      "record_id": "clean-event-2",
+      "record_type": "observed_event",
+      "source_ref": {
+        "adapter": "erpsec.synthetic-honeypot/v1",
+        "format": "jsonl",
+        "line": 2,
+        "path": "honeypot-events.jsonl",
+        "sha256": "aabdcf4447202ea856d6dbbe97f87acd7b3fd778c97bb021f1c8d07011bbbf64"
+      }
+    },
+    {
+      "record_id": "clean-event-3",
+      "record_type": "observed_event",
+      "source_ref": {
+        "adapter": "erpsec.synthetic-honeypot/v1",
+        "format": "jsonl",
+        "line": 3,
+        "path": "honeypot-events.jsonl",
+        "sha256": "aabdcf4447202ea856d6dbbe97f87acd7b3fd778c97bb021f1c8d07011bbbf64"
+      }
+    },
+    {
+      "record_id": "clean-indicator",
+      "record_type": "threat_indicator",
+      "source_ref": {
+        "adapter": "erpsec.synthetic-threat-intel/v1",
+        "format": "json",
+        "json_pointer": "/0",
+        "path": "threat-indicators.json",
+        "sha256": "d0aa90b02c66c466dfbc48b542f543ac0992825d27ccd630250f7080e2c93cf1"
+      }
+    }
+  ],
+  "findings": [],
+  "replay": {
+    "manifest_path": "replay-manifest.json",
+    "manifest_schema_version": "erpsec.synthetic-replay-manifest/v1",
+    "manifest_sha256": "4c9bed258f0c413d66c1612ef7079d9389ca40ffe23325ecf6e31d121a40620c",
+    "replay_id": "scenario-clean-correlation"
+  },
+  "run": {
+    "as_of": "2026-09-01T12:45:00Z",
+    "correlation_count": 0,
+    "coverage": "complete",
+    "input_count": 5,
+    "result": "no_findings",
+    "source_count": 3
+  },
+  "schema_version": "erpsec.report/v2",
+  "source_manifest": [
+    {
+      "adapter": "erpsec.synthetic-evidence/v1",
+      "byte_count": 289,
+      "format": "jsonl",
+      "path": "change-events.jsonl",
+      "record_count": 1,
+      "sha256": "b1529a1f03522a9187a21e375ed8a29cb44483de01550cea832fe49eff2300fb",
+      "source_id": "source-change-audit"
+    },
+    {
+      "adapter": "erpsec.synthetic-honeypot/v1",
+      "byte_count": 846,
+      "format": "jsonl",
+      "path": "honeypot-events.jsonl",
+      "record_count": 3,
+      "sha256": "aabdcf4447202ea856d6dbbe97f87acd7b3fd778c97bb021f1c8d07011bbbf64",
+      "source_id": "source-honeypot"
+    },
+    {
+      "adapter": "erpsec.synthetic-threat-intel/v1",
+      "byte_count": 326,
+      "format": "json",
+      "path": "threat-indicators.json",
+      "record_count": 1,
+      "sha256": "d0aa90b02c66c466dfbc48b542f543ac0992825d27ccd630250f7080e2c93cf1",
+      "source_id": "source-threat-intel"
+    }
+  ],
+  "tool": {
+    "name": "erp-security-evidence-workbench",
+    "version": "0.2.0rc1"
+  }
+}

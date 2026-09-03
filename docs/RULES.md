@@ -2,7 +2,7 @@
 
 ## Status and boundary
 
-This is the versioned `0.1.0rc1` rule contract. The rules operate only on supplied synthetic,
+This is the versioned `0.2.0rc1` rule contract. The rules operate only on supplied synthetic,
 vendor-neutral evidence. They do not inspect a live system, reproduce a company or customer
 methodology, establish compliance, or authorize automated remediation.
 
@@ -16,7 +16,10 @@ default parameters, fingerprint inputs, severity, or fixed guidance requires a v
 ## Selection and coverage
 
 - The compatibility CLI path evaluates only `ERP001` when no `--rule` option is supplied.
-- Repeat `--rule` to select explicit rule IDs; `--rule all` selects the registry in ID order.
+- On `analyze`, repeat `--rule` to select `ERP001`–`ERP006`; `--rule all` selects those six in ID
+  order.
+- On `replay`, no selection or `--rule all` selects `ERP007`–`ERP009`; individual replay IDs may
+  also be selected.
 - `all` cannot be combined with individual IDs, and duplicate selections are rejected.
 - Every selected rule is preflighted before evaluation. If a required record type or required
   `AUDIT_LOGGING` control is absent, the run fails as incomplete and publishes no partial report.
@@ -54,6 +57,12 @@ configurable are listed separately under `fixed_conditions`: `control: AUDIT_LOG
 and `action: SIGN_IN` plus `outcome: failure` for `ERP006`. `ERP004` has no fixed literal filter
 beyond its configured unordered pair and same-principal correlation. Parameter and record order
 must not alter evaluation results.
+
+Replay-rule literals are fixed conditions rather than live or standards-derived configuration:
+three strictly earlier failures and an inclusive maximum of 600 seconds for `ERP007`; a
+successful `SIGN_IN` inside an inclusive local
+indicator-validity interval for `ERP008`; and successful `SIGN_IN`, a fixed
+`DISABLE_AUDIT`/`GRANT_PRIVILEGE` action, and 1,800 seconds for `ERP009`.
 
 ## Registry
 
@@ -117,10 +126,49 @@ must not alter evaluation results.
 - Remediation: human reviewers should validate the principal and event context, then follow the
   appropriate incident-response or access-support process.
 
+### ERP007 v1.0.0 — Failed sign-ins are followed by a successful sign-in
+
+- Required evidence: `observed_event` from the ERP-neutral synthetic honeypot adapter.
+- Match: for one source ID, principal, and documentation-range address, three failed `SIGN_IN`
+  events with strictly earlier timestamps are followed by a successful `SIGN_IN` within a
+  600-second interval. Equality at the 600-second lower boundary matches; failures timestamped at
+  exactly the same second as the success do not establish order and never match. The most recent
+  three qualifying failures are retained, and only the earliest deterministic episode is emitted
+  for the semantic dedupe key.
+- Severity: high, because the pattern can justify prompt review but is not proof of compromise.
+- Limitation: source identity, user intent, device context, and real-world completeness are not
+  established by fictional records.
+- Remediation: validate the principal and source context through an authorized incident-response
+  or access-support process.
+
+### ERP008 v1.0.0 — Successful sign-in matches a local synthetic threat indicator
+
+- Required evidence: `observed_event`, `threat_indicator`.
+- Match: a successful `SIGN_IN` address exactly equals a supplied local synthetic IP indicator and
+  the event timestamp falls inside the indicator's closed validity interval.
+- Severity: high, because the supplied association can prioritize review.
+- Limitation: the engine performs no online lookup and never asserts that the documentation-range
+  address is malicious in the real world.
+- Remediation: validate the indicator provenance and event context before any authorized response.
+
+### ERP009 v1.0.0 — Successful sign-in precedes a sensitive change
+
+- Required evidence: `observed_event`, `change_event`.
+- Match: a successful synthetic sign-in is followed strictly later by a successful `DISABLE_AUDIT`
+  or `GRANT_PRIVILEGE` change for the same principal, at most 1,800 seconds after the sign-in. The
+  nearest preceding qualifying sign-in is retained; same-second records do not establish causal
+  order, and only the earliest deterministic episode per principal, action, and object is emitted.
+- Severity: medium, because timing alone cannot determine authorization or intent.
+- Limitation: the pattern is not an insider-threat verdict, policy violation, or compliance result.
+- Remediation: compare both steps with the authorized change record and follow the documented human
+  investigation process.
+
 ## Evidence and determinism
 
-Every finding carries field-level source references for all decisive predicates and every join key
-used in its decision. The compatibility rule `ERP001` deliberately preserves its original
+Every finding carries field-level source references for decisive fields present in normalized
+records. Replay `source_id` is manifest-supplied source metadata rather than a source-record field;
+it is exposed in the source manifest and correlation steps but is not represented as a field-level
+record reference. The compatibility rule `ERP001` deliberately preserves its original
 evidence-reference shape: the finding points to the `enabled` field, while its fixed
 `AUDIT_LOGGING` condition is explicit in the rule catalog and the complete record provenance
 remains present in the evidence manifest. Findings are ordered by rule ID and fingerprint;
@@ -128,6 +176,10 @@ evaluations follow registry order; evidence references are ordered by canonical 
 record ID, and field. New fingerprints use stable rule identity, sorted record IDs, and only a
 stable semantic key when needed. Source paths, digests, locators, and input ordering never enter a
 finding fingerprint. `ERP001` retains its existing fingerprint bytes.
+
+Replay findings additionally reference a stable correlation episode. Its opaque `dedupe_key` and
+`correlation_id`, closed-window fields, ordered chain steps, and source identities are defined in
+the [Replay contract](REPLAY_CONTRACT.md).
 
 Remediation text is fixed, advisory, and human-review oriented. No rule changes input evidence,
 accounts, permissions, controls, or another system.

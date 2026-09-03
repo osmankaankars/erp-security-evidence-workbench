@@ -57,6 +57,7 @@ def render_html_report(
     tool = _mapping(report["tool"])
     evaluations = _mapping_sequence(report["evaluations"])
     findings = _mapping_sequence(report["findings"])
+    correlations = _mapping_sequence(report.get("correlations", []))
     result = _string(run["result"])
     severity_counts = _severity_counts(findings)
 
@@ -140,6 +141,11 @@ def render_html_report(
         rule_id = _string(finding["rule_id"])
         rule_version = _string(finding["rule_version"])
         severity = _string(finding["severity"])
+        correlation_attribute = ""
+        if "correlation_id" in finding:
+            correlation_attribute = (
+                f' data-correlation-id="{_attribute(_string(finding["correlation_id"]))}"'
+            )
         parts.extend(
             [
                 (
@@ -148,7 +154,7 @@ def render_html_report(
                     f'data-fingerprint="{_attribute(fingerprint)}" '
                     f'data-rule-id="{_attribute(rule_id)}" '
                     f'data-rule-version="{_attribute(rule_version)}" '
-                    f'data-severity="{_attribute(severity)}">'
+                    f'data-severity="{_attribute(severity)}"{correlation_attribute}>'
                 ),
                 f"<h3>{_text(_string(finding['title']))}</h3>",
                 (
@@ -162,9 +168,52 @@ def render_html_report(
                 "</article>",
             ]
         )
+    parts.append("</section>")
+    if "correlations" in report:
+        parts.extend(['<section id="correlations">', "<h2>Correlation episodes</h2>"])
+        if not correlations:
+            parts.append('<p class="muted">No correlation episodes were emitted.</p>')
+        for correlation in correlations:
+            correlation_id = _string(correlation["correlation_id"])
+            window = _mapping(correlation["window"])
+            steps = _mapping_sequence(correlation["steps"])
+            parts.extend(
+                [
+                    (
+                        '<article data-erpsec-role="correlation" '
+                        f'data-correlation-id="{_attribute(correlation_id)}">'
+                    ),
+                    (
+                        f"<h3>{_text(_string(correlation['rule_id']))} · "
+                        f"<code>{_text(correlation_id)}</code></h3>"
+                    ),
+                    (
+                        "<p><strong>Window:</strong> "
+                        f"{_text(_string(window['start']))} through "
+                        f"{_text(_string(window['end']))} · "
+                        f"{_text(_string(window['semantics']))} · maximum "
+                        f"{_text(str(window['maximum_seconds']))} seconds</p>"
+                    ),
+                    "<table><thead><tr><th>Step</th><th>Time</th><th>Source</th>"
+                    "<th>Record</th><th>Explanation</th></tr></thead><tbody>",
+                ]
+            )
+            for step in steps:
+                parts.extend(
+                    [
+                        "<tr>",
+                        f"<td>{_text(str(step['position']))}</td>",
+                        f"<td>{_text(_string(step['occurred_at']))}</td>",
+                        f"<td><code>{_text(_string(step['source_id']))}</code></td>",
+                        f"<td><code>{_text(_string(step['record_id']))}</code></td>",
+                        f"<td>{_text(_string(step['summary']))}</td>",
+                        "</tr>",
+                    ]
+                )
+            parts.extend(["</tbody></table>", "</article>"])
+        parts.append("</section>")
     parts.extend(
         [
-            "</section>",
             '<section id="evidence">',
             "<h2>Finding-linked evidence</h2>",
         ]

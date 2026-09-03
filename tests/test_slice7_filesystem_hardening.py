@@ -401,7 +401,7 @@ def test_sigint_at_owned_publication_try_boundary_cleans_private_state(
             event == "line"
             and not fired
             and frame.f_code is reporting._publish_new_report.__code__
-            and frame.f_lineno == 348
+            and frame.f_lineno == 383
         ):
             parent = frame.f_locals.get("parent")
             temporary = frame.f_locals.get("temporary")

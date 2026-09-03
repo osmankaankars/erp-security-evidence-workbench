@@ -485,7 +485,7 @@ def assert_sarif_21_structure(document: dict[str, Any]) -> None:
     driver = run.get("tool", {}).get("driver")
     assert isinstance(driver, dict)
     assert driver.get("name") == "erp-security-evidence-workbench"
-    assert driver.get("version") == "0.1.0rc1"
+    assert driver.get("version") == "0.2.0rc1"
     rules = driver.get("rules")
     assert isinstance(rules, list)
     rule_ids = [rule.get("id") for rule in rules if isinstance(rule, dict)]

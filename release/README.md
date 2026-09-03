@@ -1,7 +1,7 @@
 # Release artifact workflow
 
 The policies in this directory and `scripts/release_artifacts.py` provide deterministic,
-fail-closed inspection for the `0.1.0rc1` prerelease. They do not upload, sign, or publish a
+fail-closed inspection for the `0.2.0rc1` prerelease. They do not upload, sign, or publish a
 release.
 
 ## Build reproducible archives
@@ -21,12 +21,12 @@ and writes `build-manifest.json`.
 ```bash
 PYTHONDONTWRITEBYTECODE=1 python3.11 scripts/release_artifacts.py inspect \
   --kind wheel \
-  --archive /absolute/new/release-artifacts/erp_security_evidence_workbench-0.1.0rc1-py3-none-any.whl \
+  --archive /absolute/new/release-artifacts/erp_security_evidence_workbench-0.2.0rc1-py3-none-any.whl \
   --policy release/wheel-members.txt
 
 PYTHONDONTWRITEBYTECODE=1 python3.11 scripts/release_artifacts.py inspect \
   --kind sdist \
-  --archive /absolute/new/release-artifacts/erp_security_evidence_workbench-0.1.0rc1.tar.gz \
+  --archive /absolute/new/release-artifacts/erp_security_evidence_workbench-0.2.0rc1.tar.gz \
   --policy release/sdist-members.txt
 ```
 
@@ -36,10 +36,10 @@ Create SPDX metadata from the inspected wheel with the same canonical epoch:
 
 ```bash
 PYTHONDONTWRITEBYTECODE=1 python3.11 scripts/release_artifacts.py sbom \
-  --wheel /absolute/new/release-artifacts/erp_security_evidence_workbench-0.1.0rc1-py3-none-any.whl \
+  --wheel /absolute/new/release-artifacts/erp_security_evidence_workbench-0.2.0rc1-py3-none-any.whl \
   --policy release/wheel-members.txt \
   --source-date-epoch 1788307200 \
-  --output /absolute/new/release-artifacts/erp-security-evidence-workbench-0.1.0rc1.spdx.json
+  --output /absolute/new/release-artifacts/erp-security-evidence-workbench-0.2.0rc1.spdx.json
 ```
 
 Record the selected committed source tree:

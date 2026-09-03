@@ -7,7 +7,7 @@
   a database, a cloud service, a log platform, or any live system.
 - It does not collect credentials, discover assets, scan a network, exploit a target, change an
   account/configuration, or remediate a finding.
-- Six generic project rules are not a vendor audit method, organization policy, regulatory mapping,
+- Nine generic project rules are not a vendor audit method, organization policy, regulatory mapping,
   complete risk assessment, or proof of compliance.
 - `coverage: complete` means only that the supplied files were completely processed and contained
   the minimum record types required by the selected rules. A clean report does not prove absence of
@@ -15,6 +15,9 @@
 - `dataset_classification: synthetic` is validated as a schema value; the tool cannot prove the
   origin or privacy of the bytes. Real, transformed, anonymized, employer, or customer data remains
   prohibited.
+- Replay consumes only local, digest-pinned files and documentation-range IP indicators. It does
+  not update a feed, establish indicator quality, identify a real attacker, or prove that a timing
+  pattern is malicious. Correlation hashes are reproducible identifiers, not signatures.
 - Source identity checks detect changes around the checked read, but they do not authenticate who
   created the source. SHA-256 records the consumed bytes; it is not a signature, attestation, or
   proof that the file is authoritative. The tool does not lock the source against other processes.
@@ -83,24 +86,24 @@
   case-fold collisions may behave differently if artifacts are copied to another filesystem.
 
 The implemented filesystem checks are in
-`src/erp_security_evidence_workbench/adapters.py:104-332` and
-`src/erp_security_evidence_workbench/reporting.py:264-635`.
+`adapters.parse_source` and `reporting.write_new_report` plus their private descriptor helpers.
 
 ## Resource and performance limitations
 
-- At most 32 sources, 1 MiB/1,000 records per source, 32 MiB total source bytes, 5,000 total records,
-  64 KiB per JSONL line/CSV physical row, 4,096 characters per scalar, 32 object fields, and JSON
-  depth 8 are accepted (`src/erp_security_evidence_workbench/adapters.py:21-65`).
+- `analyze` accepts at most 32 evidence files; `replay` accepts one manifest plus 2–32 declared
+  source files. Each file is limited to 1 MiB/1,000 parser records. The 32 MiB replay byte ceiling
+  counts manifest and source bytes together, while the 5,000-record ceiling counts normalized
+  evidence records. JSONL lines/CSV physical rows are limited to 64 KiB, scalars to 4,096
+  characters, objects to 32 fields, and JSON depth to 8 (`adapters.IngestLimits`).
 - A run is rejected before rendering if its retained findings would exceed 30,000 evidence
-  references (`src/erp_security_evidence_workbench/rules.py:34-38`,
-  `src/erp_security_evidence_workbench/rules.py:416-427`).
+  references (`rules.MAX_FINDING_EVIDENCE_REFS` and `rules.evaluate_rules`).
 - These are denial-of-service ceilings, not throughput, latency, or memory guarantees. A valid
   maximum input and multi-format report can still be large. Parsing, canonical records, findings,
   and rendered report bytes are held in ordinary process memory. There is no cross-machine
   benchmark, runtime timeout, hard process-memory limit, or SLA. The recorded local performance
   observation is environment-qualified.
 - The evidence-reference budget is checked after one fixed rule evaluator returns its bounded
-  candidate tuple and before findings are retained/rendered. It prevents pathological custom
+  candidate tuple and before findings are retained/rendered. It prevents pathological fixed-rule
   fan-out from becoming a report, but it is not a general-purpose sandbox.
 
 ## Privacy and reporting limitations

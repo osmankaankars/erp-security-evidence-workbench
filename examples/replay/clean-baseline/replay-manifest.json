@@ -1,0 +1,27 @@
+[
+  {
+    "dataset_classification": "synthetic",
+    "replay_id": "scenario-clean-correlation",
+    "schema_version": "erpsec.synthetic-replay-manifest/v1",
+    "sources": [
+      {
+        "adapter": "erpsec.synthetic-honeypot/v1",
+        "path": "honeypot-events.jsonl",
+        "sha256": "aabdcf4447202ea856d6dbbe97f87acd7b3fd778c97bb021f1c8d07011bbbf64",
+        "source_id": "source-honeypot"
+      },
+      {
+        "adapter": "erpsec.synthetic-threat-intel/v1",
+        "path": "threat-indicators.json",
+        "sha256": "d0aa90b02c66c466dfbc48b542f543ac0992825d27ccd630250f7080e2c93cf1",
+        "source_id": "source-threat-intel"
+      },
+      {
+        "adapter": "erpsec.synthetic-evidence/v1",
+        "path": "change-events.jsonl",
+        "sha256": "b1529a1f03522a9187a21e375ed8a29cb44483de01550cea832fe49eff2300fb",
+        "source_id": "source-change-audit"
+      }
+    ]
+  }
+]

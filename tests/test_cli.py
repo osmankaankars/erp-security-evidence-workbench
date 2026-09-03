@@ -60,7 +60,7 @@ def test_disabled_audit_logging_emits_traceable_deterministic_finding(
     assert report["schema_version"] == REPORT_SCHEMA_VERSION
     assert report["tool"] == {
         "name": "erp-security-evidence-workbench",
-        "version": "0.1.0rc1",
+        "version": "0.2.0rc1",
     }
     assert report["run"] == {
         "as_of": "2026-09-01T00:00:00Z",

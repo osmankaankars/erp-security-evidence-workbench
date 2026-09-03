@@ -2,7 +2,7 @@
 
 ## Scope
 
-This inventory covers the `0.1.0rc1` prerelease candidate and distinguishes the application runtime
+This inventory covers the `0.2.0rc1` prerelease candidate and distinguishes the application runtime
 from build and test tooling. It is not legal advice and is not a vulnerability-clearance report.
 
 ## Runtime dependencies
@@ -28,8 +28,8 @@ type checking, or local validation and are not included in the runtime wheel.
 | --- | --- | --- | --- |
 | `build` | `1.6.0` | PEP 517 frontend | MIT |
 | `jsonschema` | `4.26.0` | Offline SARIF schema tests | MIT |
-| `mypy` | `1.20.2` | Static type checking | MIT |
-| `pytest` | `8.4.2` | Test runner | MIT |
+| `mypy` | `2.3.1` | Static type checking | MIT |
+| `pytest` | `9.1.1` | Test runner | MIT |
 | `ruff` | `0.16.5` | Lint and format checks | MIT |
 | `setuptools` | `84.0.0` | PEP 517 build backend | MIT |
 | `wheel` | `0.48.0` | Wheel build support | MIT |

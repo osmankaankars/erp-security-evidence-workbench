@@ -1,6 +1,7 @@
 # ERP Security Evidence Workbench
 
 [![CI](https://github.com/osmankaankars/erp-security-evidence-workbench/actions/workflows/ci.yml/badge.svg)](https://github.com/osmankaankars/erp-security-evidence-workbench/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/osmankaankars/erp-security-evidence-workbench/actions/workflows/codeql.yml/badge.svg)](https://github.com/osmankaankars/erp-security-evidence-workbench/actions/workflows/codeql.yml)
 [![Python 3.11–3.14](https://img.shields.io/badge/Python-3.11%E2%80%933.14-3776AB.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -9,16 +10,18 @@ synthetic, ERP-neutral security evidence. It reads explicit local CSV, JSON, and
 evaluates a fixed versioned rule pack, and produces JSON, self-contained HTML, or SARIF 2.1.0
 reports.
 
-`0.1.0rc1` is a prerelease intended for evaluation and portfolio demonstration with the included
+`0.2.0rc1` is a prerelease intended for evaluation and portfolio demonstration with the included
 fictional data. It is not a production service, compliance product, live scanner, or ERP connector.
 
 ## Highlights
 
 - Offline and file-only application runtime, with no third-party runtime dependencies.
 - Strict synthetic-evidence schema with transactional, fail-closed multi-file validation.
-- Six deterministic rules covering audit logging, inactive privileged access, direct privileged
-  grants, a configurable generic segregation-of-duties pair, emergency access timing, and repeated
-  sign-in failures.
+- Six deterministic evidence rules plus three replay rules for failed-then-successful sign-ins,
+  local synthetic indicator matches, and sign-in-to-sensitive-change timing.
+- Digest-pinned, multi-source replay with an ERP-neutral synthetic honeypot adapter, a local-only
+  synthetic threat-indicator adapter, stable correlation IDs, deduplication, and explicit closed
+  time windows.
 - Stable findings, fingerprints, evaluation order, and field-level evidence references.
 - Canonical JSON, static HTML, and SARIF 2.1.0 projections from the same validated result.
 - Descriptor-anchored POSIX reads and exclusive, no-overwrite report publication with mode `0600`.
@@ -82,6 +85,22 @@ Evaluate all six rules and create a self-contained HTML report:
 The output path must not already exist and must be distinct from every input path. Select individual
 rules by repeating `--rule`, for example `--rule ERP002 --rule ERP004`.
 
+Replay the three-source detection/correlation scenario with the v2 rule pack:
+
+```bash
+.venv/bin/erpsec replay \
+  examples/replay/detection-correlation/replay-manifest.json \
+  --as-of 2026-09-01T12:45:00Z \
+  --rule all \
+  --format html \
+  --output /tmp/erpsec-replay-report.html
+```
+
+Replay manifests accept only basename-local, SHA-256-pinned files declared with one of three
+allowlisted adapters. At least two distinct regular files are required. Replay performs no online
+IOC lookup and rejects non-documentation IP ranges. See the
+[versioned replay contract](https://github.com/osmankaankars/erp-security-evidence-workbench/blob/v0.2.0rc1/docs/REPLAY_CONTRACT.md).
+
 Exit codes:
 
 - `0`: complete evaluation with no findings;
@@ -95,13 +114,18 @@ New records use schema `erpsec.synthetic-evidence/v1` and one of six record type
 legacy single-object `erpsec.synthetic-control-state/v1` JSON form remains available for the
 single-control workflow.
 
-The frozen input ceilings are 32 files, 1 MiB and 1,000 records per file, 32 MiB of source bytes and
-5,000 records per run, 64 KiB per JSONL line or CSV physical row, and 30,000 accepted finding
-evidence references per run. These are rejection limits, not performance guarantees.
+The frozen input ceilings allow `analyze` up to 32 evidence files and `replay` one manifest plus
+2–32 declared source files. Each file is limited to 1 MiB and 1,000 parser records; a replay's
+32 MiB aggregate byte ceiling includes its manifest, while its 5,000-record ceiling applies to
+normalized evidence records. JSONL lines and CSV physical rows are limited to 64 KiB, and a run may
+retain at most 30,000 finding evidence references. These are rejection limits, not performance
+guarantees.
 
 All report formats describe the same engine-validated outcome:
 
-- JSON is the canonical `erpsec.report/v1` document.
+- `analyze` JSON remains the canonical `erpsec.report/v1` document.
+- `replay` JSON uses `erpsec.report/v2`, adding replay identity, source identities, stable
+  correlation episodes, ordered evidence chains, dedupe keys, and explicit window semantics.
 - HTML is escaped, static, self-contained, and has no JavaScript or external resources.
 - SARIF targets 2.1.0 and preserves rule identity, native severity, fingerprints, and available
   source locations.
@@ -125,7 +149,9 @@ PYTHONPATH=src python3.11 scripts/synthetic_corpus.py replay \
 ```
 
 See [Synthetic scenario corpus](examples/scenarios/README.md) and the
-[Synthetic data policy](docs/SYNTHETIC_DATA_POLICY.md).
+[Synthetic data policy](docs/SYNTHETIC_DATA_POLICY.md). Detection/correlation examples, including
+a finding scenario and a clean complete-evidence scenario, are under
+[`examples/replay`](examples/replay/README.md).
 
 ## Development
 
@@ -147,6 +173,7 @@ For release reproducibility and artifact inspection, see [Reproducibility](docs/
 
 - [Architecture](docs/ARCHITECTURE.md)
 - [Rules and exact semantics](docs/RULES.md)
+- [Replay import and correlation contract](docs/REPLAY_CONTRACT.md)
 - [Rule authoring contract](docs/RULE_AUTHORING.md)
 - [Product boundary](docs/PRODUCT_BOUNDARY.md)
 - [Threat model](docs/THREAT_MODEL.md)

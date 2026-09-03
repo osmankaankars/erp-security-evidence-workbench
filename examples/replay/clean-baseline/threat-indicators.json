@@ -1,0 +1,12 @@
+[
+  {
+    "confidence": "medium",
+    "dataset_classification": "synthetic",
+    "indicator_id": "clean-indicator",
+    "indicator_type": "ip",
+    "schema_version": "erpsec.synthetic-threat-indicator/v1",
+    "valid_from": "2026-09-01T00:00:00Z",
+    "valid_until": "2026-09-02T00:00:00Z",
+    "value": "198.51.100.99"
+  }
+]

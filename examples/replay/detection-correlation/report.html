@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src &#x27;none&#x27;; style-src &#x27;sha256-DKzZMcmupOlQbwnYarnHWP9OkAHxrMGt2RG2BY5nu9U=&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ERP Security Evidence Report</title>
+<style>body{margin:0;background:#f4f7f9;color:#17212b;font:15px/1.5 system-ui,sans-serif}main{max-width:1080px;margin:auto;padding:32px}h1,h2,h3{line-height:1.2}section{background:#fff;border:1px solid #d8e0e6;border-radius:10px;margin:16px 0;padding:20px}.scope{border-left:5px solid #176b87}.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.metric{background:#edf4f7;border-radius:8px;padding:12px}.finding{border-left:5px solid #a03c2f}.severity-high{color:#8e2d22}.severity-medium{color:#765500}table{border-collapse:collapse;width:100%}th,td{border-bottom:1px solid #d8e0e6;padding:9px;text-align:left;vertical-align:top}code{overflow-wrap:anywhere}dt{font-weight:700}dd{margin:0 0 10px}.muted{color:#52616b}.state{font-weight:700}</style>
+</head>
+<body data-run-result="findings">
+<main>
+<h1>ERP Security Evidence Report</h1>
+<section id="scope" class="scope">
+<h2>Scope</h2>
+<p>This offline reference project analyzes supplied synthetic evidence only. It does not inspect a live system, establish compliance, or replace human review.</p>
+</section>
+<section id="summary">
+<h2>Summary</h2>
+<div class="summary">
+<div class="metric"><strong>Result</strong><br>findings</div>
+<div class="metric"><strong>Findings</strong><br>3</div>
+<div class="metric"><strong>Selected rules</strong><br>3</div>
+<div class="metric"><strong>Coverage</strong><br>complete</div>
+</div>
+<p class="state">Findings in supplied evidence.</p>
+<p>Severity summary: high=2, medium=1.</p>
+</section>
+<section id="rule-evaluations">
+<h2>Rule evaluations</h2>
+<table><thead><tr><th>Rule</th><th>Version</th><th>Status</th></tr></thead><tbody>
+<tr data-erpsec-role="evaluation" data-rule-id="ERP007" data-status="matched">
+<td><code>ERP007</code></td>
+<td>1.0.0</td>
+<td>matched</td></tr>
+<tr data-erpsec-role="evaluation" data-rule-id="ERP008" data-status="matched">
+<td><code>ERP008</code></td>
+<td>1.0.0</td>
+<td>matched</td></tr>
+<tr data-erpsec-role="evaluation" data-rule-id="ERP009" data-status="matched">
+<td><code>ERP009</code></td>
+<td>1.0.0</td>
+<td>matched</td></tr>
+</tbody></table>
+</section>
+<section id="skipped-evaluations">
+<h2>Skipped evaluations</h2>
+<p>None. This version fails the complete run when selected-rule evidence is insufficient and does not publish a report.</p>
+</section>
+<section id="findings">
+<h2>Findings</h2>
+<article id="finding-8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" class="finding" data-erpsec-role="finding" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-rule-id="ERP007" data-rule-version="1.0.0" data-severity="high" data-correlation-id="476d90d49bcd029aab22b972d3417a02968da37432f05ec04e27965880d34fcc">
+<h3>Failed sign-ins are followed by a successful sign-in</h3>
+<p class="severity-high"><strong>ERP007 · high</strong></p>
+<p>Three failed synthetic sign-ins from the same source and principal are timestamped strictly before a success inside the inclusive ten-minute window.</p>
+<p><strong>Finding ID:</strong> <code>8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0</code></p>
+<p><strong>Limitation:</strong> ERP007 evaluates only supplied synthetic events and cannot establish attacker identity, intent, device context, or source-system completeness.</p>
+<p><strong>Remediation:</strong> Review the correlated evidence chain, validate the principal and source context, and follow an authorized incident-response or access-support process.</p>
+</article>
+<article id="finding-7f119ff70e1d0f207bdac9cd11e41abcda251af4035649ebd5015b6566e9ec44" class="finding" data-erpsec-role="finding" data-fingerprint="7f119ff70e1d0f207bdac9cd11e41abcda251af4035649ebd5015b6566e9ec44" data-rule-id="ERP008" data-rule-version="1.0.0" data-severity="high" data-correlation-id="c05d2b4a1edb3db69d6c430075b63ebdd9d6814ccbf98636438ca0d9a698ce96">
+<h3>Successful sign-in matches a local synthetic threat indicator</h3>
+<p class="severity-high"><strong>ERP008 · high</strong></p>
+<p>A successful synthetic sign-in source address exactly matches a supplied local synthetic indicator during its inclusive validity interval.</p>
+<p><strong>Finding ID:</strong> <code>7f119ff70e1d0f207bdac9cd11e41abcda251af4035649ebd5015b6566e9ec44</code></p>
+<p><strong>Limitation:</strong> ERP008 uses only a user-supplied local synthetic indicator file; it performs no online lookup and does not assert that an address is malicious in the real world.</p>
+<p><strong>Remediation:</strong> Validate the indicator source and event context, then follow the authorized triage process before taking any containment action.</p>
+</article>
+<article id="finding-2c78c6876c92d2498353d12beb9e26eb4a933a4cef36d2f9d7878ea85729d870" class="finding" data-erpsec-role="finding" data-fingerprint="2c78c6876c92d2498353d12beb9e26eb4a933a4cef36d2f9d7878ea85729d870" data-rule-id="ERP009" data-rule-version="1.0.0" data-severity="medium" data-correlation-id="44d429dbcd54dded11f3178e771a057ae6b522fc5512bbac7723cb9b67df2014">
+<h3>Successful sign-in precedes a sensitive change</h3>
+<p class="severity-medium"><strong>ERP009 · medium</strong></p>
+<p>A successful synthetic sign-in is followed by a successful sensitive change for the same principal inside the inclusive thirty-minute window.</p>
+<p><strong>Finding ID:</strong> <code>2c78c6876c92d2498353d12beb9e26eb4a933a4cef36d2f9d7878ea85729d870</code></p>
+<p><strong>Limitation:</strong> ERP009 identifies a supplied synthetic timing pattern only; it does not determine malicious intent, policy violation, or whether the change was approved.</p>
+<p><strong>Remediation:</strong> Review the authentication and change evidence against the authorized change record and escalate only through the documented investigation process.</p>
+</article>
+</section>
+<section id="correlations">
+<h2>Correlation episodes</h2>
+<article data-erpsec-role="correlation" data-correlation-id="44d429dbcd54dded11f3178e771a057ae6b522fc5512bbac7723cb9b67df2014">
+<h3>ERP009 · <code>44d429dbcd54dded11f3178e771a057ae6b522fc5512bbac7723cb9b67df2014</code></h3>
+<p><strong>Window:</strong> 2026-09-01T12:10:00Z through 2026-09-01T12:20:00Z · closed_interval_inclusive · maximum 1800 seconds</p>
+<table><thead><tr><th>Step</th><th>Time</th><th>Source</th><th>Record</th><th>Explanation</th></tr></thead><tbody>
+<tr>
+<td>1</td>
+<td>2026-09-01T12:10:00Z</td>
+<td><code>source-honeypot</code></td>
+<td><code>event-4</code></td>
+<td>Successful sign-in</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2026-09-01T12:20:00Z</td>
+<td><code>source-change-audit</code></td>
+<td><code>change-1</code></td>
+<td>Successful sensitive synthetic change</td>
+</tr>
+</tbody></table>
+</article>
+<article data-erpsec-role="correlation" data-correlation-id="476d90d49bcd029aab22b972d3417a02968da37432f05ec04e27965880d34fcc">
+<h3>ERP007 · <code>476d90d49bcd029aab22b972d3417a02968da37432f05ec04e27965880d34fcc</code></h3>
+<p><strong>Window:</strong> 2026-09-01T12:00:00Z through 2026-09-01T12:10:00Z · closed_interval_inclusive · maximum 600 seconds</p>
+<table><thead><tr><th>Step</th><th>Time</th><th>Source</th><th>Record</th><th>Explanation</th></tr></thead><tbody>
+<tr>
+<td>1</td>
+<td>2026-09-01T12:00:00Z</td>
+<td><code>source-honeypot</code></td>
+<td><code>event-1</code></td>
+<td>Failed synthetic sign-in</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2026-09-01T12:04:00Z</td>
+<td><code>source-honeypot</code></td>
+<td><code>event-2</code></td>
+<td>Failed synthetic sign-in</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2026-09-01T12:08:00Z</td>
+<td><code>source-honeypot</code></td>
+<td><code>event-3</code></td>
+<td>Failed synthetic sign-in</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2026-09-01T12:10:00Z</td>
+<td><code>source-honeypot</code></td>
+<td><code>event-4</code></td>
+<td>Successful sign-in</td>
+</tr>
+</tbody></table>
+</article>
+<article data-erpsec-role="correlation" data-correlation-id="c05d2b4a1edb3db69d6c430075b63ebdd9d6814ccbf98636438ca0d9a698ce96">
+<h3>ERP008 · <code>c05d2b4a1edb3db69d6c430075b63ebdd9d6814ccbf98636438ca0d9a698ce96</code></h3>
+<p><strong>Window:</strong> 2026-09-01T00:00:00Z through 2026-09-02T00:00:00Z · closed_interval_inclusive · maximum 86400 seconds</p>
+<table><thead><tr><th>Step</th><th>Time</th><th>Source</th><th>Record</th><th>Explanation</th></tr></thead><tbody>
+<tr>
+<td>1</td>
+<td>2026-09-01T00:00:00Z</td>
+<td><code>source-threat-intel</code></td>
+<td><code>indicator-doc-address</code></td>
+<td>Local synthetic IP indicator</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2026-09-01T12:10:00Z</td>
+<td><code>source-honeypot</code></td>
+<td><code>event-4</code></td>
+<td>Successful sign-in from matched address</td>
+</tr>
+</tbody></table>
+</article>
+</section>
+<section id="evidence">
+<h2>Finding-linked evidence</h2>
+<table><thead><tr><th>Rule</th><th>Record</th><th>Source</th><th>Format</th><th>Locator</th><th>Field</th></tr></thead><tbody>
+<tr data-erpsec-role="evidence" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-record-id="event-1" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="1" data-field="action">
+<td><code>ERP007</code></td>
+<td><code>event-1</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 1</td>
+<td>action</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-record-id="event-1" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="1" data-field="occurred_at">
+<td><code>ERP007</code></td>
+<td><code>event-1</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 1</td>
+<td>occurred_at</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-record-id="event-1" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="1" data-field="outcome">
+<td><code>ERP007</code></td>
+<td><code>event-1</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 1</td>
+<td>outcome</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-record-id="event-1" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="1" data-field="principal_id">
+<td><code>ERP007</code></td>
+<td><code>event-1</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 1</td>
+<td>principal_id</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-record-id="event-1" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="1" data-field="source_address">
+<td><code>ERP007</code></td>
+<td><code>event-1</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 1</td>
+<td>source_address</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-record-id="event-2" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="2" data-field="action">
+<td><code>ERP007</code></td>
+<td><code>event-2</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 2</td>
+<td>action</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-record-id="event-2" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="2" data-field="occurred_at">
+<td><code>ERP007</code></td>
+<td><code>event-2</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 2</td>
+<td>occurred_at</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-record-id="event-2" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="2" data-field="outcome">
+<td><code>ERP007</code></td>
+<td><code>event-2</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 2</td>
+<td>outcome</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-record-id="event-2" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="2" data-field="principal_id">
+<td><code>ERP007</code></td>
+<td><code>event-2</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 2</td>
+<td>principal_id</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-record-id="event-2" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="2" data-field="source_address">
+<td><code>ERP007</code></td>
+<td><code>event-2</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 2</td>
+<td>source_address</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-record-id="event-3" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="3" data-field="action">
+<td><code>ERP007</code></td>
+<td><code>event-3</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 3</td>
+<td>action</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-record-id="event-3" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="3" data-field="occurred_at">
+<td><code>ERP007</code></td>
+<td><code>event-3</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 3</td>
+<td>occurred_at</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-record-id="event-3" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="3" data-field="outcome">
+<td><code>ERP007</code></td>
+<td><code>event-3</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 3</td>
+<td>outcome</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-record-id="event-3" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="3" data-field="principal_id">
+<td><code>ERP007</code></td>
+<td><code>event-3</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 3</td>
+<td>principal_id</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-record-id="event-3" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="3" data-field="source_address">
+<td><code>ERP007</code></td>
+<td><code>event-3</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 3</td>
+<td>source_address</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-record-id="event-4" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="4" data-field="action">
+<td><code>ERP007</code></td>
+<td><code>event-4</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 4</td>
+<td>action</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-record-id="event-4" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="4" data-field="occurred_at">
+<td><code>ERP007</code></td>
+<td><code>event-4</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 4</td>
+<td>occurred_at</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-record-id="event-4" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="4" data-field="outcome">
+<td><code>ERP007</code></td>
+<td><code>event-4</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 4</td>
+<td>outcome</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-record-id="event-4" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="4" data-field="principal_id">
+<td><code>ERP007</code></td>
+<td><code>event-4</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 4</td>
+<td>principal_id</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0" data-record-id="event-4" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="4" data-field="source_address">
+<td><code>ERP007</code></td>
+<td><code>event-4</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 4</td>
+<td>source_address</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="7f119ff70e1d0f207bdac9cd11e41abcda251af4035649ebd5015b6566e9ec44" data-record-id="event-4" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="4" data-field="action">
+<td><code>ERP008</code></td>
+<td><code>event-4</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 4</td>
+<td>action</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="7f119ff70e1d0f207bdac9cd11e41abcda251af4035649ebd5015b6566e9ec44" data-record-id="event-4" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="4" data-field="occurred_at">
+<td><code>ERP008</code></td>
+<td><code>event-4</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 4</td>
+<td>occurred_at</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="7f119ff70e1d0f207bdac9cd11e41abcda251af4035649ebd5015b6566e9ec44" data-record-id="event-4" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="4" data-field="outcome">
+<td><code>ERP008</code></td>
+<td><code>event-4</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 4</td>
+<td>outcome</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="7f119ff70e1d0f207bdac9cd11e41abcda251af4035649ebd5015b6566e9ec44" data-record-id="event-4" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="4" data-field="source_address">
+<td><code>ERP008</code></td>
+<td><code>event-4</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 4</td>
+<td>source_address</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="7f119ff70e1d0f207bdac9cd11e41abcda251af4035649ebd5015b6566e9ec44" data-record-id="indicator-doc-address" data-source-path="threat-indicators.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/0/valid_from" data-field="valid_from">
+<td><code>ERP008</code></td>
+<td><code>indicator-doc-address</code></td>
+<td>threat-indicators.json</td>
+<td>json</td>
+<td>json_pointer /0/valid_from</td>
+<td>valid_from</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="7f119ff70e1d0f207bdac9cd11e41abcda251af4035649ebd5015b6566e9ec44" data-record-id="indicator-doc-address" data-source-path="threat-indicators.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/0/valid_until" data-field="valid_until">
+<td><code>ERP008</code></td>
+<td><code>indicator-doc-address</code></td>
+<td>threat-indicators.json</td>
+<td>json</td>
+<td>json_pointer /0/valid_until</td>
+<td>valid_until</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="7f119ff70e1d0f207bdac9cd11e41abcda251af4035649ebd5015b6566e9ec44" data-record-id="indicator-doc-address" data-source-path="threat-indicators.json" data-source-format="json" data-locator-kind="json_pointer" data-locator-value="/0/value" data-field="value">
+<td><code>ERP008</code></td>
+<td><code>indicator-doc-address</code></td>
+<td>threat-indicators.json</td>
+<td>json</td>
+<td>json_pointer /0/value</td>
+<td>value</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="2c78c6876c92d2498353d12beb9e26eb4a933a4cef36d2f9d7878ea85729d870" data-record-id="change-1" data-source-path="change-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="1" data-field="action">
+<td><code>ERP009</code></td>
+<td><code>change-1</code></td>
+<td>change-events.jsonl</td>
+<td>jsonl</td>
+<td>line 1</td>
+<td>action</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="2c78c6876c92d2498353d12beb9e26eb4a933a4cef36d2f9d7878ea85729d870" data-record-id="change-1" data-source-path="change-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="1" data-field="object_id">
+<td><code>ERP009</code></td>
+<td><code>change-1</code></td>
+<td>change-events.jsonl</td>
+<td>jsonl</td>
+<td>line 1</td>
+<td>object_id</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="2c78c6876c92d2498353d12beb9e26eb4a933a4cef36d2f9d7878ea85729d870" data-record-id="change-1" data-source-path="change-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="1" data-field="occurred_at">
+<td><code>ERP009</code></td>
+<td><code>change-1</code></td>
+<td>change-events.jsonl</td>
+<td>jsonl</td>
+<td>line 1</td>
+<td>occurred_at</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="2c78c6876c92d2498353d12beb9e26eb4a933a4cef36d2f9d7878ea85729d870" data-record-id="change-1" data-source-path="change-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="1" data-field="outcome">
+<td><code>ERP009</code></td>
+<td><code>change-1</code></td>
+<td>change-events.jsonl</td>
+<td>jsonl</td>
+<td>line 1</td>
+<td>outcome</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="2c78c6876c92d2498353d12beb9e26eb4a933a4cef36d2f9d7878ea85729d870" data-record-id="change-1" data-source-path="change-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="1" data-field="principal_id">
+<td><code>ERP009</code></td>
+<td><code>change-1</code></td>
+<td>change-events.jsonl</td>
+<td>jsonl</td>
+<td>line 1</td>
+<td>principal_id</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="2c78c6876c92d2498353d12beb9e26eb4a933a4cef36d2f9d7878ea85729d870" data-record-id="event-4" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="4" data-field="occurred_at">
+<td><code>ERP009</code></td>
+<td><code>event-4</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 4</td>
+<td>occurred_at</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="2c78c6876c92d2498353d12beb9e26eb4a933a4cef36d2f9d7878ea85729d870" data-record-id="event-4" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="4" data-field="outcome">
+<td><code>ERP009</code></td>
+<td><code>event-4</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 4</td>
+<td>outcome</td></tr>
+<tr data-erpsec-role="evidence" data-fingerprint="2c78c6876c92d2498353d12beb9e26eb4a933a4cef36d2f9d7878ea85729d870" data-record-id="event-4" data-source-path="honeypot-events.jsonl" data-source-format="jsonl" data-locator-kind="line" data-locator-value="4" data-field="principal_id">
+<td><code>ERP009</code></td>
+<td><code>event-4</code></td>
+<td>honeypot-events.jsonl</td>
+<td>jsonl</td>
+<td>line 4</td>
+<td>principal_id</td></tr>
+</tbody></table>
+</section>
+<section id="rule-details">
+<h2>Rule details</h2>
+<article id="rule-erp007">
+<h3>ERP007 · Failed sign-ins are followed by a successful sign-in</h3>
+<p>A success after repeated failures from the same synthetic source can warrant review for credential misuse or an operational access issue.</p>
+<p><strong>Required evidence:</strong> observed_event</p>
+<p><strong>Limitation:</strong> ERP007 evaluates only supplied synthetic events and cannot establish attacker identity, intent, device context, or source-system completeness.</p>
+<p><strong>Remediation:</strong> Review the correlated evidence chain, validate the principal and source context, and follow an authorized incident-response or access-support process.</p>
+</article>
+<article id="rule-erp008">
+<h3>ERP008 · Successful sign-in matches a local synthetic threat indicator</h3>
+<p>A successful sign-in from an address present in a supplied local indicator set can justify prioritized human review.</p>
+<p><strong>Required evidence:</strong> observed_event, threat_indicator</p>
+<p><strong>Limitation:</strong> ERP008 uses only a user-supplied local synthetic indicator file; it performs no online lookup and does not assert that an address is malicious in the real world.</p>
+<p><strong>Remediation:</strong> Validate the indicator source and event context, then follow the authorized triage process before taking any containment action.</p>
+</article>
+<article id="rule-erp009">
+<h3>ERP009 · Successful sign-in precedes a sensitive change</h3>
+<p>A sensitive change shortly after authentication can warrant review of authorization and change-management context.</p>
+<p><strong>Required evidence:</strong> change_event, observed_event</p>
+<p><strong>Limitation:</strong> ERP009 identifies a supplied synthetic timing pattern only; it does not determine malicious intent, policy violation, or whether the change was approved.</p>
+<p><strong>Remediation:</strong> Review the authentication and change evidence against the authorized change record and escalate only through the documented investigation process.</p>
+</article>
+</section>
+<section id="limitations">
+<h2>Limitations</h2>
+<p>Coverage is complete only for the supplied files and selected rules. A clean result does not prove absence of risk or source-system completeness.</p>
+</section>
+<section id="run-metadata">
+<h2>Run metadata</h2>
+<dl>
+<dt>Analysis time</dt><dd>2026-09-01T12:45:00Z</dd>
+<dt>Input records</dt><dd>6</dd>
+<dt>Report schema</dt><dd>erpsec.report/v2</dd>
+<dt>Tool</dt><dd>erp-security-evidence-workbench 0.2.0rc1</dd>
+</dl>
+</section>
+</main>
+</body>
+</html>

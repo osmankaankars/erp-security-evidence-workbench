@@ -19,7 +19,7 @@ def test_rc_version_has_one_package_source_of_truth() -> None:
     project = configuration["project"]
     setuptools = configuration["tool"]["setuptools"]
 
-    assert __version__ == "0.1.0rc1"
+    assert __version__ == "0.2.0rc1"
     assert "version" not in project
     assert project["dynamic"] == ["version"]
     assert setuptools["dynamic"]["version"] == {
@@ -34,8 +34,8 @@ def test_release_candidate_tool_versions_are_exact() -> None:
     assert set(configuration["project"]["optional-dependencies"]["dev"]) == {
         "build==1.6.0",
         "jsonschema==4.26.0",
-        "mypy==1.20.2",
-        "pytest==8.4.2",
+        "mypy==2.3.1",
+        "pytest==9.1.1",
         "ruff==0.16.5",
         "setuptools==84.0.0",
         "wheel==0.48.0",
@@ -77,6 +77,7 @@ def test_required_release_candidate_documents_exist() -> None:
         "docs/CLAIM_EVIDENCE.md",
         "docs/OBSERVED_PERFORMANCE.md",
         "docs/RELEASE_CANDIDATE.md",
+        "docs/REPLAY_CONTRACT.md",
         "docs/REPRODUCIBILITY.md",
         "docs/RULE_AUTHORING.md",
     )

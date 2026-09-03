@@ -1,0 +1,235 @@
+{
+  "$schema": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/schemas/sarif-schema-2.1.0.json",
+  "runs": [
+    {
+      "artifacts": [
+        {
+          "hashes": {
+            "sha-256": "b1529a1f03522a9187a21e375ed8a29cb44483de01550cea832fe49eff2300fb"
+          },
+          "length": 289,
+          "location": {
+            "index": 0,
+            "uri": "change-events.jsonl"
+          },
+          "properties": {
+            "erpsec.adapter": "erpsec.synthetic-evidence/v1",
+            "erpsec.format": "jsonl",
+            "erpsec.recordCount": 1
+          },
+          "roles": [
+            "analysisTarget"
+          ]
+        },
+        {
+          "hashes": {
+            "sha-256": "aabdcf4447202ea856d6dbbe97f87acd7b3fd778c97bb021f1c8d07011bbbf64"
+          },
+          "length": 846,
+          "location": {
+            "index": 1,
+            "uri": "honeypot-events.jsonl"
+          },
+          "properties": {
+            "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+            "erpsec.format": "jsonl",
+            "erpsec.recordCount": 3
+          },
+          "roles": [
+            "analysisTarget"
+          ]
+        },
+        {
+          "hashes": {
+            "sha-256": "d0aa90b02c66c466dfbc48b542f543ac0992825d27ccd630250f7080e2c93cf1"
+          },
+          "length": 326,
+          "location": {
+            "index": 2,
+            "uri": "threat-indicators.json"
+          },
+          "properties": {
+            "erpsec.adapter": "erpsec.synthetic-threat-intel/v1",
+            "erpsec.format": "json",
+            "erpsec.recordCount": 1
+          },
+          "roles": [
+            "analysisTarget"
+          ]
+        }
+      ],
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "properties": {
+        "erpsec.asOf": "2026-09-01T12:45:00Z",
+        "erpsec.correlations": [],
+        "erpsec.coverage": "complete",
+        "erpsec.evaluations": [
+          {
+            "rule_id": "ERP007",
+            "rule_version": "1.0.0",
+            "status": "not_matched"
+          },
+          {
+            "rule_id": "ERP008",
+            "rule_version": "1.0.0",
+            "status": "not_matched"
+          },
+          {
+            "rule_id": "ERP009",
+            "rule_version": "1.0.0",
+            "status": "not_matched"
+          }
+        ],
+        "erpsec.inputCount": 5,
+        "erpsec.replay": {
+          "manifest_path": "replay-manifest.json",
+          "manifest_schema_version": "erpsec.synthetic-replay-manifest/v1",
+          "manifest_sha256": "4c9bed258f0c413d66c1612ef7079d9389ca40ffe23325ecf6e31d121a40620c",
+          "replay_id": "scenario-clean-correlation"
+        },
+        "erpsec.reportSchemaVersion": "erpsec.report/v2",
+        "erpsec.result": "no_findings",
+        "erpsec.syntheticEvidenceOnly": true
+      },
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "erp-security-evidence-workbench",
+          "rules": [
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "A success after repeated failures from the same synthetic source can warrant review for credential misuse or an operational access issue."
+              },
+              "help": {
+                "text": "ERP007 evaluates only supplied synthetic events and cannot establish attacker identity, intent, device context, or source-system completeness. Remediation: Review the correlated evidence chain, validate the principal and source context, and follow an authorized incident-response or access-support process."
+              },
+              "id": "ERP007",
+              "properties": {
+                "erpsec.fixedConditions": [
+                  {
+                    "default": 3,
+                    "description": "Exactly three preceding failures are retained in each episode.",
+                    "name": "failure_threshold"
+                  },
+                  {
+                    "default": 600,
+                    "description": "At most 600 seconds from the first retained failure through a strictly later success; the 600-second boundary is inclusive.",
+                    "name": "maximum_window_seconds"
+                  },
+                  {
+                    "default": "SIGN_IN",
+                    "description": "Generic authentication action evaluated by this rule.",
+                    "name": "action"
+                  }
+                ],
+                "erpsec.parameters": [],
+                "erpsec.requiredEvidenceTypes": [
+                  "observed_event"
+                ],
+                "erpsec.ruleVersion": "1.0.0",
+                "erpsec.severity": "high"
+              },
+              "shortDescription": {
+                "text": "Failed sign-ins are followed by a successful sign-in"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "A successful sign-in from an address present in a supplied local indicator set can justify prioritized human review."
+              },
+              "help": {
+                "text": "ERP008 uses only a user-supplied local synthetic indicator file; it performs no online lookup and does not assert that an address is malicious in the real world. Remediation: Validate the indicator source and event context, then follow the authorized triage process before taking any containment action."
+              },
+              "id": "ERP008",
+              "properties": {
+                "erpsec.fixedConditions": [
+                  {
+                    "default": "SIGN_IN",
+                    "description": "Generic authentication action evaluated by this rule.",
+                    "name": "action"
+                  },
+                  {
+                    "default": "success",
+                    "description": "Only explicitly successful synthetic events are correlated.",
+                    "name": "outcome"
+                  },
+                  {
+                    "default": "inclusive",
+                    "description": "Event time must be inside the closed indicator-validity interval.",
+                    "name": "indicator_validity"
+                  }
+                ],
+                "erpsec.parameters": [],
+                "erpsec.requiredEvidenceTypes": [
+                  "observed_event",
+                  "threat_indicator"
+                ],
+                "erpsec.ruleVersion": "1.0.0",
+                "erpsec.severity": "high"
+              },
+              "shortDescription": {
+                "text": "Successful sign-in matches a local synthetic threat indicator"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "A sensitive change shortly after authentication can warrant review of authorization and change-management context."
+              },
+              "help": {
+                "text": "ERP009 identifies a supplied synthetic timing pattern only; it does not determine malicious intent, policy violation, or whether the change was approved. Remediation: Review the authentication and change evidence against the authorized change record and escalate only through the documented investigation process."
+              },
+              "id": "ERP009",
+              "properties": {
+                "erpsec.fixedConditions": [
+                  {
+                    "default": 1800,
+                    "description": "Sensitive change must occur strictly after the successful sign-in and no more than 1,800 seconds later.",
+                    "name": "maximum_window_seconds"
+                  },
+                  {
+                    "default": [
+                      "DISABLE_AUDIT",
+                      "GRANT_PRIVILEGE"
+                    ],
+                    "description": "Fixed vendor-neutral synthetic change actions.",
+                    "name": "sensitive_actions"
+                  },
+                  {
+                    "default": "success",
+                    "description": "Both the sign-in and change must have successful outcomes.",
+                    "name": "outcome"
+                  }
+                ],
+                "erpsec.parameters": [],
+                "erpsec.requiredEvidenceTypes": [
+                  "change_event",
+                  "observed_event"
+                ],
+                "erpsec.ruleVersion": "1.0.0",
+                "erpsec.severity": "medium"
+              },
+              "shortDescription": {
+                "text": "Successful sign-in precedes a sensitive change"
+              }
+            }
+          ],
+          "version": "0.2.0rc1"
+        }
+      }
+    }
+  ],
+  "version": "2.1.0"
+}

@@ -1,0 +1,1621 @@
+{
+  "$schema": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/schemas/sarif-schema-2.1.0.json",
+  "runs": [
+    {
+      "artifacts": [
+        {
+          "hashes": {
+            "sha-256": "e6c7701be27a0b3920c091424248c9b9bfc71550c98dad1c91a2fe7e99690369"
+          },
+          "length": 282,
+          "location": {
+            "index": 0,
+            "uri": "change-events.jsonl"
+          },
+          "properties": {
+            "erpsec.adapter": "erpsec.synthetic-evidence/v1",
+            "erpsec.format": "jsonl",
+            "erpsec.recordCount": 1
+          },
+          "roles": [
+            "analysisTarget"
+          ]
+        },
+        {
+          "hashes": {
+            "sha-256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+          },
+          "length": 1108,
+          "location": {
+            "index": 1,
+            "uri": "honeypot-events.jsonl"
+          },
+          "properties": {
+            "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+            "erpsec.format": "jsonl",
+            "erpsec.recordCount": 4
+          },
+          "roles": [
+            "analysisTarget"
+          ]
+        },
+        {
+          "hashes": {
+            "sha-256": "31daab92b1f1a1c7e0f8ecfddf70a3f1b592b4c04f6d4488a173e0aab0c699b8"
+          },
+          "length": 330,
+          "location": {
+            "index": 2,
+            "uri": "threat-indicators.json"
+          },
+          "properties": {
+            "erpsec.adapter": "erpsec.synthetic-threat-intel/v1",
+            "erpsec.format": "json",
+            "erpsec.recordCount": 1
+          },
+          "roles": [
+            "analysisTarget"
+          ]
+        }
+      ],
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "properties": {
+        "erpsec.asOf": "2026-09-01T12:45:00Z",
+        "erpsec.correlations": [
+          {
+            "correlation_id": "44d429dbcd54dded11f3178e771a057ae6b522fc5512bbac7723cb9b67df2014",
+            "dedupe_key": "a53ae88ee31192d888b6da7185b25439f1cb33c29e70f14db2e2375cd032afad",
+            "rule_id": "ERP009",
+            "rule_version": "1.0.0",
+            "steps": [
+              {
+                "evidence_refs": [
+                  {
+                    "record_id": "event-4",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "principal_id",
+                      "format": "jsonl",
+                      "line": 4,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-4",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "occurred_at",
+                      "format": "jsonl",
+                      "line": 4,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-4",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "outcome",
+                      "format": "jsonl",
+                      "line": 4,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  }
+                ],
+                "occurred_at": "2026-09-01T12:10:00Z",
+                "position": 1,
+                "record_id": "event-4",
+                "record_type": "observed_event",
+                "source_id": "source-honeypot",
+                "summary": "Successful sign-in"
+              },
+              {
+                "evidence_refs": [
+                  {
+                    "record_id": "change-1",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-evidence/v1",
+                      "field": "principal_id",
+                      "format": "jsonl",
+                      "line": 1,
+                      "path": "change-events.jsonl",
+                      "sha256": "e6c7701be27a0b3920c091424248c9b9bfc71550c98dad1c91a2fe7e99690369"
+                    }
+                  },
+                  {
+                    "record_id": "change-1",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-evidence/v1",
+                      "field": "object_id",
+                      "format": "jsonl",
+                      "line": 1,
+                      "path": "change-events.jsonl",
+                      "sha256": "e6c7701be27a0b3920c091424248c9b9bfc71550c98dad1c91a2fe7e99690369"
+                    }
+                  },
+                  {
+                    "record_id": "change-1",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-evidence/v1",
+                      "field": "action",
+                      "format": "jsonl",
+                      "line": 1,
+                      "path": "change-events.jsonl",
+                      "sha256": "e6c7701be27a0b3920c091424248c9b9bfc71550c98dad1c91a2fe7e99690369"
+                    }
+                  },
+                  {
+                    "record_id": "change-1",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-evidence/v1",
+                      "field": "occurred_at",
+                      "format": "jsonl",
+                      "line": 1,
+                      "path": "change-events.jsonl",
+                      "sha256": "e6c7701be27a0b3920c091424248c9b9bfc71550c98dad1c91a2fe7e99690369"
+                    }
+                  },
+                  {
+                    "record_id": "change-1",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-evidence/v1",
+                      "field": "outcome",
+                      "format": "jsonl",
+                      "line": 1,
+                      "path": "change-events.jsonl",
+                      "sha256": "e6c7701be27a0b3920c091424248c9b9bfc71550c98dad1c91a2fe7e99690369"
+                    }
+                  }
+                ],
+                "occurred_at": "2026-09-01T12:20:00Z",
+                "position": 2,
+                "record_id": "change-1",
+                "record_type": "change_event",
+                "source_id": "source-change-audit",
+                "summary": "Successful sensitive synthetic change"
+              }
+            ],
+            "window": {
+              "end": "2026-09-01T12:20:00Z",
+              "maximum_seconds": 1800,
+              "semantics": "closed_interval_inclusive",
+              "start": "2026-09-01T12:10:00Z"
+            }
+          },
+          {
+            "correlation_id": "476d90d49bcd029aab22b972d3417a02968da37432f05ec04e27965880d34fcc",
+            "dedupe_key": "2752f9d9397dac40313e32a6153018d77b93870c633598fc0df8510c12ba2685",
+            "rule_id": "ERP007",
+            "rule_version": "1.0.0",
+            "steps": [
+              {
+                "evidence_refs": [
+                  {
+                    "record_id": "event-1",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "action",
+                      "format": "jsonl",
+                      "line": 1,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-1",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "occurred_at",
+                      "format": "jsonl",
+                      "line": 1,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-1",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "outcome",
+                      "format": "jsonl",
+                      "line": 1,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-1",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "principal_id",
+                      "format": "jsonl",
+                      "line": 1,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-1",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "source_address",
+                      "format": "jsonl",
+                      "line": 1,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  }
+                ],
+                "occurred_at": "2026-09-01T12:00:00Z",
+                "position": 1,
+                "record_id": "event-1",
+                "record_type": "observed_event",
+                "source_id": "source-honeypot",
+                "summary": "Failed synthetic sign-in"
+              },
+              {
+                "evidence_refs": [
+                  {
+                    "record_id": "event-2",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "action",
+                      "format": "jsonl",
+                      "line": 2,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-2",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "occurred_at",
+                      "format": "jsonl",
+                      "line": 2,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-2",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "outcome",
+                      "format": "jsonl",
+                      "line": 2,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-2",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "principal_id",
+                      "format": "jsonl",
+                      "line": 2,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-2",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "source_address",
+                      "format": "jsonl",
+                      "line": 2,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  }
+                ],
+                "occurred_at": "2026-09-01T12:04:00Z",
+                "position": 2,
+                "record_id": "event-2",
+                "record_type": "observed_event",
+                "source_id": "source-honeypot",
+                "summary": "Failed synthetic sign-in"
+              },
+              {
+                "evidence_refs": [
+                  {
+                    "record_id": "event-3",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "action",
+                      "format": "jsonl",
+                      "line": 3,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-3",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "occurred_at",
+                      "format": "jsonl",
+                      "line": 3,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-3",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "outcome",
+                      "format": "jsonl",
+                      "line": 3,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-3",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "principal_id",
+                      "format": "jsonl",
+                      "line": 3,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-3",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "source_address",
+                      "format": "jsonl",
+                      "line": 3,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  }
+                ],
+                "occurred_at": "2026-09-01T12:08:00Z",
+                "position": 3,
+                "record_id": "event-3",
+                "record_type": "observed_event",
+                "source_id": "source-honeypot",
+                "summary": "Failed synthetic sign-in"
+              },
+              {
+                "evidence_refs": [
+                  {
+                    "record_id": "event-4",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "action",
+                      "format": "jsonl",
+                      "line": 4,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-4",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "occurred_at",
+                      "format": "jsonl",
+                      "line": 4,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-4",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "outcome",
+                      "format": "jsonl",
+                      "line": 4,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-4",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "principal_id",
+                      "format": "jsonl",
+                      "line": 4,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-4",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "source_address",
+                      "format": "jsonl",
+                      "line": 4,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  }
+                ],
+                "occurred_at": "2026-09-01T12:10:00Z",
+                "position": 4,
+                "record_id": "event-4",
+                "record_type": "observed_event",
+                "source_id": "source-honeypot",
+                "summary": "Successful sign-in"
+              }
+            ],
+            "window": {
+              "end": "2026-09-01T12:10:00Z",
+              "maximum_seconds": 600,
+              "semantics": "closed_interval_inclusive",
+              "start": "2026-09-01T12:00:00Z"
+            }
+          },
+          {
+            "correlation_id": "c05d2b4a1edb3db69d6c430075b63ebdd9d6814ccbf98636438ca0d9a698ce96",
+            "dedupe_key": "4b2ea09b47836ae9deb8f780be30fa020094a08471755a36175ad5ac051bf953",
+            "rule_id": "ERP008",
+            "rule_version": "1.0.0",
+            "steps": [
+              {
+                "evidence_refs": [
+                  {
+                    "record_id": "indicator-doc-address",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-threat-intel/v1",
+                      "format": "json",
+                      "json_pointer": "/0/value",
+                      "path": "threat-indicators.json",
+                      "sha256": "31daab92b1f1a1c7e0f8ecfddf70a3f1b592b4c04f6d4488a173e0aab0c699b8"
+                    }
+                  },
+                  {
+                    "record_id": "indicator-doc-address",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-threat-intel/v1",
+                      "format": "json",
+                      "json_pointer": "/0/valid_from",
+                      "path": "threat-indicators.json",
+                      "sha256": "31daab92b1f1a1c7e0f8ecfddf70a3f1b592b4c04f6d4488a173e0aab0c699b8"
+                    }
+                  },
+                  {
+                    "record_id": "indicator-doc-address",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-threat-intel/v1",
+                      "format": "json",
+                      "json_pointer": "/0/valid_until",
+                      "path": "threat-indicators.json",
+                      "sha256": "31daab92b1f1a1c7e0f8ecfddf70a3f1b592b4c04f6d4488a173e0aab0c699b8"
+                    }
+                  },
+                  {
+                    "record_id": "indicator-doc-address",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-threat-intel/v1",
+                      "format": "json",
+                      "json_pointer": "/0/confidence",
+                      "path": "threat-indicators.json",
+                      "sha256": "31daab92b1f1a1c7e0f8ecfddf70a3f1b592b4c04f6d4488a173e0aab0c699b8"
+                    }
+                  }
+                ],
+                "occurred_at": "2026-09-01T00:00:00Z",
+                "position": 1,
+                "record_id": "indicator-doc-address",
+                "record_type": "threat_indicator",
+                "source_id": "source-threat-intel",
+                "summary": "Local synthetic IP indicator"
+              },
+              {
+                "evidence_refs": [
+                  {
+                    "record_id": "event-4",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "source_address",
+                      "format": "jsonl",
+                      "line": 4,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-4",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "action",
+                      "format": "jsonl",
+                      "line": 4,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-4",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "outcome",
+                      "format": "jsonl",
+                      "line": 4,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  },
+                  {
+                    "record_id": "event-4",
+                    "source_ref": {
+                      "adapter": "erpsec.synthetic-honeypot/v1",
+                      "field": "occurred_at",
+                      "format": "jsonl",
+                      "line": 4,
+                      "path": "honeypot-events.jsonl",
+                      "sha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+                    }
+                  }
+                ],
+                "occurred_at": "2026-09-01T12:10:00Z",
+                "position": 2,
+                "record_id": "event-4",
+                "record_type": "observed_event",
+                "source_id": "source-honeypot",
+                "summary": "Successful sign-in from matched address"
+              }
+            ],
+            "window": {
+              "end": "2026-09-02T00:00:00Z",
+              "maximum_seconds": 86400,
+              "semantics": "closed_interval_inclusive",
+              "start": "2026-09-01T00:00:00Z"
+            }
+          }
+        ],
+        "erpsec.coverage": "complete",
+        "erpsec.evaluations": [
+          {
+            "rule_id": "ERP007",
+            "rule_version": "1.0.0",
+            "status": "matched"
+          },
+          {
+            "rule_id": "ERP008",
+            "rule_version": "1.0.0",
+            "status": "matched"
+          },
+          {
+            "rule_id": "ERP009",
+            "rule_version": "1.0.0",
+            "status": "matched"
+          }
+        ],
+        "erpsec.inputCount": 6,
+        "erpsec.replay": {
+          "manifest_path": "replay-manifest.json",
+          "manifest_schema_version": "erpsec.synthetic-replay-manifest/v1",
+          "manifest_sha256": "14d5e5d0d9e6da52e42445f556d01a5a95cfb083a993fce8ad62d2ed3551a64f",
+          "replay_id": "scenario-detection-correlation"
+        },
+        "erpsec.reportSchemaVersion": "erpsec.report/v2",
+        "erpsec.result": "findings",
+        "erpsec.syntheticEvidenceOnly": true
+      },
+      "results": [
+        {
+          "fingerprints": {
+            "erpsec/v1": "8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0"
+          },
+          "level": "error",
+          "locations": [
+            {
+              "message": {
+                "text": "Evidence record event-1"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "action",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "1",
+                "erpsec.recordId": "event-1",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-1"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "occurred_at",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "1",
+                "erpsec.recordId": "event-1",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-1"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "outcome",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "1",
+                "erpsec.recordId": "event-1",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-1"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "principal_id",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "1",
+                "erpsec.recordId": "event-1",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-1"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "source_address",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "1",
+                "erpsec.recordId": "event-1",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-2"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 2
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "action",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "2",
+                "erpsec.recordId": "event-2",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-2"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 2
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "occurred_at",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "2",
+                "erpsec.recordId": "event-2",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-2"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 2
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "outcome",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "2",
+                "erpsec.recordId": "event-2",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-2"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 2
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "principal_id",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "2",
+                "erpsec.recordId": "event-2",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-2"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 2
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "source_address",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "2",
+                "erpsec.recordId": "event-2",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-3"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 3
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "action",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "3",
+                "erpsec.recordId": "event-3",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-3"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 3
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "occurred_at",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "3",
+                "erpsec.recordId": "event-3",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-3"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 3
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "outcome",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "3",
+                "erpsec.recordId": "event-3",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-3"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 3
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "principal_id",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "3",
+                "erpsec.recordId": "event-3",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-3"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 3
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "source_address",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "3",
+                "erpsec.recordId": "event-3",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-4"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 4
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "action",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "4",
+                "erpsec.recordId": "event-4",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-4"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 4
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "occurred_at",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "4",
+                "erpsec.recordId": "event-4",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-4"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 4
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "outcome",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "4",
+                "erpsec.recordId": "event-4",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-4"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 4
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "principal_id",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "4",
+                "erpsec.recordId": "event-4",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-4"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 4
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "source_address",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "4",
+                "erpsec.recordId": "event-4",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            }
+          ],
+          "message": {
+            "text": "Three failed synthetic sign-ins from the same source and principal are timestamped strictly before a success inside the inclusive ten-minute window."
+          },
+          "properties": {
+            "erpsec.correlationId": "476d90d49bcd029aab22b972d3417a02968da37432f05ec04e27965880d34fcc",
+            "erpsec.findingId": "8fb56c8f57f45ac031a92d6195df4ea2aea6f47ff0dfbede0c7b0ef97e1510e0",
+            "erpsec.limitation": "ERP007 evaluates only supplied synthetic events and cannot establish attacker identity, intent, device context, or source-system completeness.",
+            "erpsec.remediation": "Review the correlated evidence chain, validate the principal and source context, and follow an authorized incident-response or access-support process.",
+            "erpsec.requiredEvidenceTypes": [
+              "observed_event"
+            ],
+            "erpsec.ruleVersion": "1.0.0",
+            "erpsec.severity": "high"
+          },
+          "ruleId": "ERP007",
+          "ruleIndex": 0
+        },
+        {
+          "fingerprints": {
+            "erpsec/v1": "7f119ff70e1d0f207bdac9cd11e41abcda251af4035649ebd5015b6566e9ec44"
+          },
+          "level": "error",
+          "locations": [
+            {
+              "message": {
+                "text": "Evidence record event-4"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 4
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "action",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "4",
+                "erpsec.recordId": "event-4",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-4"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 4
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "occurred_at",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "4",
+                "erpsec.recordId": "event-4",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-4"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 4
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "outcome",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "4",
+                "erpsec.recordId": "event-4",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-4"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 4
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "source_address",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "4",
+                "erpsec.recordId": "event-4",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record indicator-doc-address"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 2,
+                  "uri": "threat-indicators.json"
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-threat-intel/v1",
+                "erpsec.field": "valid_from",
+                "erpsec.locatorKind": "json_pointer",
+                "erpsec.locatorValue": "/0/valid_from",
+                "erpsec.recordId": "indicator-doc-address",
+                "erpsec.sourceFormat": "json",
+                "erpsec.sourceSha256": "31daab92b1f1a1c7e0f8ecfddf70a3f1b592b4c04f6d4488a173e0aab0c699b8"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record indicator-doc-address"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 2,
+                  "uri": "threat-indicators.json"
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-threat-intel/v1",
+                "erpsec.field": "valid_until",
+                "erpsec.locatorKind": "json_pointer",
+                "erpsec.locatorValue": "/0/valid_until",
+                "erpsec.recordId": "indicator-doc-address",
+                "erpsec.sourceFormat": "json",
+                "erpsec.sourceSha256": "31daab92b1f1a1c7e0f8ecfddf70a3f1b592b4c04f6d4488a173e0aab0c699b8"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record indicator-doc-address"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 2,
+                  "uri": "threat-indicators.json"
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-threat-intel/v1",
+                "erpsec.field": "value",
+                "erpsec.locatorKind": "json_pointer",
+                "erpsec.locatorValue": "/0/value",
+                "erpsec.recordId": "indicator-doc-address",
+                "erpsec.sourceFormat": "json",
+                "erpsec.sourceSha256": "31daab92b1f1a1c7e0f8ecfddf70a3f1b592b4c04f6d4488a173e0aab0c699b8"
+              }
+            }
+          ],
+          "message": {
+            "text": "A successful synthetic sign-in source address exactly matches a supplied local synthetic indicator during its inclusive validity interval."
+          },
+          "properties": {
+            "erpsec.correlationId": "c05d2b4a1edb3db69d6c430075b63ebdd9d6814ccbf98636438ca0d9a698ce96",
+            "erpsec.findingId": "7f119ff70e1d0f207bdac9cd11e41abcda251af4035649ebd5015b6566e9ec44",
+            "erpsec.limitation": "ERP008 uses only a user-supplied local synthetic indicator file; it performs no online lookup and does not assert that an address is malicious in the real world.",
+            "erpsec.remediation": "Validate the indicator source and event context, then follow the authorized triage process before taking any containment action.",
+            "erpsec.requiredEvidenceTypes": [
+              "observed_event",
+              "threat_indicator"
+            ],
+            "erpsec.ruleVersion": "1.0.0",
+            "erpsec.severity": "high"
+          },
+          "ruleId": "ERP008",
+          "ruleIndex": 1
+        },
+        {
+          "fingerprints": {
+            "erpsec/v1": "2c78c6876c92d2498353d12beb9e26eb4a933a4cef36d2f9d7878ea85729d870"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "message": {
+                "text": "Evidence record change-1"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 0,
+                  "uri": "change-events.jsonl"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-evidence/v1",
+                "erpsec.field": "action",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "1",
+                "erpsec.recordId": "change-1",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "e6c7701be27a0b3920c091424248c9b9bfc71550c98dad1c91a2fe7e99690369"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record change-1"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 0,
+                  "uri": "change-events.jsonl"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-evidence/v1",
+                "erpsec.field": "object_id",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "1",
+                "erpsec.recordId": "change-1",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "e6c7701be27a0b3920c091424248c9b9bfc71550c98dad1c91a2fe7e99690369"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record change-1"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 0,
+                  "uri": "change-events.jsonl"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-evidence/v1",
+                "erpsec.field": "occurred_at",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "1",
+                "erpsec.recordId": "change-1",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "e6c7701be27a0b3920c091424248c9b9bfc71550c98dad1c91a2fe7e99690369"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record change-1"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 0,
+                  "uri": "change-events.jsonl"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-evidence/v1",
+                "erpsec.field": "outcome",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "1",
+                "erpsec.recordId": "change-1",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "e6c7701be27a0b3920c091424248c9b9bfc71550c98dad1c91a2fe7e99690369"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record change-1"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 0,
+                  "uri": "change-events.jsonl"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-evidence/v1",
+                "erpsec.field": "principal_id",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "1",
+                "erpsec.recordId": "change-1",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "e6c7701be27a0b3920c091424248c9b9bfc71550c98dad1c91a2fe7e99690369"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-4"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 4
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "occurred_at",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "4",
+                "erpsec.recordId": "event-4",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-4"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 4
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "outcome",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "4",
+                "erpsec.recordId": "event-4",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            },
+            {
+              "message": {
+                "text": "Evidence record event-4"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "index": 1,
+                  "uri": "honeypot-events.jsonl"
+                },
+                "region": {
+                  "startLine": 4
+                }
+              },
+              "properties": {
+                "erpsec.adapter": "erpsec.synthetic-honeypot/v1",
+                "erpsec.field": "principal_id",
+                "erpsec.locatorKind": "line",
+                "erpsec.locatorValue": "4",
+                "erpsec.recordId": "event-4",
+                "erpsec.sourceFormat": "jsonl",
+                "erpsec.sourceSha256": "0c34e318c60a80ea46a46c53205471449f335c67d153d2935df36a5396214535"
+              }
+            }
+          ],
+          "message": {
+            "text": "A successful synthetic sign-in is followed by a successful sensitive change for the same principal inside the inclusive thirty-minute window."
+          },
+          "properties": {
+            "erpsec.correlationId": "44d429dbcd54dded11f3178e771a057ae6b522fc5512bbac7723cb9b67df2014",
+            "erpsec.findingId": "2c78c6876c92d2498353d12beb9e26eb4a933a4cef36d2f9d7878ea85729d870",
+            "erpsec.limitation": "ERP009 identifies a supplied synthetic timing pattern only; it does not determine malicious intent, policy violation, or whether the change was approved.",
+            "erpsec.remediation": "Review the authentication and change evidence against the authorized change record and escalate only through the documented investigation process.",
+            "erpsec.requiredEvidenceTypes": [
+              "change_event",
+              "observed_event"
+            ],
+            "erpsec.ruleVersion": "1.0.0",
+            "erpsec.severity": "medium"
+          },
+          "ruleId": "ERP009",
+          "ruleIndex": 2
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "erp-security-evidence-workbench",
+          "rules": [
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "A success after repeated failures from the same synthetic source can warrant review for credential misuse or an operational access issue."
+              },
+              "help": {
+                "text": "ERP007 evaluates only supplied synthetic events and cannot establish attacker identity, intent, device context, or source-system completeness. Remediation: Review the correlated evidence chain, validate the principal and source context, and follow an authorized incident-response or access-support process."
+              },
+              "id": "ERP007",
+              "properties": {
+                "erpsec.fixedConditions": [
+                  {
+                    "default": 3,
+                    "description": "Exactly three preceding failures are retained in each episode.",
+                    "name": "failure_threshold"
+                  },
+                  {
+                    "default": 600,
+                    "description": "At most 600 seconds from the first retained failure through a strictly later success; the 600-second boundary is inclusive.",
+                    "name": "maximum_window_seconds"
+                  },
+                  {
+                    "default": "SIGN_IN",
+                    "description": "Generic authentication action evaluated by this rule.",
+                    "name": "action"
+                  }
+                ],
+                "erpsec.parameters": [],
+                "erpsec.requiredEvidenceTypes": [
+                  "observed_event"
+                ],
+                "erpsec.ruleVersion": "1.0.0",
+                "erpsec.severity": "high"
+              },
+              "shortDescription": {
+                "text": "Failed sign-ins are followed by a successful sign-in"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "A successful sign-in from an address present in a supplied local indicator set can justify prioritized human review."
+              },
+              "help": {
+                "text": "ERP008 uses only a user-supplied local synthetic indicator file; it performs no online lookup and does not assert that an address is malicious in the real world. Remediation: Validate the indicator source and event context, then follow the authorized triage process before taking any containment action."
+              },
+              "id": "ERP008",
+              "properties": {
+                "erpsec.fixedConditions": [
+                  {
+                    "default": "SIGN_IN",
+                    "description": "Generic authentication action evaluated by this rule.",
+                    "name": "action"
+                  },
+                  {
+                    "default": "success",
+                    "description": "Only explicitly successful synthetic events are correlated.",
+                    "name": "outcome"
+                  },
+                  {
+                    "default": "inclusive",
+                    "description": "Event time must be inside the closed indicator-validity interval.",
+                    "name": "indicator_validity"
+                  }
+                ],
+                "erpsec.parameters": [],
+                "erpsec.requiredEvidenceTypes": [
+                  "observed_event",
+                  "threat_indicator"
+                ],
+                "erpsec.ruleVersion": "1.0.0",
+                "erpsec.severity": "high"
+              },
+              "shortDescription": {
+                "text": "Successful sign-in matches a local synthetic threat indicator"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "A sensitive change shortly after authentication can warrant review of authorization and change-management context."
+              },
+              "help": {
+                "text": "ERP009 identifies a supplied synthetic timing pattern only; it does not determine malicious intent, policy violation, or whether the change was approved. Remediation: Review the authentication and change evidence against the authorized change record and escalate only through the documented investigation process."
+              },
+              "id": "ERP009",
+              "properties": {
+                "erpsec.fixedConditions": [
+                  {
+                    "default": 1800,
+                    "description": "Sensitive change must occur strictly after the successful sign-in and no more than 1,800 seconds later.",
+                    "name": "maximum_window_seconds"
+                  },
+                  {
+                    "default": [
+                      "DISABLE_AUDIT",
+                      "GRANT_PRIVILEGE"
+                    ],
+                    "description": "Fixed vendor-neutral synthetic change actions.",
+                    "name": "sensitive_actions"
+                  },
+                  {
+                    "default": "success",
+                    "description": "Both the sign-in and change must have successful outcomes.",
+                    "name": "outcome"
+                  }
+                ],
+                "erpsec.parameters": [],
+                "erpsec.requiredEvidenceTypes": [
+                  "change_event",
+                  "observed_event"
+                ],
+                "erpsec.ruleVersion": "1.0.0",
+                "erpsec.severity": "medium"
+              },
+              "shortDescription": {
+                "text": "Successful sign-in precedes a sensitive change"
+              }
+            }
+          ],
+          "version": "0.2.0rc1"
+        }
+      }
+    }
+  ],
+  "version": "2.1.0"
+}
